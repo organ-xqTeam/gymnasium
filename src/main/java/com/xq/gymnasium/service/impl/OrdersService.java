@@ -701,7 +701,16 @@ public class OrdersService implements IOrdersService {
 	 * @throws JSONException 
 	 */
 	public List<Map<String,Object>> selectbyordersydhou(Selectbyordersyd sb) {
-		System.out.println("sb"+sb);
+		/*
+		sell[{sremark=, pstatus=1, pstate=1, stid=92, oid=231, sprice=23.00, otime=2018-10-11 10:58:34.0, sid=113, money=23.0, oname=hy, sname=南山南, snumber=b001-A, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 07:00:00.0, oendtime=2018-10-12 08:00:00.0}, {sremark=, pstatus=1, pstate=1, stid=92, oid=236, sprice=23.00, otime=2018-10-11 10:59:16.0, sid=114, money=23.0, oname=test, sname=南山南, snumber=b001-B, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 07:00:00.0, oendtime=2018-10-12 08:00:00.0}]
+		sell[{sremark=, pstatus=1, pstate=1, stid=92, oid=232, sprice=23.00, otime=2018-10-11 10:58:34.0, sid=113, money=23.0, oname=hy, sname=南山南, snumber=b001-A, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 08:00:00.0, oendtime=2018-10-12 09:00:00.0}, {sremark=, pstatus=1, pstate=1, stid=92, oid=237, sprice=23.00, otime=2018-10-11 10:59:16.0, sid=114, money=23.0, oname=test, sname=南山南, snumber=b001-B, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 08:00:00.0, oendtime=2018-10-12 09:00:00.0}]
+		sell[{sremark=, pstatus=1, pstate=1, stid=92, oid=233, sprice=23.00, otime=2018-10-11 10:58:34.0, sid=113, money=23.0, oname=hy, sname=南山南, snumber=b001-A, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 09:00:00.0, oendtime=2018-10-12 10:00:00.0}, {sremark=, pstatus=1, pstate=1, stid=92, oid=238, sprice=23.00, otime=2018-10-11 10:59:16.0, sid=114, money=23.0, oname=test, sname=南山南, snumber=b001-B, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 09:00:00.0, oendtime=2018-10-12 10:00:00.0}]
+		sell[{sremark=, pstatus=1, pstate=1, stid=92, oid=234, sprice=23.00, otime=2018-10-11 10:58:34.0, sid=113, money=23.0, oname=hy, sname=南山南, snumber=b001-A, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 10:00:00.0, oendtime=2018-10-12 11:00:00.0}, {sremark=, pstatus=1, pstate=1, stid=92, oid=239, sprice=23.00, otime=2018-10-11 10:59:16.0, sid=114, money=23.0, oname=test, sname=南山南, snumber=b001-B, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 10:00:00.0, oendtime=2018-10-12 11:00:00.0}]
+		sell[{sremark=, pstatus=1, pstate=1, stid=92, oid=235, sprice=23.00, otime=2018-10-11 10:58:34.0, sid=113, money=23.0, oname=hy, sname=南山南, snumber=b001-A, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 11:00:00.0, oendtime=2018-10-12 12:00:00.0}, {sremark=, pstatus=1, pstate=1, stid=92, oid=240, sprice=23.00, otime=2018-10-11 10:59:16.0, sid=114, money=23.0, oname=test, sname=南山南, snumber=b001-B, state=1, time=2018-09-28 22:39:28.0, ostarttime=2018-10-12 11:00:00.0, oendtime=2018-10-12 12:00:00.0}]
+		sell[]
+		sell[]
+		sell[]*/
+		//System.out.println("sb"+sb);
 		Map<String,Object> map = null;
 		String f = "";
 		List<Map<String,Object>> lis = new ArrayList<Map<String,Object>>();
@@ -718,8 +727,106 @@ public class OrdersService implements IOrdersService {
 				f = dt.formatDate(d, "yyyy-MM-dd HH:ss:mm");
 			}
 			sb.setState(1);
+			//System.out.println("abaaa"+sb);
 			List<Map<String, Object>> list = om.selectbyordersyd(sb);
-			//System.out.println("list"+list);
+			System.out.println("listlllllllllllllll"+list);
+			//listlllllllllllllll[{
+	//		gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, 
+			//pstate=1, gclosedtime=1,2, stid=92, oid=236, sid=114, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 07:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:16.0, money=23.0, oname=test, sname=南山南, snumber=b001-B, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 08:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=231, sid=113, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 07:00:00.0, pstatus=1, sprice=23.00, 
+			//gname=三生三世十里桃花, otime=2018-10-11 10:58:34.0, money=23.0, oname=hy, 
+			//sname=南山南, snumber=b001-A, gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 08:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=237, sid=114, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 08:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花,
+			//otime=2018-10-11 10:59:16.0, money=23.0, oname=test, sname=南山南, snumber=b001-B, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 09:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=232, sid=113, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 08:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:58:34.0, money=23.0, oname=hy, sname=南山南, snumber=b001-A, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 09:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=233, sid=113, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 09:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:58:34.0, money=23.0, oname=hy, sname=南山南, snumber=b001-A, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 10:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=238, sid=114, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 09:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:16.0, money=23.0, oname=test, sname=南山南, snumber=b001-B, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 10:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=234, sid=113, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 10:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:58:34.0, money=23.0, oname=hy, sname=南山南, snumber=b001-A, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 11:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=239, sid=114, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 10:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:16.0, money=23.0, oname=test, sname=南山南, snumber=b001-B, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 11:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=240, sid=114, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 11:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:16.0, money=23.0, oname=test, sname=南山南, snumber=b001-B, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 12:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=235, sid=113, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 11:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:58:34.0, money=23.0, oname=hy, sname=南山南, snumber=b001-A, 
+			//gendtime=1, time=2018-09-28 22:39:28.0, facilities=222222, 
+			//oendtime=2018-10-12 12:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=244, sid=116, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 12:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 11:00:44.0, money=23.0, oname=test, sname=北海北, snumber=b002-B, 
+			//gendtime=1, time=2018-09-28 22:40:04.0, facilities=222222, 
+			//oendtime=2018-10-12 13:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, 
+			//pstate=1, gclosedtime=1,2, stid=92, oid=241, sid=115, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 12:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:48.0, money=23.0, oname=test, sname=北海北, snumber=b002-A, 
+			//gendtime=1, time=2018-09-28 22:40:04.0, facilities=222222, 
+			//oendtime=2018-10-12 13:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=242, sid=115, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 13:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:48.0, money=23.0, oname=test, sname=北海北, snumber=b002-A, 
+			//gendtime=1, time=2018-09-28 22:40:04.0, facilities=222222, 
+			//oendtime=2018-10-12 14:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=245, sid=116, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 13:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 11:00:44.0, money=23.0, oname=test, sname=北海北, snumber=b002-B, 
+			//gendtime=1, time=2018-09-28 22:40:04.0, facilities=222222, 
+			//oendtime=2018-10-12 14:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, 
+			//gphonenum=2222222, pstate=1, gclosedtime=1,2, stid=92, oid=246, sid=116, 
+			//gstarttime=1, state=1, ostarttime=2018-10-12 14:00:00.0, pstatus=1, 
+			//sprice=23.00, gname=三生三世十里桃花, otime=2018-10-11 11:00:44.0, money=23.0, 
+			//oname=test, sname=北海北, snumber=b002-B, gendtime=1, time=2018-09-28 22:40:04.0, 
+			//facilities=222222, oendtime=2018-10-12 15:00:00.0, hcode=ZXYSHJ, stname=篮球}, 
+			//{gid=50, noticeuse=222222, sremark=, glocation=等等等等, gphonenum=2222222, pstate=1, 
+			//gclosedtime=1,2, stid=92, oid=243, sid=115, gstarttime=1, state=1, 
+			//ostarttime=2018-10-12 14:00:00.0, pstatus=1, sprice=23.00, gname=三生三世十里桃花, 
+			//otime=2018-10-11 10:59:48.0, money=23.0, oname=test, sname=北海北, snumber=b002-A, 
+			//gendtime=1, time=2018-09-28 22:40:04.0, facilities=222222, 
+			//oendtime=2018-10-12 15:00:00.0, hcode=ZXYSHJ, stname=篮球}]
 			List<String> strl = new ArrayList<String>();
 			if(!list.isEmpty() && list != null) {
 				String snum = (String)list.get(0).get("snumber");
@@ -729,13 +836,17 @@ public class OrdersService implements IOrdersService {
 				for (int i = 1; i < list.size(); i++) {
 					//System.out.println((String)list.get(i).get("snumber"));
 					String snum1 = (String)list.get(i).get("snumber");
-					String snumber1 = snum.split("-")[0];
+					String snumber1 = snum1.split("-")[0];
 					String date1 = dt.formatDate((Date)list.get(i).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
+					System.out.println("snumber1"+snumber1);
+					System.out.println("date1"+date1);
 					String str = snumber1+"="+date1;
+					System.out.println("styrrrr"+str);
 					if(!strl.contains(str)) {
 						strl.add(snumber1+"="+date1);
 					}
 				}
+				//System.out.println("strl"+strl);
 				if(!strl.isEmpty()) {
 					List<List> li = new ArrayList<List>();
 					int p = 0;
@@ -746,21 +857,32 @@ public class OrdersService implements IOrdersService {
 						String two = strl.get(i).split("=")[1];
 						map.put("snumber", one+"%");
 						map.put("ostarttime", two);
+						//System.out.println("map---"+map);
+						/**
+						 * 	map---{snumber=b001%, ostarttime=2018-10-12 12:00:00}
+							sell[]
+							map---{snumber=b001%, ostarttime=2018-10-12 13:00:00}
+							sell[]
+							map---{snumber=b001%, ostarttime=2018-10-12 14:00:00}
+							sell[]
+						 */
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
-						li.add(sell);
+						//System.out.println("sell"+sell);
+						//li.add(sell);
+						Map<String,Object> m = new HashMap<String,Object>();
+						String one1 = f.split(" ")[0];
+						String two1 = one1.split("-")[1];
+						String three = one1.split("-")[2];
+						String time = two1 + "." + three;
+						Map<String,Object> map1 = new HashMap<String,Object>();
+						map1.put(strl.get(p), sell);
+						//System.out.println("time"+map1);
+						m.put(time, map1);
+						lis.add(m);
 					}
-					Map<String,Object> m = new HashMap<String,Object>();
-					String one1 = f.split(" ")[0];
-					String two1 = one1.split("-")[1];
-					String three = one1.split("-")[2];
-					String time = two1 + "." + three;
-					Map<String,Object> map1 = new HashMap<String,Object>();
-					map1.put(strl.get(p), li);
-					m.put(time, map1);
-					lis.add(m);
 				}
 			}else {
-				System.out.println("=========");
+				//System.out.println("=========");
 				Map<String,Object> m = new HashMap<String,Object>();
 				String one1 = f.split(" ")[0];
 				String two1 = one1.split("-")[1];
