@@ -403,9 +403,21 @@ public class SiteService implements ISiteService {
 	 */
 	public List<Site> selectbystids(Integer stid){
 		Map<String,Object> map = new HashMap<String,Object>();
+		StringTools st = StringTools.getFactory();
 		map.put("stid", stid);
 		map.put("state", 1);
 		List<Site> list = ism.selectbystids(map);
+		System.out.println("list----"+list);
+		/*int i = 0;
+		for (Site s : list) {
+			String[] ss = list.get(i).getSnumber().split("-");
+			if (ss.length == 2) {
+				s.setSnumber(ss[0]);
+			}else {
+				s.setSnumber(list.get(i).getSnumber());
+			}
+			i++;
+		}*/
 		return list;
 	}
 	
