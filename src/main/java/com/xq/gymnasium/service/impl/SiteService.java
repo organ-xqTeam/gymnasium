@@ -265,10 +265,33 @@ public class SiteService implements ISiteService {
 	 * @param s
 	 * @return
 	 */
-	public String updatesite(Site s) {
+	public String updatesite(Site s,Integer gid) {
 		String str = "";
+		//按sid查询
+		Site ss = ism.selectbysid(s.getSid());
+		String sname = ss.getSname();
+		String[] snum = ss.getSnumber().split("-");
 		int result = ism.updatesite(s);
-		if(result > 0) {
+		boolean flag = true;
+		if(snum.length == 2) {
+			//查询场地名称相同的场地
+			Map<String,Object> m = new HashMap<String,Object>();
+			m.put("sname", sname);
+			m.put("snum", snum[0]+"%");
+			m.put("gid", gid);
+			System.out.println("mmm"+m);
+			List<Site> sl = ism.selectbysname(m);
+			for(Site s1 : sl) {
+				s1.setSname(s.getSname());
+				//Integer sid = s1.getSid();
+				int result1 = ism.updatebysname(s1);
+				if(result1 <= 0) {
+					flag = false;
+				}
+			}
+		}
+		//查询修改的一块场地
+		if(result > 0 && flag) {
 			str = "site.update.success";
 		}else {
 			str = "site.update.fail";

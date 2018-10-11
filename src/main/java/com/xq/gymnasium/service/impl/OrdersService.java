@@ -700,6 +700,7 @@ public class OrdersService implements IOrdersService {
 	 * @return
 	 * @throws JSONException 
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<Map<String,Object>> selectbyordersydhou(Selectbyordersyd sb) {
 		Map<String,Object> map = null;
 		List<Map<String,Object>> ls = new ArrayList<Map<String,Object>>();
@@ -707,6 +708,9 @@ public class OrdersService implements IOrdersService {
 		List<Map<String,Object>> lis = new ArrayList<Map<String,Object>>();
 		StringTools st = StringTools.getFactory();
 		DateTools dt = DateTools.getFactory();
+		String str = "";
+		String date1 = "";
+		String snumbers = "";
 		for (int l = 0; l < sb.getNum(); l++) {
 			if(l != 0) {
 				Date d = dt.formatDate(sb.getServenday(), "yyyy-MM-dd HH:ss:mm");
@@ -722,23 +726,34 @@ public class OrdersService implements IOrdersService {
 			List<String> strl = new ArrayList<String>();
 			if(!list.isEmpty() && list != null) {
 				String snum = (String)list.get(0).get("snumber");
-				String snumber = snum.split("-")[0];
-				String date = dt.formatDate((Date)list.get(0).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
-				strl.add(snumber+"="+date);
+				String[] sp = snum.split("-");
+				if(sp.length == 2) {
+					String snumber = snum.split("-")[0];
+					String date = dt.formatDate((Date)list.get(0).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
+					strl.add(snumber+"="+date);
+				}else {
+					String date = dt.formatDate((Date)list.get(0).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
+					strl.add((String)list.get(0).get("snumber")+"="+date);
+				}
 				for (int i = 1; i < list.size(); i++) {
 					String snum1 = (String)list.get(i).get("snumber");
-					String snumber1 = snum1.split("-")[0];
-					String date1 = dt.formatDate((Date)list.get(i).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
-					String str = snumber1+"="+date1;
-					if(!strl.contains(str)) {
-						strl.add(snumber1+"="+date1);
+					String[] sp1 = snum.split("-");
+					if(sp1.length == 2) {
+						snumbers = snum1.split("-")[0];
+						date1 = dt.formatDate((Date)list.get(i).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
+						str = snumbers+"="+date1;
+					}else {
+						snumbers = (String)list.get(i).get("snumber");
+						date1 = dt.formatDate((Date)list.get(i).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
+						str = snumbers+"="+date1;
+					}
+					if(!strl.contains(str) && !snumbers.equals("by001")) {
+						strl.add(snumbers+"="+date1);
 					}
 				}
+				//System.out.println("strl"+strl);
 				if(!strl.isEmpty()) {
-					List<List> li = new ArrayList<List>();
-					int p = 0;
 					for (int i = 0; i < strl.size(); i++) {
-						p = i;
 						map = new HashMap<String,Object>();
 						String one = strl.get(i).split("=")[0];
 						String two = strl.get(i).split("=")[1];
@@ -749,16 +764,16 @@ public class OrdersService implements IOrdersService {
 						List<Map<String,Object>> ss = new ArrayList<Map<String,Object>>();
 						for (Map<String, Object> m : sell) {
 							Map<String,Object> m1 = new HashMap<String,Object>();
-							String snumber1 = (String)m.get("snumber");
-							String[] snu = snumber1.split("-");
 							m1.put("snumber", m.get("snumber"));
 							m1.put("sname", m.get("sname"));
 							ss.add(m1);
 						}
+						//System.out.println("ss"+ss);
 						Map<String,Object> map1 = new HashMap<String,Object>();
-						map1.put(strl.get(p), ss);
+						map1.put(strl.get(i), ss);
 						ls.add(map1);
 					}
+					//System.out.println("ls"+ls);
 					Map<String,Object> m = new HashMap<String,Object>();
 					String one1 = f.split(" ")[0];
 					String two1 = one1.split("-")[1];

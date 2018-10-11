@@ -197,8 +197,8 @@ public class SiteController {
 	 * http://localhost:8089/site/updatesite?sname=haha&sprice=50&sremark=dhdhajdas&sid=7
 	 */
 	@RequestMapping("/updatesite")
-	public String updatesite(Site s) {
-		String result = its.updatesite(s);
+	public String updatesite(Site s,Integer gid) {
+		String result = its.updatesite(s,gid);
 		return result;
 	}
 	

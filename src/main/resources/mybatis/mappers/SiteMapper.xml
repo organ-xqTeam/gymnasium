@@ -87,6 +87,22 @@
 	<update id="updatesite" parameterType="com.xq.gymnasium.model.Site">
 		update site set sname = #{sname},sprice = #{sprice},sremark = #{sremark} where sid = #{sid}
 	</update>
+	<!-- 修改场地名称 -->
+	<update id="updatebysname" parameterType="com.xq.gymnasium.model.Site">
+		update site set sname = #{sname} where sid = #{sid}
+	</update>
+	<!-- 按sname查询 -->
+	<select id="selectbysname" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		select * 
+		from site s
+		left join sitetype st on s.stid = st.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		where s.snumber like #{snum} and g.gid = #{gid}
+	</select>
+	<!-- 按id查询 -->
+	<select id="selectbysid" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Site">
+		select * from site where sid = #{sid}
+	</select>
 	<!-- 删除场地 -->
 	<delete id="deletesite" parameterType="java.lang.Integer">
 		delete from site where sid = #{sid}

@@ -68,7 +68,7 @@ public interface ISiteService {
 	 * @param s
 	 * @return
 	 */
-	String updatesite(Site s);
+	String updatesite(Site s,Integer gid);
 	
 	/**
 	 * 删除场地

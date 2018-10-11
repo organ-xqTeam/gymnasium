@@ -219,4 +219,31 @@ public interface SiteMapper {
 	 * @return
 	 */
 	int updatebygmstate(Map<String,Object> map);
+	
+	/**
+	 * 按sname查询
+	 * yangweihang
+	 * @Date 2018年10月11日 下午4:31:38
+	 * @param sname
+	 * @return
+	 */
+	List<Site> selectbysname(Map<String,Object> map);
+	
+	/**
+	 * 修改场地名称
+	 * yangweihang
+	 * @Date 2018年10月11日 下午4:37:40
+	 * @param s
+	 * @return
+	 */
+	int updatebysname(Site s);
+	
+	/**
+	 * 按sid查询
+	 * yangweihang
+	 * @Date 2018年10月11日 下午4:47:52
+	 * @param sid
+	 * @return
+	 */
+	Site selectbysid(int sid);
 }
