@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 体育馆信息 -->
+<mapper namespace="com.xq.gymnasium.dao.GymnasiumMessageMapper">
+	<!-- 新增体育馆信息 -->	
+	<insert id="insertmessage" parameterType="com.xq.gymnasium.model.GymnasiumMessage">
+		insert into gymnasiummessage(gname,glocation,gphonenum,gstarttime,gendtime,gclosedtime,facilities,noticeuse,time,hcode) values(#{gname},#{glocation},#{gphonenum},#{gstarttime},#{gendtime},#{gclosedtime},#{facilities},#{noticeuse},#{time},#{hcode})
+		<selectKey resultType="java.lang.Integer" keyProperty="gid" order="AFTER">
+	      	SELECT LAST_INSERT_ID()
+	    </selectKey>
+	</insert>
+	<!-- 修改体育馆信息 -->	
+	<insert id="updatemessage" parameterType="com.xq.gymnasium.model.GymnasiumMessage">
+		update gymnasiummessage set gname=#{gname},glocation=#{glocation},gphonenum=#{gphonenum},gstarttime=#{gstarttime},gendtime=#{gendtime},gclosedtime=#{gclosedtime},facilities=#{facilities},noticeuse=#{noticeuse} where gid=#{gid}
+		<selectKey resultType="java.lang.Integer" keyProperty="gid" order="AFTER">
+	      	SELECT LAST_INSERT_ID()
+	    </selectKey>
+	</insert>
+	<!-- 查询全部的体育馆 -->
+	<select id="selectbygm" resultType="com.xq.gymnasium.model.GymnasiumMessage">
+		select * from gymnasiummessage
+	</select>
+	<!-- 场馆管理 -->
+	<select id="selectbygym" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT g.gid,s.sname,s.snumber,g.gname,st.stname,s.pstatus,g.gstarttime,g.gendtime,g.gclosedtime,g.glocation,g.facilities,g.glocation,g.gphonenum,g.state,g.noticeuse
+		FROM gymnasiummessage g
+		LEFT JOIN sitetype st  ON g.gid = st.gid
+		LEFT JOIN site s ON st.stid = s.stid
+		LEFT JOIN orders o ON o.sid = s.sid
+		<where>
+			<if test="gid != null and gid != ''" >
+				g.gid = #{gid}
+			</if>
+			<if test="sname != null and sname != ''">
+				g.gname = #{sname}
+			</if>
+			<if test="hcode != null and hcode != ''">
+				g.hcode = #{hcode}
+			</if>
+		</where>
+		GROUP BY g.gname
+		order by g.time desc
+	</select>
+	<!-- 按gid查询 -->
+	<select id="selectbygid" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.GymnasiumMessage">
+		select * from gymnasiummessage g
+		where gid = #{gid}
+	</select>
+	<!-- 删除体育馆 -->
+	<delete id="deletebygid" parameterType="java.lang.Integer">
+		delete from gymnasiummessage where gid=#{gid}
+	</delete>
+	<!-- 修改开馆闭馆 -->
+	<update id="updatestate" parameterType="java.util.HashMap">
+		update gymnasiummessage set state = #{state} where gid = #{gid}
+	</update>
+	<!-- 查询和会员医院id一样的体育馆 -->
+	<select id="selectbycode" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.GymnasiumMessage">
+		select * from gymnasiummessage where hcode = #{hcode}
+	</select>
+	<!-- 查询体育馆状态 -->
+	<select id="selectbygmstate" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.GymnasiumMessage">
+		select g.* from gymnasiummessage g
+		left join sitetype st on g.gid = st.gid
+		left join site s on s.stid = st.stid
+		where s.sid = #{sid}
+	</select>
+</mapper>

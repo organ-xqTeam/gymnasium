@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>场馆管理</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/list.css" />
+	<link rel="stylesheet" type="text/css" href="../css/service.css" />
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<style>
+		ul.restDate li label,
+		ul.restDate li label input{
+			font-weight: normal;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="header_logo ac fl">体育场馆管理系统</div>
+		<ul class="header_menu">
+			<li><a href="index.html">首页</a></li>
+			<li><a class="header_menu_act" href="manage_venue.html">场馆管理</a></li>
+			<li><a href="index_list.html">查看预定</a></li>
+		</ul>
+		<div class="header_icon fr">
+			<span class="iconfont icon-tuichu" id="dropout"></span>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div class="main">
+		<div class="content_list">
+			<div class="content_date" style="margin: 20px 0;">
+				<!-- <span style="font-size: 16px;font-weight: bold;">场馆名称:</span>
+				<input type="text" id="sname" name="sname" class="content_date_input" style="margin-left: 10px;">
+				<input type="button" id="sub" class="content_date_submit content_date_btn" name="" value="搜索"> -->
+				<a href="#" class="content_date_btn ac fr" data-toggle="modal" data-target="#myAdd">新 增</a>
+				<div style="clear: both;"></div>
+			</div>
+
+			<div class="list_content">
+				<div class="table_caption"></div>
+				<table class="list_table">
+					<thead class="list_table_title">
+						<tr>
+							<td>序号</td>
+							<td>所属场馆</td>
+							<td>场馆编号</td>
+							<!-- <td>开闭馆时间</td> -->
+							<td>预定状态</td>
+							<td>操作</td>
+						</tr>
+					</thead>
+					<tbody id="showgm"></tbody>
+				</table>
+				<div class="ar">
+					<ul class="pagination">
+						<!-- <li id="add"><a href="#">&laquo;</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+
+		<!-- 编辑模态框 -->
+		<div class="modal fade" id="myupd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		 style="padding-right: 0!important;min-width: 1280px;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="add_title modal-title" id="myModalLabel">修改体育场馆</h4>
+					</div>
+					<div class="modal-body add_body" id="show">
+						<div>
+							<span>场馆具体位置</span>
+							<input id="gid" name="gid" type="hidden">
+							<input class="add_input" id="glocation" name="glocation" type="text">
+						</div>
+						<div>
+							<span>场馆名称</span>
+							<input class="add_input" id="gname" name="gname" type="text">
+						</div>
+						<div>
+							<span>联系电话</span>
+							<input class="add_input" type="text" id="gphonenum" name="gphonenum">
+						</div>
+						<!-- <div>
+							<span>场馆属性</span>
+							<input class="venue_add" id="stname" type="text" name="stname">
+							<button class="venue_btn" type="button" onclick="saveLi()">添加</button>
+						</div>
+						<div>
+							<span></span>
+							<ul class="venue_attr" id="ul2"></ul>
+						</div> -->
+						<!-- <div>
+							<span>开闭馆时间</span>
+							早 : <input class="venue_time" type="time" id="gstarttime" name="gstarttime">
+							晚 : <input class="venue_time" type="time" id="gendtime" name="gendtime">
+						</div> -->
+						<div>
+							<span>休馆时间</span>
+							<ul class="restDate">
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_0" value="0" name="gclosedtime">无休
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_1" value="1" name="gclosedtime">周一
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_2" value="2" name="gclosedtime">周二
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_3" value="3" name="gclosedtime">周三
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_4" value="4" name="gclosedtime">周四
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_5" value="5" name="gclosedtime">周五
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_6" value="6" name="gclosedtime">周六
+									</label>
+								</li>
+								<li class="venue_check">
+									<label>
+										<input type="checkbox" id="ch_7" value="7" name="gclosedtime">周日
+									</label>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<span>场馆设施</span>
+							<input class="add_input" id="facilities" name="facilities" type="text">
+						</div>
+						<div>
+							<span>使用须知</span>
+							<input class="venue_add" id="notes_item" type="text" name="" style="width: 60%;">
+							<button class="venue_btn addNotesBtn" type="button" id="bbb">添加</button>
+						</div>
+						<div>
+							<span></span>
+							<ol type="1" class="notes_ol" id="ol1">
+							</ol>
+						</div>
+					</div>
+					<div class="modal-footer" id="block1">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="update">确定</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 编辑模态框 end -->
+
+		<!-- 新增模态框 -->
+		<div class="modal fade" id="myAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		 style="padding-right: 0!important;min-width: 1280px;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="add_title modal-title" id="myModalLabel">新增体育场馆</h4>
+					</div>
+					<div class="modal-body add_body" id="show">
+						<div>
+							<span>场馆具体位置</span>
+							<input class="add_input" id="glocation1" name="glocation1" type="text">
+						</div>
+						<div>
+							<span>场馆名称</span>
+							<input class="add_input" id="gname1" name="gname1" type="text">
+						</div>
+						<div>
+							<span>联系电话</span>
+							<input class="add_input" type="text" id="gphonenum1" name="gphonenum1">
+						</div>
+						<!-- <div>
+							<span>场馆属性</span>
+							<input class="venue_add" id="stname1" type="text" name="stname1">
+							<button class="venue_btn" type="button" onclick="saveLi()">添加</button>
+						</div> -->
+						<div>
+							<span></span>
+							<ul class="venue_attr" id="ul1"></ul>
+						</div>
+						<script type="text/javascript">
+							// function saveLi(){
+							//     var demo = $("input[id='stname1']").val();
+							//     $(".venue_attr").append("<li>" + demo + "</li>");
+							// }
+						</script>
+						<!-- <div>
+							<span>开闭馆时间</span>
+							早 : <input class="venue_time" type="time" id="gstarttime1" name="gstarttime1">
+							晚 : <input class="venue_time" type="time" id="gendtime1" name="gendtime1">
+						</div> -->
+						<div>
+							<span>休馆时间</span>
+							<ul>
+								<li class="venue_check"><input type="checkbox" id="ch_0" value="0" name="gclosedtime1">无休</li>
+								<li class="venue_check"><input type="checkbox" id="ch_1" value="1" name="gclosedtime1">周一</li>
+								<li class="venue_check"><input type="checkbox" id="ch_2" value="2" name="gclosedtime1">周二</li>
+								<li class="venue_check"><input type="checkbox" id="ch_3" value="3" name="gclosedtime1">周三</li>
+								<li class="venue_check"><input type="checkbox" id="ch_4" value="4" name="gclosedtime1">周四</li>
+								<li class="venue_check"><input type="checkbox" id="ch_5" value="5" name="gclosedtime1">周五</li>
+								<li class="venue_check"><input type="checkbox" id="ch_6" value="6" name="gclosedtime1">周六</li>
+								<li class="venue_check"><input type="checkbox" id="ch_7" value="7" name="gclosedtime1">周日</li>
+							</ul>
+						</div>
+						<div>
+							<span>场馆设施</span>
+							<input class="add_input" id="facilities1" name="facilities1" type="text">
+						</div>
+						<div>
+							<span>使用须知</span>
+							<input class="venue_add" id="notes_item1" type="text" name="" style="width: 60%;">
+							<button class="venue_btn addNotesBtn" type="button">添加</button>
+						</div>
+						<div>
+							<span></span>
+							<ol type="1" class="notes_ol" id="ol">
+
+							</ol>
+						</div>
+						<!-- <script type="text/javascript">
+					   function notes(){
+						   var demo = $("input[id='notes_item1']").val();
+						   $("ol").append("<li>" + demo + "</li>");
+					   }
+				   </script> -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="insert">确定</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 新增模态框 end -->
+		<!-- 查看模态框 -->
+		<div class="modal fade" id="myshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		 style="padding-right: 0!important;min-width: 1280px;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="add_title modal-title" id="myModalLabel">查看体育场馆</h4>
+					</div>
+					<div class="modal-body add_body" id="show">
+						<div>
+							<span>场馆具体位置</span>
+							<input class="add_input" id="glocation1" name="glocation1" type="text">
+						</div>
+						<div>
+							<span>场馆名称</span>
+							<input class="add_input" id="gname1" name="gname1" type="text">
+						</div>
+						<div>
+							<span>联系电话</span>
+							<input class="add_input" type="text" id="gphonenum1" name="gphonenum1">
+						</div>
+						<!-- <div>
+							<span>场馆属性</span>
+							<input class="venue_add" id="stname1" type="text" name="stname1">
+							<button class="venue_btn" type="button" onclick="saveLi()">添加</button>
+						</div> -->
+						<div>
+							<span></span>
+							<ul class="venue_attr" id="ul1"></ul>
+						</div>
+						<script type="text/javascript">
+							// function saveLi(){
+							//     var demo = $("input[id='stname1']").val();
+							//     $(".venue_attr").append("<li>" + demo + "</li>");
+							// }
+						</script>
+						<div>
+							<span>开闭馆时间</span>
+							早 : <input class="venue_time" type="time" id="gstarttime1" name="gstarttime1">
+							晚 : <input class="venue_time" type="time" id="gendtime1" name="gendtime1">
+						</div>
+						<div>
+							<span>休馆时间</span>
+							<ul>
+								<li class="venue_check"><input type="checkbox" id="ch_0" value="0" name="gclosedtime1">无休</li>
+								<li class="venue_check"><input type="checkbox" id="ch_1" value="1" name="gclosedtime1">周一</li>
+								<li class="venue_check"><input type="checkbox" id="ch_2" value="2" name="gclosedtime1">周二</li>
+								<li class="venue_check"><input type="checkbox" id="ch_3" value="3" name="gclosedtime1">周三</li>
+								<li class="venue_check"><input type="checkbox" id="ch_4" value="4" name="gclosedtime1">周四</li>
+								<li class="venue_check"><input type="checkbox" id="ch_5" value="5" name="gclosedtime1">周五</li>
+								<li class="venue_check"><input type="checkbox" id="ch_6" value="6" name="gclosedtime1">周六</li>
+								<li class="venue_check"><input type="checkbox" id="ch_7" value="7" name="gclosedtime1">周日</li>
+							</ul>
+						</div>
+						<div>
+							<span>场馆设施</span>
+							<input class="add_input" id="facilities1" name="facilities1" type="text">
+						</div>
+						<div>
+							<span>使用须知</span>
+							<input class="venue_add" id="notes_item1" type="text" name="" style="width: 60%;">
+							<button class="venue_btn addNotesBtn" type="button">添加</button>
+						</div>
+						<div>
+							<span></span>
+							<ol type="1" class="notes_ol" id="ol">
+
+							</ol>
+						</div>
+						<!-- <script type="text/javascript">
+					   function notes(){
+						   var demo = $("input[id='notes_item1']").val();
+						   $("ol").append("<li>" + demo + "</li>");
+					   }
+				   </script> -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="insert">确定</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+	<script src="../js/manage_venue.js"></script>
+</body>
+
+</html>

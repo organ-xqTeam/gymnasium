@@ -1,0 +1,92 @@
+.button_box{
+	margin-bottom: 30px;
+	display: inline-block;
+}
+
+.list_table_star{
+	display: inline-block;
+	min-width: 100px;
+}
+
+.list_table_star li{
+	display: inline-block;
+}
+
+.myLeft_tabCon_list li{
+	padding: 0 10px; 
+	border-left: none;
+}
+
+.content_date_input{
+	margin-right: 0 !important;
+}
+
+.daterangepicker:before, .daterangepicker:after{
+	display: none;
+}
+
+.add_btn{
+	width: 80px;
+	height: 36px;
+	margin-bottom: 20px;
+	line-height: 36px;
+	display: inline-block;
+}
+
+/*新增会议室*/
+
+.add_title{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.add_body{
+	padding: 20px 5% 0 5%;
+}
+
+.add_body div{
+	margin-bottom: 15px;
+	font-size: 16px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.add_input{
+	width: calc(100% - 120px);
+	border: 1px solid #ccc;
+	outline: none;
+	padding: 6px 10px;
+}
+
+.add_textarea{
+	height: 70px;
+}
+
+.add_body span{
+	font-size: 16px;
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+	margin-right: 10px;
+}
+
+.list_table_btn{
+	width: auto;
+}
+
+.room_w{
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px 0;
+	line-height: 30px;
+}
+
+.room_w span,.room_w p{
+	margin-left: 10px;
+	font-weight: 200;
+}
+
+.room_w img{
+	width: 80%;
+}
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 体育馆场地类别-->
+<mapper namespace="com.xq.gymnasium.dao.SitetypeMapper">
+	<!-- 新增场地类别 -->
+	<insert id="insertsitetype" useGeneratedKeys="true" parameterType="java.util.List">  
+    	insert into sitetype(gid,stname)   
+    	values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.gid},#{item.stname})  
+	    </foreach>  
+	</insert>
+	<!-- 删除场地类别 -->
+	<delete id="deletesitetype" parameterType="java.lang.Integer">
+		delete from sitetype where gid = #{gid}
+	</delete>
+	<!-- 根据id查询 -->
+	<select id="selectById" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Sitetype">
+		select * from sitetype where stid=#{stid}
+	</select>
+	<!-- 按体育场id查询体育场类别 -->
+	<select id="selectsitetype" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Sitetype">
+		select * from sitetype where gid = #{gid}
+	</select>
+	<!-- 按体育馆场地编号查询场地类别名称 -->
+	<select id="selectStnameBySnumber" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Sitetype">
+		select * 
+		from sitetype as st
+		left join site as s  on s.stid = st.stid 
+		group by snumber having s.snumber = #{snumber}
+	</select>
+	<!-- 查询体育场类别 -->
+	<select id="selectbysitetype" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Sitetype">
+		select * from sitetype st
+		left join gymnasiummessage g on st.gid = g.gid
+		where g.hcode = #{hcode}
+	</select>
+	<!-- 按stname查询 -->
+	<select id="selectbystname" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Sitetype">
+		select * from sitetype where stname = #{stname}
+	</select>
+</mapper>

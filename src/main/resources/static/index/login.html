@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>首页-体育场预定登陆</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var code = '';
+			var codeLength = 4;
+	        //设置随机字符
+	        var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z');
+	        //循环codeLength 我设置的4就是循环4次
+	        for(var i = 0; i < codeLength; i++){
+	            //设置随机数范围,这设置为0 ~ 36
+	             var index = Math.floor(Math.random()*36);
+	             //字符串拼接 将每次随机的字符 进行拼接
+	             code += random[index]; 
+	        }
+	        //将拼接好的字符串赋值给展示的Value
+	        $("#code").html(code);
+			$("#code").click(function(){
+				var code = '';
+				//设置长度，这里看需求，我这里设置了4
+		        var codeLength = 4;
+		        //设置随机字符
+		        var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z');
+		        //循环codeLength 我设置的4就是循环4次
+		        for(var i = 0; i < codeLength; i++){
+		            //设置随机数范围,这设置为0 ~ 36
+		             var index = Math.floor(Math.random()*36);
+		             //字符串拼接 将每次随机的字符 进行拼接
+		             code += random[index]; 
+		        }
+		        //将拼接好的字符串赋值给展示的Value
+		        $("#code").html(code);
+			});
+			//登陆
+			$("#but").click(function(){
+				if($("#chcode").val() != code){
+					alert("验证码输入错误！");
+					return false;
+				}
+				$.ajax({
+					type:"post",
+					url:Global.host+"user/userlogin",
+					data:{
+						userNames:$("#ausername").val(),
+						password:$("#apwd").val(),
+						interfaceNum:1
+					},
+					success:function(str){
+						if(str == 'userlogin.success'){
+							alert("登陆成功！");
+							location.href = Global.host +"index/index.html";
+						}else{
+							alert("账号或密码错误！");
+						}
+					}
+				});
+				/* $.ajax({
+					type:"post",
+					url:Global.host+"administrator/adminlogin",
+					data:{
+						ausername:$("#ausername").val(),
+						apwd:$("#apwd").val()
+					},
+					success:function(str){
+						if(str == 'login.success'){
+							location.href = Global.host +"index/index.html";
+						}
+					}
+				}); */
+			});
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<div class="header_logo ac fl">体育场馆管理系统</div>
+		<div class="header_icon fr">
+			<span class="iconfont icon-tuichu"></span>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div class="main">
+		<div class="ac">
+			<div class="login_line"></div>
+			<div class="login_title ac">用 户 登 陆</div>
+			<br>
+			<div class="login_item">
+				<input type="text" id="ausername" name="ausername" placeholder="用户名：">
+			</div>
+			<div class="login_item">
+				<input type="password" id="apwd" name="apwd" placeholder="密码：">
+			</div>
+			<div class="login_item">
+				<input type="text" id="chcode" placeholder="验证码：">
+				<div class="login_ident" id="code"></div>
+			</div>
+			<div id="test"></div>
+			<br>
+			<div class="login_item ac">
+				<button id="but" class="login_btn">登陆</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

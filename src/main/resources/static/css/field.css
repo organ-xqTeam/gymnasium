@@ -1,0 +1,298 @@
+body{
+	background-color: #f1f5f6 !important;
+	height: 100% !important;
+	padding: 10px !important;
+	box-sizing: border-box !important;
+}
+
+.add_input{
+	border:none;
+	outline:none;
+}
+
+/*绗竴鍧�*/
+.field_top{
+	background-color: #fff;
+	width: 100%;
+	border-radius: 8px;
+}
+
+.field_title{
+	padding: 10px 14px;
+	border-bottom: 1px solid #F1F5F6;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.field_fl{
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #000;
+}
+
+.field_fr{
+	padding: 4px 6px;
+	border: 1px solid #2EC5C4;
+	border-radius: 8px;
+	color: #2EC5C4;
+	font-size: 1em;
+}
+
+/*鍦洪淇℃伅*/
+.field_content{
+	padding: 10px 14px;
+}
+
+.field_content_title{
+	font-size: 1.2em;
+	margin-bottom: 10px;
+	color: #000;
+}
+
+.field_content_style{
+	font-size: 0.9em;
+	color: #848484;
+	margin-bottom: 10px;
+	line-height: 24px;
+}
+
+.font_b{
+	color: #000;
+}
+
+/*鍦洪棰勫畾*/
+.field_tab{
+	padding: 12px 7%;
+}
+
+.field_tab li{
+	display: inline-block;
+	font-size: 1.2em;
+	color: #848484;
+	margin-right: 30px;
+	padding-bottom: 3px;
+}
+
+.field_tab_act{
+	color: #2EC5C4 !important;
+	border-bottom: 4px solid #2EC5C4;
+}
+
+/*鍦洪棰勫畾鏃堕棿*/
+.field_date{
+	padding: 10px;
+}
+
+.field_date_ul{
+	display: flex;
+	justify-content: space-between;
+}
+
+.field_date_ul li{
+	display: inline-block;
+	text-align: center;
+}
+
+.field_date_week{
+	font-size: 0.8em;
+	color: #848484;
+	margin-bottom: 4px;
+}
+
+.field_date_rili{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1em;
+	border-radius: 50%;
+}
+
+.field_date_act .field_date_rili{
+	background-color: #2EC5C4;
+	color: #fff;
+}
+
+.field_date_act .field_date_week{
+	color: #2EC5C4
+}
+
+/*鍦洪棰勫畾琛ㄥ崟*/
+.field_scroll{
+	width:100%;
+	overflow-x:scroll;
+	overflow-y: hidden;
+	scrollbar-base-color:red;
+}
+.field_scroll::-webkit-scrollbar{
+display:none;
+}
+.date_content{
+	width: 100%;
+	margin-top: 10px;
+}
+
+.date_content th{
+	padding: 10px 0;
+	color: #000;
+	height:60px;
+}
+
+table tbody tr td{
+	border: 1px solid #F1F5F6;
+	text-align: center;
+	padding: 4px 0;
+	box-sizing: border-box;
+	height: 60px;
+	width: 90px;
+	font-size: 0.8em;
+}
+.book_act{
+	background-color: #2EC5C4;
+	color: #fff;
+}
+.date_content thead{
+	background-color: rgba(46,197,196,0.06);
+}
+.date_content tbody th{
+	width: 80px;
+	font-size: 1em;
+}
+.field_th{
+	position: absolute;
+	top: 10px;
+}
+.field_th li{
+	width: 70px;
+	height: 60px;
+	text-align: center;
+	border-bottom: 1px solid #F1F5F6;
+	font-size: 1em;
+	background-color: #fff;
+	box-sizing: border-box;
+	padding-top: 8px;
+}
+.field_th li p{
+	line-height:6px;
+}
+.field_th li:first-child{
+	background-color:#f3fcfc;
+	height: 61px;
+}
+.no_book{
+	background-color: #EBEBEB;
+}
+
+/*琛ㄥ崟涓嬮潰*/
+
+.table_bottom li{
+	display: inline-block;
+	margin-left: 40px;
+	text-align: center;
+}
+
+.table_bottom li div{
+	display: inline-block;
+	width: 42px;
+	height: 20px;
+	text-align: center;
+	margin-bottom: 2px;
+	margin-top: 10px;
+}
+.select{
+	background-color: #2EC5C4;
+	border:1px solid #2EC5C4 ;
+}
+.selected{
+	border:1px solid #F1F5F6 ;
+}
+.selecting{
+	background-color: #EBEBEB;
+	border:1px solid #EBEBEB ;
+}
+
+/*涓嬫柟纭鎸夐挳*/
+.field_btn{
+	padding: 20px 20px 10px 20px;
+}
+
+.field_btn button{
+	width: 100%;
+	height: 50px;
+	background: #2EC5C4;
+	border-radius: 6px;
+	font-size: 1.4em;
+	color: #FFFFFF;
+	border:none;
+	outline: none;
+}
+
+/*鏉″脊绐�*/
+.field_tc{
+	width: calc(100% - 20px);
+	position: absolute;
+	top: 35%;
+}
+.field_jump{
+	margin-bottom: 20px;
+	display: inline-block;
+	width: calc(80% - 20px);
+	height: 50px;
+	line-height: 50px;
+	background: rgba(0,0,0,.4);
+	border-radius: 10px;
+	font-size: 1.2em;
+	color: #FFFFFF;
+}
+
+/*纭寮圭獥*/
+
+.field_confirm{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,.4);
+}
+
+.field_box{
+	background: #FFFFFF;
+	border-radius: 10px;
+	width: 70%;
+	display: inline-block;
+	height: 150px;
+	margin-top: 30%;
+}
+
+.field_box_word{
+	height: 100px;
+	padding: 0 20px;
+	font-size: 1.2em;
+	color: #000000;
+	align-items: center;
+	justify-content:center; 
+}
+
+.field_box_btns{
+	display: flex;
+}
+
+.field_box_btns button{
+	width: 100%;
+	line-height: 49px;
+	background-color: #fff;
+	border: none;
+	outline: none;
+	border-top: 1px solid #BEC2CE;
+	font-size: 1.2em;
+	border-radius: 0 0 10px 10px;
+	color: #017CFF;
+}
+.btn_l{
+	border-radius: 0 0 0 10px !important;
+	border-right: 1px solid #BEC2CE !important;
+	color: #848484 !important;
+}

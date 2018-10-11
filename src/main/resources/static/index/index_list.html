@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>首页-体育场预定</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/list.css"/>
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<script type="text/javascript">
+		var pageSize = 15;
+		$(function(){
+			$.ajax({
+				type:"post",
+				url:Global.host+"orders/selectByOname",
+				data:{
+					num:1,
+					pageNum:0,
+					pageSize:pageSize
+				},
+				success:function(list){
+					$("#showod").html('');
+					/* var list = data.list; */
+					//console.log(data);
+					var length = list.length-1;
+					for(var i = 0; i < list.length-1; i++){
+						var $tr=$(`
+							<tr>
+								<td>${i+1}</td>
+								<td>${list[i].sname}</td>
+								<td>${list[i].snumber}</td>
+								<td>${list[i].oname}</td>
+								<td>${list[i].ostarttime}</td>
+								<td>${list[i].money}</td>
+								<td>${list[i].otime}</td>
+								<td class="list_table_btn">
+									<button class="${Number(list[i].states)==2?'normal_btn':''}">正常</button>
+									<button class="tuiding ${Number(list[i].states)==1?'disabled_btn':''}" data-otime="${list[i].otime}">退订</button>
+								</td>
+							</tr>		
+						`)
+						$("#showod").append($tr);
+					}
+					var num = Math.ceil(list[length].count/pageSize);
+					$("#fenye").html('');
+					for(var i = 0; i < num; i++){
+						var $tr=$(`
+							<li><a onclick="page(${i})">${i+1}</a></li>
+						`)
+						$("#fenye").append($tr);
+					}
+				}
+			});
+			//导出excle
+			$("#getexcle").click(function(){
+				var configdemo = $("#config-demo").val();
+				var starttime = configdemo.split( " ~ " )[0];
+				var endtime = configdemo.split( " ~ " )[1];
+				var pageNum = $("#pageNum").val()-1;
+				var starttime = starttime;
+				var endtime = endtime;
+				location.href = "http://meiliyue.caapa.org:81/gymnasium/orders/getexcle?pageNum="+pageNum+"&pageSize="+pageSize+"&starttime="+starttime+"&endtime="+endtime;
+			});
+			//点击退订 事件
+			$("#showod").delegate(".tuiding","click",function(){
+				if(!$(this).hasClass("disabled_btn")){
+					return
+				}
+				var otime=$(this).attr("data-otime")
+				tuiding(otime)
+			})
+		});
+		//分页查询
+		function page(pageNum){
+			var configdemo = $("#config-demo").val();
+			var starttime = configdemo.split( " ~ " )[0];
+			var endtime = configdemo.split( " ~ " )[1];
+			if(endtime != ''){
+				endtime = endtime + " 23:59:59";
+			}
+			$.ajax({
+				type:"get",
+				url:Global.host+"orders/selectByOname",
+				data:{
+					num:1,
+					pageNum:pageNum,
+					pageSize:pageSize,
+					starttime:starttime,
+					endtime:endtime
+				},
+				success:function(list){
+					var length = list.length-1;
+					$("#showod").html('');
+					for(var i = 0; i < list.length-1; i++){
+						var $tr=$(`
+							<tr>
+								<td>${i+1}</td>
+								<td>${list[i].sname}</td>
+								<td>${list[i].snumber}</td>
+								<td>${list[i].oname}</td>
+								<td>${list[i].ostarttime}</td>
+								<td>${list[i].money}</td>
+								<td>${list[i].otime}</td>
+								<td class="list_table_btn">
+									<button class="${Number(list[i].states)==2?'normal_btn':''}">正常</button>
+									<button class="${Number(list[i].states)==1?'disabled_btn':''}" onclick="tuiding('${list[i].otime}')">退订</button>
+								</td>
+							</tr>		
+						`)
+						$("#showod").append($tr);
+					}
+					var num = Math.ceil(list[length].count/pageSize);
+					$("#fenye").html('');
+					for(var i = 0; i < num; i++){
+						var $tr=$(`
+							<li><a onclick="page(${i})">${i+1}</a></li>
+						`)
+						$("#fenye").append($tr);
+					}
+				}
+			});
+		}
+		//退订
+		function tuiding(otime){
+			$.ajax({
+				type:"post",
+				url:Global.host+"orders/updatestate",
+				data:{
+					otime:otime
+				},
+				success:function(data){
+					if(data=='order.unsubscribe.success'){
+						alert("退订成功！");
+					}else if(data == 'Please do not repeat after you unsubscribe'){
+						alert("您好，此预订不能退订，谢谢");
+					}
+					location.reload();
+				}
+			});
+		}
+	</script>
+	<style>
+		.date_content th,.date_content td{
+			user-select: none;
+		}
+		td.mSelected{
+			background-color: #B9537A;
+			opacity: 0.2;
+			border-left: 4px solid #B9537A !important;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="header_logo ac fl">体育场馆管理系统</div>
+		<ul class="header_menu">
+			<li><a href="index.html">首页</a></li>
+			<li><a href="manage_venue.html">场馆管理</a></li>
+			<li><a href="index_list.html" class="header_menu_act">查看预定</a></li>
+		</ul>
+		<div class="header_icon fr">
+			<span class="iconfont icon-tuichu" id="dropout"></span>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div class="main">
+		<div class="content_list">
+			<div class="content_date">
+				<span class="iconfont icon-rili"></span>
+				<input type="text" id="config-demo" class="content_date_input form-control">
+				<button class="pagination content_date_btn" onclick="page(0)">查询</button>
+			</div>
+			<div class="list_content">
+				<div class="table_caption"></div>
+				<table class="list_table">
+					<thead class="list_table_title">
+						<tr>
+							<td>序号</td>
+							<td>场地名称</td>
+							<td>场地编号</td>
+							<td>预定人</td>
+							<td>预定时间</td>
+							<td>费用(每小时/元)</td>
+							<td>操作时间</td>
+							<td class="list_table_btn">操作</td>
+						</tr>
+					</thead>
+					<input type="hidden" id="pageNum" value="1">
+					<tbody id="showod">
+					</tbody>
+				</table>
+				<div class="ar">
+					 <!-- href="http://meiliyue.caapa.org:81/gymnasium/orders/getexcle" -->
+					<a id="getexcle" class="pagination content_date_btn ac fl">导出Excel</a>
+					<ul class="pagination" id="fenye">
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<script type="text/javascript">
+		var beginTimeStore = '';
+		var endTimeStore = '';
+		$('#config-demo').daterangepicker({
+			"timePicker": true,
+			"timePicker24Hour": false,
+			"linkedCalendars": false,
+			"autoUpdateInput": false,
+			"locale": {
+				format: 'YYYY-MM-DD',
+				separator: ' ~ ',
+				applyLabel: "确认",
+				cancelLabel: "取消",
+				resetLabel: "重置",
+			}
+		}, function(start, end, label) {
+			beginTimeStore = start;
+			endTimeStore = end;
+			console.log(this.startDate.format(this.locale.format));
+			console.log(this.endDate.format(this.locale.format));
+			if(!this.startDate){
+				this.element.val('');
+			}else{
+				this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+			}
+		});
+	</script>
+</body>
+</html>

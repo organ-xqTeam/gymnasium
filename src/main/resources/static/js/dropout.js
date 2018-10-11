@@ -1,0 +1,11 @@
+$(function(){
+	$("#dropout").click(function(){
+		$.ajax({
+			type:"get",
+			url:Global.host+"user/dropout",
+			success:function(data){
+				location.href="login.html";
+			}
+		});
+	});
+});

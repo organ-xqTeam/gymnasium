@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>场地管理</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/list.css"/> 
+	<link rel="stylesheet" type="text/css" href="../css/service.css"/> 
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<script type="text/javascript">
+	var pageSize = 10;
+	var urlstr=window.location.href;
+	var gid=Number(urlstr.split("?gid=")[1]);
+	$(function(){
+		//场地管理
+		$.ajax({
+			type:"post",
+			url:Global.host+"site/selectsite",
+			data:{
+				gid:gid,
+				pageNum:1,
+				pageSize:pageSize
+			},
+			success:function(data){
+				$("#list_table").html('');
+				var list = data.list;
+				for(var i = 0; i < list.length; i++){
+					var $tr=$(`
+						<tr>
+							<td>${i+1}</td>
+							<td>${list[i].sname}</td>
+							<td>${list[i].snumber}</td>
+							<td>${list[i].stname}</td>
+							<td>${list[i].state}</td>
+							<td class="list_table_btn" data-id=""+list.sid+"">
+								<button class="normal_btn change buttonstate" onclick="updatestate(${list[i].sid})">变更预订状态</button>
+								<button class="normal_btn buttonedit" onclick="updatesite(${list[i].sid})"  data-toggle="modal" data-target="#myupd">编辑</button>
+								<button class="disabled_btn buttondel" onclick="deletesite(${list[i].sid})">删除</button>
+							</td>
+						</tr>		
+					`)
+					$("#list_table").append($tr);
+					gid = list[i].gid;
+				}
+				var num = Math.ceil(data.count/pageSize);
+				/* alert("pageSize"+pageSize);
+				alert("data.count"+data.count);
+				alert("num"+num); */
+				$("#fenye").html('');
+				for(var i = 0; i < num; i++){
+					var $tr=$(`
+						<li><a onclick="page(${i+1})">${i+1}</a></li>
+					`)
+					$("#fenye").append($tr);
+				}
+			}
+		});
+		//查询全部的体育馆
+		var mgid='';
+		$.ajax({
+			type:"get",
+			url:Global.host+"message/selectbygm",
+			success:function(data){
+				var a =  window.location.href;
+				mgid=Number(a.split("?gid=")[1])
+				var gid = document.getElementById("gid");
+				gid.length=1;
+				var mname=""
+				$.each(data,function(){
+					if(this.gid==mgid){
+						mname=this.gname
+					}
+					//gid.add(new Option(this.gname,this.gid));
+				});
+				gid.value=mname;
+				$.ajax({
+					type:"post",
+					url:Global.host+"sitetype/selectsitetype",
+					data:{
+						gid:mgid
+					},
+					success:function(data){
+						var sitetype = document.getElementById("sitetype");
+						sitetype.length=1;
+						$.each(data,function(){
+							sitetype.add(new Option(this.stname,this.stid));
+						});
+					}
+				});
+			}
+		});
+		/* //根据体育馆id查询场地
+		$("#gid").change(function(){
+			$.ajax({
+				type:"post",
+				url:Global.host+"sitetype/selectsitetype",
+				data:{
+					gid:$("#gid").val()
+				},
+				success:function(data){
+					var sitetype = document.getElementById("sitetype");
+					sitetype.length=1;
+					$.each(data,function(){
+						sitetype.add(new Option(this.stname,this.stid));
+					});
+				}
+			});
+		}); */
+		//羽毛球场地关联篮球场地
+		/* $("[id^=one_]").click(function(){
+			var num = this.id.split("_")[1];
+			alert("num"+num);
+			if(num == 1){
+				$("#num").val(1);
+			}else{
+				$("#num").val(2);
+			}
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/selectsnumbers",
+				data:{
+					gid:$("#gid").val(),
+					num:1
+				},
+				success:function(data){
+					$("#srname").val(data.sname);
+					$("#srsnumber").val(data.snumber);
+				}
+			});
+		}); */
+		//羽毛球场地关联篮球场地
+		/* $("[id^=two_]").click(function(){
+			var num = this.id.split("_")[1];
+			if(num == 1){
+				$("#num").val(3);
+			}else{
+				$("#num").val(4);
+			}
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/selectsnumbers",
+				data:{
+					gid:$("#gid").val(),
+					num:2
+				},
+				success:function(data){
+					$("#srname").val(data.sname);
+					$("#srsnumber").val(data.snumber);
+				}
+			});
+		}); */
+		//新增
+		$("[id^=insert_]").click(function(){
+			var name = [];
+			$("input[name='sname']").each(function(){
+				if(this.value != ''){
+					name.push(this.value);
+				}
+			});
+			var n = this.id.split("_")[1];
+			var pstatus = 0;
+			if(n == 1){
+				pstatus = 1;
+			}else{
+				pstatus = 2;
+			}
+			var sremark = '';
+			if($("#sremark").val() != ''){
+				sremark = $("#sremark").val();
+			}else if($("#sremark2").val() != ''){
+				sremark = $("#sremark2").val();
+			}
+			var sprice = 0;
+			if($("#sprice").val() != ''){
+				sprice = $("#sprice").val();
+			}else if($("#sprice2").val() != ''){
+				sprice = $("#sprice2").val();
+			}
+			if(isNaN(sprice)){
+				alert("价格必须是数字！");
+			}
+			var num = $("#num").val();
+			if(num == ''){
+				num = 0;
+			}
+			if($("#sitetype").val() == ''){
+				alert("请选择场地类型！");
+				return false;
+			}
+			var stname = $("#sitetype option:selected").text();
+			if(name == ''){
+				alert("场地名称不能为空！");
+				return false;
+			}
+			if(sprice == ''){
+				alert("价钱不能为空！");
+				return false;
+			}
+			if(pstatus == ''){
+				alert("状态不能为空！");
+				return false;
+			}
+			/* if(stname == '羽毛球'){
+				if(num == 0){
+					alert("请选择关联篮球场地编号！");
+					return false;
+				}
+			} */
+			var srname = '';
+			if($("#srname").val() == ''){
+				srname = 'b001';
+			}else{
+				srname = $("#srname").val();
+			}
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/insertsite",
+				data:{
+					stid:$("#sitetype").val(),
+					srsnumber:srname,
+					sname:name,
+					sprice:sprice,
+					pstatus:pstatus,
+					sremark:sremark,
+					num:num
+				},
+				traditional:true,
+				success:function(data){
+					if(data == 'insert.bk.success' || data == 'insert.bm.success'){
+		                alert("新增成功！");
+	                }else{
+	                	alert("新增失败！");
+	                }
+					location.reload();
+				}
+			});
+		});
+		
+		//获取场地后缀名
+		$("[id^='one_']").click(function(){
+			var num = this.id.split("_")[1];
+			$("#num").val(num);
+		});
+		
+		//修改
+		$("#update").click(function(){
+			if($("#sname1").val() == ''){
+				alert("场馆名称不能为空！");
+				return false;
+			}
+			if($("#sprice3").val() == ''){
+				alert("金额不能为空！");
+				return false;
+			}
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/updatesite",
+				data:{
+					sid:$("#sid1").val(),
+					sname:$("#sname1").val(),
+					sprice:$("#sprice3").val(),
+					sremark:$("#sremark3").val()
+				},
+				success:function(data){
+					if(data == 'site.update.success'){
+						alert("修改成功！");
+					}else{
+						alert("修改失败！");
+					}
+					location.reload();
+				}
+			});			
+		})
+			
+		$.ajax({
+			type:"post",
+			url:Global.host+"sitetype/selectsitetype",
+			data:{
+				gid:gid
+			},
+			success:function(data){
+				var sitetype = document.getElementById("stid");
+				$.each(data,function(){
+					sitetype.add(new Option(this.stname,this.stid));
+				});
+			}
+		});
+		 $("#stid").change(function(){
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/selectbystid",
+				data:{
+					stid:$("#stid").val()
+				},
+				success:function(data){
+					var site = document.getElementById("sid");
+					site.length = 1;
+					$.each(data,function(){
+						site.add(new Option(this.sname,this.sid));
+					});
+				}
+			});
+		}); 
+		 
+		 //场地属性是羽毛球的话就加载篮球场地
+		 $("#sitetype").change(function(){
+			$.ajax({
+				type:"post",
+				url:Global.host+"site/selectBylqSnumber",
+				data:{
+					gid:gid,
+					stname:"篮球"
+				},
+				success:function(data){
+					var srname = document.getElementById("srname");
+					srname.length = 1;
+					$.each(data,function(){
+						srname.add(new Option(this.sname,this.snumber));
+					});
+				}
+			});
+		 });
+		 
+		 //查询体育馆场地编号
+		 /* $("#sitetype").change(function(){
+			if(this.text == '羽毛球'){
+				alert("sddsdd");
+				$.ajax({
+					type:"post",
+					url:Global.host+"site/selectsname",
+					data:{
+						gid:gid
+					},
+					success:function(data){
+						var srname = document.getElementById("srname");
+						srname.length = 1;
+						$.each(data,function(){
+							srname.add(new Option(this.snumber,this.sname));
+						});
+					}
+				});
+			}
+		 }); */
+		 
+		$("#btu").click(function(){
+			var stname = $("#stid option:selected").text();
+			var sname = $("#sid option:selected").text();
+			var status = $("#status").val();
+			var configdemo = $("#config-demo").val();
+			//var starttime = configdemo.split( " ~ " )[0];
+			//var endtime = configdemo.split( " ~ " )[1];
+			if(stname == '请选择'){
+				stname = '';
+			}
+			if(sname == '请选择'){
+				sname = '';
+			}
+			$.ajax({
+				type:"get",
+				url:Global.host+"site/selectsite",
+				data:{
+					sname:sname,
+					stname:stname,
+					pstatus:status,
+					gid:gid,
+					//starttime:starttime,
+					//endtime:endtime,
+					pageNum:"1",
+					pageSize:pageSize
+				},
+				success:function(data){
+					$("#list_table").html('');
+					var list = data.list;
+					for(var i = 0; i < list.length; i++){
+						var $tr=$(`
+							<tr>
+								<td>${i+1}</td>
+								<td>${list[i].sname}</td>
+								<td>${list[i].snumber}</td>
+								<td>${list[i].stname}</td>
+								<td>${list[i].state}</td>
+								<td class="list_table_btn" data-id=""+list.sid+"">
+								<button class="normal_btn change buttonstate" onclick="updatestate(${list[i].sid})">变更预订状态</button>
+								<button class="normal_btn buttonedit" onclick="updatesite(${list[i].sid})" data-toggle="modal" data-target="#myupd">编辑</button>
+								<button class="disabled_btn buttondel" onclick="deletesite(${list[i].sid})">删除</button>
+								</td>
+							</tr>		
+						`)
+						$("#list_table").append($tr);
+						gid = list[i].gid;
+					}
+					$("#fenye").html('');
+					/* alert("pageSize"+pageSize);
+					alert("data.count"+data.count);
+					alert("num"+num); */
+					var num = Math.ceil(data.count/pageSize);
+					for(var i = 0; i < num; i++){
+						var $tr=$(`
+							<li><a onclick="page(${i+1})">${i+1}</a></li>
+						`)
+						$("#fenye").append($tr);
+					}
+				}
+			});
+		});
+	})
+	//变更预定状态
+	function updatestate(sid){
+		if(sid == ''){
+			alert("场地索引不能为空！");
+			return false;
+		}
+		$.ajax({
+			type:"post",
+			url:Global.host+"site/updatepstatus",
+			data:{
+				sid:sid
+			},
+			success:function(data){
+				if(data == 'site.change.success'){
+					alert("变更预定状态成功！");
+				}else if(data == 'gm.cloce'){
+					alert("请先把体育馆状态改为可预订才可修改场地状态！");
+				}else{
+					alert("变更预定状态失败！");
+				}
+				location.reload();
+			}
+		});
+	}
+	
+	//按sid查询
+	function updatesite(sid){
+		if(sid == ''){
+			alert("场地索引不能为空！");
+			return false;
+		}
+		$.ajax({
+			type:"post",
+			url:Global.host+"site/selectBySite",
+			data:{
+				sid:sid
+			},
+			success:function(data){
+				$("#sid1").val(data.sid);
+				$("#sname1").val(data.sname);
+				$("#sprice3").val(data.sprice);
+				if(data.sremark == '[object HTMLTextAreaElement]'){
+					$("#sremark3").val('');
+				}else{
+					$("#sremark3").val(data.sremark);
+				}
+			}
+		});
+	}
+	//删除
+	function deletesite(sid){
+		if(sid == ''){
+			alert("场地索引不能为空！");
+			return false;
+		}
+		//是否确认删除
+		var flag = confirm('是否确认删除?');
+		if(flag == false){
+			return false;
+		}
+		$.ajax({
+			type:"post",
+			url:Global.host+"site/deletesite",
+			data:{
+				sid:sid
+			},
+			success:function(data){
+				if(data == 'site.delete.success'){
+					alert("删除成功！");
+				}else if(data == 'list'){
+					alert("有预定不可以删除！");
+				}else{
+					alert("删除失败！");
+				}
+				location.reload();
+			}
+		});
+	}
+	//分页查询
+	function page(pageNum){
+		/* alert("pageNum"+pageNum); */
+		$("#pageNum").val(pageNum);
+		var stname = $("#stid option:selected").text();
+		var sname = $("#sid option:selected").text();
+		var status = $("#status").val();
+		var configdemo = $("#config-demo").val();
+		/* alert("configdemo"+configdemo); */
+		var starttime = '';
+		var endtime = '';
+		if(configdemo != undefined){
+			starttime = configdemo.split( " ~ " )[0];
+			endtime = configdemo.split( " ~ " )[1];
+		}
+		if(stname == '请选择'){
+			stname = '';
+		}
+		if(sname == '请选择'){
+			sname = '';
+		}
+		$.ajax({
+			type:"get",
+			url:Global.host+"site/selectsite",
+			data:{
+				gid:gid,
+				sname:sname,
+				stname:stname,
+				pstatus:status,
+				starttime:starttime,
+				endtime:endtime,
+				pageNum:pageNum,
+				pageSize:pageSize
+			},
+			success:function(data){
+				$("#list_table").html('');
+				var list = data.list;
+				for(var i = 0; i < list.length; i++){
+					var $tr=$(`
+						<tr>
+							<td>${i+1}</td>
+							<td>${list[i].sname}</td>
+							<td>${list[i].snumber}</td>
+							<td>${list[i].stname}</td>
+							<td>${list[i].state}</td>
+							<td class="list_table_btn" data-id=""+list.sid+"">
+								<button class="normal_btn change buttonstate" onclick="updatestate(${list[i].sid})">变更预订状态</button>
+								<button class="normal_btn buttonedit" onclick="updatesite(${list[i].sid})" data-toggle="modal" data-target="#myupd">编辑</button>
+								<button class="disabled_btn buttondel" onclick="deletesite(${list[i].sid})">删除</button>
+							</td>
+						</tr>		
+					`)
+					$("#list_table").append($tr);
+					gid = list[i].gid;
+				}
+				$("#fenye").html('');
+				/* alert("pageSize"+pageSize);
+				alert("data.count"+data.count);
+				alert("num"+num); */
+				var num = Math.ceil(data.count/pageSize);
+				for(var i = 0; i < num; i++){
+					var $tr=$(`
+						<li><a onclick="page(${i+1})">${i+1}</a></li>
+					`)
+					$("#fenye").append($tr);
+				}
+			}
+		});
+	}
+	//查看
+	/* function examine(sid){
+		$.ajax({
+			type:"post",
+			url:Global.host+"site/selectBySite",
+			data:{
+				sid:sid,
+				type:"chakan",
+				gid:gid
+			},
+			success:function(data){
+				if(data.strstname == '篮球'){
+					$("#gid3").val(data.strgname);
+					$("#stname2").val(data.strstname);
+					$("#sname3").val(data.sname);
+					$("#sprice4").val(data.sprice);
+					$("#sremark4").val(data.sremark);
+				}else{
+					$("#gid3").val(data.strgname);
+					$("#stname2").val(data.strstname);
+					$("#sname4").val(data.sname);
+					$("#sprice5").val(data.sprice);
+					$("#sremark5").val(data.sremark);
+					$("#srname3").val(data.strsrname);
+				}
+			}
+		});
+	} */
+	</script>
+</head>
+<body>
+	<header>
+		<div class="header_logo ac fl">体育场馆管理系统</div>
+		<ul class="header_menu">
+			<li><a href="index.html">首页</a></li>
+			<li><a href="manage_venue.html" class="header_menu_act">场馆管理</a></li>
+			<li><a href="index_list.html">查看预定</a></li>
+		</ul>
+		<div class="header_icon fr">
+			<span class="iconfont icon-tuichu" id="dropout" id="dropout"></span>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div class="main">
+		<div class="myLeft fl">
+			<div class="myLeft_room">
+				<div class="myLeft_tab_title ac">场地筛选</div>
+				<div class="myLeft_tabCon">
+					<ul class="myLeft_tabCon_list">
+						<li>
+							<select id="stid">
+								<option value="" >请选择</option> 
+							</select>
+						</li>
+						<li>
+							<select id="status">
+								<option value="">预定状态</option>
+								<option value="1">可预定状态</option>
+								<option value="2">不可预定状态</option>
+							</select>
+						</li>
+						<li style="padding: 0;"><input class="tabCon_btn" id="btu" type="submit" name="" value="确 认"></li>
+					</ul>
+				</div>	
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="content_date">
+				<button class="add_btn content_date_btn fr" id="add" data-toggle="modal" data-target="#myAdd">新 增</button>
+			</div>
+			<div style="clear: both;"></div>
+			<!-- 新增弹窗 -->
+			<div class="modal fade" id="myAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-right: 0!important;min-width: 1280px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="add_title modal-title" id="myModalLabel">新增场馆场地</h4>
+						</div>
+						<div class="modal-body">
+							<div class="add_body">
+								<div>
+									<span>场馆信息</span>
+									<!-- <select class="add_input" id="gid" name="gid">
+										<option value="">请选择</option>
+									</select> -->
+									<input class="add_input" id="gid" type="text" readonly="readonly">
+								</div>
+								<div>
+									<span>场地属性</span>
+									<select class="add_input my-select" id="sitetype" name="sitetype">
+										<option value="">请选择</option>
+									</select>
+								</div>
+							</div>
+							<div class="add_body basketball">
+								<div>
+									<span>场地位置</span>
+									<div class="add_input court_img">
+										<img class="" src="../images/court.jpg">
+									</div>
+								</div>
+								<div>
+									<span>场地名称</span>
+									<input class="add_input" type="text" name="sname" id="sname">
+								</div>
+								<div>
+									<span>费用</span>
+									<input class="add_input" type="text" id="sprice" name="sprice" placeholder="每小时/元">
+								</div>
+								<div>
+									<span>备注</span>
+									<textarea class="add_input add_textarea sremark" id="sremark" name="sremark"></textarea>
+								</div>
+							</div>
+							<div class="add_body badminton" style="display: none;" id="gl">
+								<div>
+									<span>场地图示</span>
+									<div class="add_input court_img">
+										<img class="" src="../images/badminton.jpg">
+									</div>
+								</div>
+								<div>
+									<span>场地名称</span>
+									<input class="add_input" type="text" name="sname" id="sname">
+								</div>
+								<div>
+									<span>关联篮球场场地名称</span>
+									<!-- <input class="add_input" type="text" name="srname" id="srname" value="b001"> -->
+									<select class="add_input my-select" id="srname" name="srname">
+										<option value="">请选择</option>
+									</select>
+								</div>
+								<div>
+									<input type="hidden" id="num" name="num">
+									<input type="hidden" id="srsnumber" name="srsnumber">
+									<span>对应篮球场场地位置</span>
+									<div class="add_input court_img court_position">
+										<div id="one_C"></div>
+										<div id="one_E"></div>
+										<div id="one_D"></div>
+										<div id="one_F"></div>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(".court_position div").click(function(){
+										$(this).addClass("court_position_bg");
+										$(this).siblings().removeClass('court_position_bg')
+									});
+								</script>
+								<div>
+									<span>费用</span>
+									<input class="add_input" type="text" id="sprice2" name="sprice2" placeholder="每小时/元">
+								</div>
+								<div>
+									<span>备注</span>
+									<textarea class="add_input add_textarea sremark" id="sremark2" name="sremark2"></textarea>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$("#sitetype").on("change",function () {
+									var value=$("#sitetype").find("option:selected").text();
+									if(value=="篮球"){
+										$('.basketball').css('display','block')
+										$('.badminton').css('display','none')
+									}else{
+										$('.badminton').css('display','block')
+										$('.basketball').css('display','none')
+									}
+								});
+							</script>
+						</div> 	
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="insert_2">保存</button>
+							<button type="button" class="btn btn-default btn1" data-dismiss="modal" id="insert_1">发布</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 修改弹窗 -->
+			<div class="modal fade" id="myupd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-right: 0!important;min-width: 1280px;">
+				<input type="hidden" id="sid1" name="sid1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="add_title modal-title" id="myModalLabel">修改场馆场地</h4>
+						</div>
+						<div class="modal-body">
+							<div class="add_body basketball">
+								<div>
+									<span>场地名称</span>
+									<input class="add_input" type="text" name="sname1" id="sname1">
+								</div>
+								<div>
+									<span>费用</span>
+									<input class="add_input" type="text" id="sprice3" name="sprice3" placeholder="每小时/元">
+								</div>
+								<div>
+									<span>备注</span>
+									<textarea class="add_input add_textarea" id="sremark3" name="sremark3"></textarea>
+								</div>
+							</div>
+						</div> 	
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default btn1" data-dismiss="modal" id="update">提交</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 查看弹窗 -->
+			<div class="modal fade" id="myshow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-right: 0!important;min-width: 1280px;">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="add_title modal-title" id="myModalLabel">查看场馆场地</h4>
+						</div>
+						<div class="modal-body">
+							<div class="add_body">
+								<div>
+									<span>场馆信息</span>
+									<input class="add_input" id="gid3" type="text" readonly="readonly">
+								</div>
+								<div>
+									<span>场地属性</span>
+									<input class="add_input" id="stname2" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="add_body basketball">
+								<div>
+									<span>场地位置</span>
+									<div class="add_input court_img">
+										<img class="" src="../images/court.jpg">
+									</div>
+								</div>
+								<div>
+									<span>场地名称</span>
+									<input class="add_input" type="text" name="sname3" id="sname3" readonly="readonly">
+								</div>
+								<div>
+									<span>费用</span>
+									<input class="add_input" type="text" id="sprice4" name="sprice4" placeholder="每小时/元" readonly="readonly">
+								</div>
+								<div>
+									<span>备注</span>
+									<textarea class="add_input add_textarea sremark" id="sremark4" name="sremark4" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="add_body badminton" style="display: none;" id="gl">
+								<div>
+									<span>场地图示</span>
+									<div class="add_input court_img">
+										<img class="" src="../images/badminton.jpg">
+									</div>
+								</div>
+								<div>
+									<span>场地名称</span>
+									<input class="add_input" type="text" name="sname4" id="sname4">
+								</div>
+								<div>
+									<span>关联篮球场场地名称</span>
+									<!-- <input class="add_input" type="text" name="srname" id="srname" value="b001"> -->
+									<input class="add_input" type="text" name="srname3" id="srname3">
+								</div>
+								<div>
+									<span>对应篮球场场地位置</span>
+									<div class="add_input court_img court_position">
+										<div id="one_C"></div>
+										<div id="one_E"></div>
+										<div id="one_D"></div>
+										<div id="one_F"></div>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(".court_position div").click(function(){
+										$(this).addClass("court_position_bg");
+										$(this).siblings().removeClass('court_position_bg')
+									});
+								</script>
+								<div>
+									<span>费用</span>
+									<input class="add_input" type="text" id="sprice5" name="sprice5" placeholder="每小时/元">
+								</div>
+								<div>
+									<span>备注</span>
+									<textarea class="add_input add_textarea sremark" id="sremark5" name="sremark5"></textarea>
+								</div>
+							</div>
+							<script type="text/javascript">
+								$("#sitetype").on("change",function () {
+									var value=$("#sitetype").find("option:selected").text();
+									if(value=="篮球"){
+										$('.basketball').css('display','block')
+										$('.badminton').css('display','none')
+									}else{
+										$('.badminton').css('display','block')
+										$('.basketball').css('display','none')
+									}
+								});
+							</script>
+						</div> 	
+					</div>
+				</div>
+			</div>
+			<div class="list_content">
+				<div class="table_caption"></div>
+				<table class="list_table" >
+					<thead class="list_table_title">
+						<tr>
+							<td>序号</td>
+							<td>场地名称</td>
+							<td>场地编号</td>
+							<td>场地类型</td>
+							<td>预定状态</td>
+							<td>操作</td>
+						</tr>
+					</thead>
+					<tbody id="list_table">
+						
+					</tbody>
+				</table>
+				<input type="hidden" id="pageNum" name="pageNum">
+				<script type="text/javascript">
+					$(".change").click(function(){
+						$(this).closest("td").siblings(".myBook").find("span").toggle();
+					});
+					$(".disabled_btn").click(function(){
+						$(this).closest("td").parent().remove()
+					});
+				</script>
+				<div class="ar">
+					<ul class="pagination" id="fenye">
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<script type="text/javascript">
+		var beginTimeStore = '';
+		var endTimeStore = '';
+		 //定义locale汉化插件
+        var locale = {
+        		format: 'YYYY-MM-DD',
+				separator: ' ~ ',
+				applyLabel: "确认",
+				cancelLabel: "取消",
+				resetLabel: "重置",
+            "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+            "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+          
+        };
+		$('#config-demo').daterangepicker({
+			"timePicker": true,
+			"timePicker24Hour": false,
+			"linkedCalendars": false,
+			"autoUpdateInput": false,
+			'locale': locale,
+			/* "locale": {
+				format: 'YYYY-MM-DD',
+				separator: ' ~ ',
+				applyLabel: "确认",
+				cancelLabel: "取消",
+				resetLabel: "重置",
+			} */
+		}, function(start, end, label) {
+			beginTimeStore = start;
+			endTimeStore = end;
+			console.log(this.startDate.format(this.locale.format));
+			console.log(this.endDate.format(this.locale.format));
+			if(!this.startDate){
+				this.element.val('');
+			}else{
+				this.element.val(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+			}
+		});
+	</script>
+</body>
+</html>

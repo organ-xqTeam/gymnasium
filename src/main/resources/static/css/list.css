@@ -1,0 +1,123 @@
+.content_list {
+    padding: 0 10%;
+}
+
+.list_table{
+	width: 100%;
+}
+
+.list_table tbody tr:nth-child(even){
+	background-color: #fafafa;
+}
+
+
+.list_table_title tr td{
+	padding: 4px 6px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #f2f7fd;
+}
+
+.list_table_s{
+	width: 100px;
+}
+
+.list_table_btn button,.list_table_btn a{
+	display: inline-block;
+	padding: 0 6px;
+	height: 24px;
+	margin: 2px;
+	line-height: 24px;
+	background-color: #999;
+	color: #fff;
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.normal_btn{
+	background-color: #38acff !important;
+}
+
+.disabled_btn{
+	background-color: red !important;
+}
+
+.pagination li a{
+	margin-left: 10px;
+	font-size: 16px;
+	color: #000;
+}
+
+.pagination li a:hover{
+	background-color: #02c1b2;
+	color: #fff;
+}
+
+/*场馆新增*/
+.venue{
+	display: block !important;
+}
+
+.venue_attr li{
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 6px;
+	margin-right: 4px;
+	cursor: pointer;
+}
+
+.venue_add{
+	width: 100px;
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+}
+
+.venue_btn{
+	padding: 3px 8px;
+	background-color: #38acff;
+	color: #fff;
+	border: none;
+	outline: none;
+}
+.venue_time{
+	margin: 0 16px 0 6px;
+}
+.venue_check{
+	display: inline-block;
+	margin-bottom: 6px;
+}
+.notes_ol li{
+	list-style: decimal;
+	margin-left: 20px;
+}
+.court_img{
+	padding: 0 !important;
+}
+.court_img img{
+	width: 100%;
+}
+
+.court_position{
+	background:url(../images/court.jpg) no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 180px;
+	display: block!important;
+
+}
+
+.court_position div{
+	width: 49%;
+	height: 86px;
+	display: inline-block!important;
+	margin-bottom: 0!important;
+	border: 1px solid #666;
+}
+
+.court_position_bg{
+	background-color: rgba(0,0,0,.5);
+}

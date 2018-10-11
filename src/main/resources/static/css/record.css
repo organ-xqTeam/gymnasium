@@ -1,0 +1,49 @@
+.record{
+	padding: 10px;
+}
+.record_date{
+	width: 100%;
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.record_input{
+	display: inline-block;
+	width: 40%;
+}
+.record_input input{
+	height: 26px;
+	border-radius: 17px !important;
+	padding: 0;
+	border: none;
+	outline: none;
+}
+
+.record_name{
+	font-size: 1.3em;
+	color: #848484;
+	line-height: 30px;
+}
+
+.record_fr_btn{
+	padding: 4px 14px;
+	background: #2EC5C4;
+	border-radius: 100px;
+	border: none;
+	outline: none;
+	color: #fff;
+}
+
+.date_content thead{
+	background-color: rgb(46,197,196);
+}
+
+.date_content thead tr th{
+	color: #fff;
+	text-align: center;
+}
+
+.date_content tr td:first-child{
+	width: 36px;
+}

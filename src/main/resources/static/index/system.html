@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>系统管理-修改密码</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.ajax({
+				type:"post",
+				url:Global.host+"administrator/selectByAid",
+				success:function(data){
+					$("#pwd").val(data);
+				}
+			});
+			$("#sub").click(function(){
+				var pwds = $("#pwds").val();
+				var apwd = $("#apwd").val();
+				if(pwds != apwd){
+					alert("密码不一致！");
+				}
+				$.ajax({
+					type:"post",
+					url:Global.host+"administrator/updateaid",
+					data:{
+						apwd:apwd
+					},
+					success:function(data){
+						if(data == 'update.success'){
+							alert("修改成功！");
+						}else{
+							alert("修改失败！");
+						}
+						location.reload();
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<div class="header_logo ac fl">体育场馆管理系统</div>
+		<ul class="header_menu">
+			<li><a href="index.html">首页</a></li>
+			<li><a href="manage_venue.html">场馆管理</a></li>
+			<!-- <li><a href="system.html" class="header_menu_act">系统管理</a></li> -->
+			<li><a href="index_list.html">查看预定</a></li>
+		</ul>
+		<div class="header_icon fr">
+			<span class="iconfont icon-tuichu" id="dropout"></span>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+	<div class="main">
+		<div class="ac">
+			<div class="login_line"></div>
+			<div class="login_title ac">修 改 密 码</div>
+			<br>
+			<div class="login_item">
+				<input type="password" id="pwd" name="pwd" placeholder="原密码：">
+			</div>
+			<div class="login_item">
+				<input type="password" id="pwds" name="pwds" placeholder="新密码：">
+			</div>
+			<div class="login_item">
+				<input type="password" id="apwd" name="apwd" placeholder="确认密码：">
+			</div>
+			<br>
+			<div class="login_item ac">
+				<button class="login_btn" id="sub">修 改</button>
+				<button class="login_btn btn1" style="border: 1px solid #ddd;">重 置</button>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

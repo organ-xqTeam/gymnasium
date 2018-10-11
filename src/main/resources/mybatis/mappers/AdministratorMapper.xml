@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 管理员 -->
+<mapper namespace="com.xq.gymnasium.dao.AdministratorMapper">
+	<!-- 新增管理员 -->
+	<insert id="insertadmin" parameterType="com.xq.gymnasium.model.Administrator">
+		insert into administrator(aname,ausername,apwd,aphonenum,aemile,arole) values(#{aname},#{ausername},#{apwd},#{aphonenum},#{aemile},#{arole})
+	</insert>
+	<!-- 按账号和密码查询 -->
+	<select id="selectadmin" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Administrator">
+		select * from administrator where ausername = #{ausername} and apwd = #{apwd}
+	</select>
+	<!-- 关联体育馆 -->
+	<update id="updategid" parameterType="com.xq.gymnasium.model.Administrator">
+		update administrator set gid = #{gid} where aid = #{aid}
+	</update>
+	<!-- 按aid查询 -->
+	<select id="selectByAid" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Administrator">
+		select * from administrator where aid = #{aid}
+	</select>
+	<update id="updateaid" parameterType="com.xq.gymnasium.model.Administrator">
+		update administrator set apwd = #{apwd} where aid = #{aid}
+	</update>
+</mapper>

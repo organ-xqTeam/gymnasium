@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>预定记录</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>  
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" /> 
+	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../css/field.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/record.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/Global.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.ajax({
+				type:"POST",
+				url:Global.host + "orders/selectByOname",
+				data:{
+					num:0
+				},
+				success:function(data){
+					for(var i = 0; i < data.length-1; i++){
+						var $tr=$(`
+							<tr>
+								<td><input type="checkbox" id="upd_${data[i].state}_${data[i].otime}" name="oid"></td>
+								<td>${data[i].sname}</td>
+								<td>${data[i].ostarttime}</td>
+								<td>${data[i].state}</td>
+							</tr>		
+						`)
+						$("#tb").append($tr);
+					}
+				}
+			});
+			
+			//退订
+			$("#td").click(function(){
+				/* var oid = [];  */
+				var flag1 = true;
+				var flag2 = true;
+				var otime = '';
+			    $('input[name="oid"]:checked').each(function(){ 
+			    	/* var o = this.id.split("_")[1]; */
+			    	var state = this.id.split("_")[1];
+			    	if(state == '已退订'){
+			    		flag1 = false;
+			    	}
+			    	if(state == '已使用'){
+			    		flag2 = false;
+			    	}
+			    	/* oid.push(o); */
+				    otime = this.id.split("_")[2];
+			    });
+			    if(!flag1){
+			    	alert("已经退订不可退订！");
+			    	return false;
+			    }
+			    if(!flag2){
+			    	alert("已经使用不可退订！");
+			    	return false;
+			    }
+				$.ajax({
+					type:"post",
+					url:Global.host+"orders/updatestate",
+					data:{
+						otime:otime
+					},
+					traditional:true,
+					success:function(data){
+						if(data == 'order.unsubscribe.success'){
+							alert("退订成功!");
+						}else{
+							alert("退订失败!");
+						}
+						location.reload();
+					}
+				});
+			});
+			//查询
+			$("#cx").click(function(){
+				var endtime = $("#date2").val();
+				if(endtime != ''){
+					endtime = endtime + " 23:59:59";
+				}
+				$.ajax({
+					type:"post",
+					url:Global.host+"orders/selectByOname",
+					data:{
+						num:0,
+						starttime:$("#date1").val(),
+						endtime:endtime
+					},
+					success:function(data){
+						$("#tb").html('');
+						for(var i = 0; i < data.length-1; i++){
+							var $tr=$(`
+								<tr>
+									<td><input type="checkbox" id="upd_${data[i].state}_${data[i].otime}" name="oid"></td>
+									<td>${data[i].sname}</td>
+									<td>${data[i].ostarttime}</td>
+									<td>${data[i].state}</td>
+								</tr>		
+							`)
+							$("#tb").append($tr);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="record">
+		<div class="record_name">选择日期：</div> <button class="record_fr_btn fr" id="td">退 订</button><button class="record_fr_btn fr" id="cx">查询</button></div> 
+		<div class="record_date">
+			<div class="record_input input-group date"> 
+				<input type="text" class="input-group-addon form-control" id='date1'/>  
+			</div>
+			<span class="record_name">至</span>
+			<div class="record_input input-group date"> 
+				<input type="text" class="input-group-addon form-control" id='date2' />  
+			</div>
+		</div>
+	</div>
+	<div class="field_top">
+		<!-- 场馆预定表单 -->
+		<table class="date_content">
+			<thead>
+				<tr>
+					<th></th>
+					<th>预定场所</th>
+					<th>预定时间</th>
+					<th>状态</th>
+				</tr>
+			</thead>
+			<tbody id="tb">
+			</tbody>
+		</table>
+	</div>
+	<div class="field_tc ac">
+		<div class="field_jump" style='display:none;'>您已退订，请勿重复操作</div>
+	</div>
+	<script>
+		$('#date1').datetimepicker({  
+			format: 'YYYY-MM-DD',  
+			locale: moment.locale('zh-cn')  
+		});
+		$('#date2').datetimepicker({  
+			format: 'YYYY-MM-DD',  
+			locale: moment.locale('zh-cn')  
+		});
+		
+	</script>
+</body>
+</html>

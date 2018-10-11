@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 体育馆订单 -->
+<mapper namespace="com.xq.gymnasium.dao.OrdersMapper">
+	<!-- 批量录入订单 -->
+	<insert id="insertorders" useGeneratedKeys="true" parameterType="java.util.List">
+		insert into orders(sid,oname,ostarttime,oendtime,otime,money,state) values
+		<foreach collection="list" item="item" index="index" separator="," >  
+			(#{item.sid},#{item.oname},#{item.ostarttime},#{item.oendtime},#{item.otime},#{item.money},#{item.state})
+		</foreach>
+	</insert>
+	<!-- 查询当前的人是否有没有完成的订单 -->
+	<select id="selectByNotOrders" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where oname = #{oname} and oendtime > sysdate() and state = 1
+	</select>
+	<!-- 查询该人的订单 -->
+	<select id="selectByOname" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select o.oid,s.sname,o.ostarttime,o.oendtime,o.state,o.otime,
+		s.snumber,o.oname,o.money,IF((SELECT state FROM orders WHERE oid = o.oid AND (state != 1 OR SYSDATE() > oendtime)) IS NULL,1,2) AS states
+		from orders o
+		left join site s on s.sid = o.sid
+		left join sitetype st on s.stid = st.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		<where>
+			<if test="oname != null and oname != ''">
+				and o.oname = #{oname}
+			</if>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					and o.ostarttime between #{starttime} and #{endtime}
+				</if>
+			</if>
+			<if test="hcode != null and hcode != ''">
+				and g.hcode = #{hcode}
+			</if>
+		</where>
+		group by o.otime
+		order by o.otime desc
+		LIMIT #{pageNum},#{pageSize}
+	</select>
+	<!-- 查询总价格 -->
+	<select id="selectbymoney" parameterType="java.util.HashMap" resultType="java.lang.Double">
+		select sum(money) from orders where otime = #{otime}
+	</select>
+	<!-- 查询多个订单 -->
+	<select id="selectbyotimes" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where otime = #{otime}
+	</select>
+	<!-- 查询一个订单 -->
+	<select id="selectbyotime" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where otime = #{otime} limit #{pageNum},#{pageSize}
+	</select>
+	<!-- 批量退订 -->
+	<update id="updatestate" parameterType="java.util.HashMap">
+		<!-- <foreach collection="list" item="o" separator=";">   -->
+       		update orders set state = 2 where otime = #{otime}
+      	<!-- </foreach> -->
+	</update>
+	<!-- 查询状态 -->
+	<select id="selectbystate" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where oid = #{oid} and (state != 1 OR SYSDATE() > oendtime)
+	</select>
+	<!-- 查询场地预定信息 -->
+	<select id="selectbyorders" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select s.sname,s.snumber,o.oname,o.ostarttime,o.oendtime,o.money,o.otime,o.oid,IF( (SELECT state FROM orders WHERE oid = o.oid AND (state != 1 OR SYSDATE() > oendtime)) IS NULL,1,2 ) AS states
+		from orders o
+		left join site s on s.sid = o.sid 
+		<where>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					o.ostarttime between #{starttime} and #{endtime}
+				</if>
+			</if>
+		</where>
+		group by o.otime
+		ORDER BY o.ostarttime DESC
+		LIMIT #{pageNum},#{pageSize}
+	</select>
+	<!-- 查询场地预定信息总数 -->
+	<select id="selectbyorderscount" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		from orders o
+		left join site s on s.sid = o.sid 
+		<where>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					o.ostarttime between #{starttime} and #{endtime}
+				</if>
+			</if>
+		</where>
+		group by otime
+	</select>
+	<!-- 按日期查询场馆预定情况 -->
+	<select id="selectbyordersyd" parameterType="com.xq.gymnasium.model.Selectbyordersyd" resultType="java.util.HashMap">
+		select * 
+		from orders as o
+		left join site as s on s.sid = o.sid
+		left join sitetype as st on s.stid = st.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		<where>
+			<if test="year != null and year != ''">
+				and year(o.ostarttime) = #{year}
+			</if>
+			<if test="month != null and month != ''">
+				and month(o.ostarttime) = #{month}
+			</if>
+			<if test="oneday != null and oneday != ''">
+				<if test="twoday != null and twoday != ''">
+					and day(o.ostarttime) between #{oneday} and #{twoday}
+				</if>
+			</if>
+			<if test="stname != null and stname != ''">
+				and st.stname = #{stname}
+			</if>
+			<if test="snumber != null and snumber != ''">
+				and s.snumber = #{snumber}
+			</if>
+			<if test="sname != null and sname != ''">
+				and s.sname = #{sname}
+			</if>
+			<if test="date != null and date != ''">
+				and year(o.otime) = year(#{date}) and month(o.otime) = month(#{date}) and day(o.otime) = day(#{date})
+			</if>
+			<if test="servenday != null and servenday != ''">
+				and year(o.ostarttime) = year(#{servenday}) and month(o.ostarttime) = month(#{servenday}) and day(o.ostarttime) = day(#{servenday})
+			</if>
+			<if test="state != null and state != ''">
+				and o.state != 2
+			</if>
+			<if test="sid != 0">
+				and s.sid = #{sid}
+			</if>
+			and g.gid = #{gid}
+		</where>
+		ORDER BY ostarttime
+	</select>
+	<!-- 查询当天的使用的人数和场地数 -->
+	<select id="selectbycount" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<!-- SELECT
+		(SELECT COUNT(*) FROM(
+		SELECT oname FROM orders WHERE YEAR(ostarttime)=YEAR(now()) AND MONTH(ostarttime)=MONTH(now()) AND DAY(ostarttime)=DAY(now()) and state = 1
+		GROUP BY oname
+		) AS d) AS people,
+		(SELECT COUNT(*) FROM(
+		(SELECT COUNT(*) FROM orders WHERE YEAR(ostarttime)=YEAR(now()) AND MONTH(ostarttime)=MONTH(now()) AND DAY(ostarttime)=DAY(now()) and state = 1 GROUP BY sid)
+		)AS c)AS site -->
+		
+		SELECT
+		(SELECT COUNT(*) FROM(
+		SELECT oname FROM orders o
+		left join site s on o.sid = s.sid
+		left join sitetype st on st.stid = s.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		WHERE YEAR(ostarttime)=YEAR(now()) AND MONTH(ostarttime)=MONTH(now()) AND DAY(ostarttime)=DAY(now()) and o.state = 1 and g.hcode = #{hcode}
+		GROUP BY oname
+		) AS d) AS people,
+		(SELECT COUNT(*) FROM(
+		(SELECT COUNT(*) FROM orders o
+		left join site s on o.sid = s.sid
+		left join sitetype st on st.stid = s.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		WHERE YEAR(ostarttime)=YEAR(now()) AND MONTH(ostarttime)=MONTH(now()) AND DAY(ostarttime)=DAY(now()) and o.state = 1 and g.hcode = #{hcode}
+		GROUP BY o.sid)
+		)AS c)AS site
+	</select>
+	<!-- 前端查询订单 -->
+	<select id="selectbyordersydss" parameterType="com.xq.gymnasium.model.Selectbyordersyd" resultType="java.util.HashMap">
+		SELECT * 
+		FROM site AS s
+		LEFT JOIN orders AS o ON s.sid = o.sid
+		LEFT JOIN sitetype AS st ON s.stid = st.stid
+		left join gymnasiummessage as g on g.gid = st.gid
+		<where>
+			<if test="year != null and year != ''">
+				and year(o.ostarttime) = #{year}
+			</if>
+			<if test="month != null and month != ''">
+				and month(o.ostarttime) = #{month}
+			</if>
+			<if test="oneday != null and oneday != ''">
+				<if test="twoday != null and twoday != ''">
+					and day(o.ostarttime) between #{oneday} and #{twoday}
+				</if>
+			</if>
+			<if test="stname != null and stname != ''">
+				and st.stname = #{stname}
+			</if>
+			<if test="snumber != null and snumber != ''">
+				and s.snumber = #{snumber}
+			</if>
+			<if test="sname != null and sname != ''">
+				and s.sname = #{sname}
+			</if>
+			<if test="date != null and date != ''">
+				and year(o.otime) = year(#{date}) and month(o.otime) = month(#{date}) and day(o.otime) = day(#{date})
+			</if>
+			<if test="servenday != null and servenday != ''">
+				and year(o.ostarttime) = year(#{servenday}) and month(o.ostarttime) = month(#{servenday}) and day(o.ostarttime) = day(#{servenday})
+			</if>
+			and o.state = 1
+		</where>
+		ORDER BY sname,ostarttime
+	</select>
+	<!-- 删除体育馆对应的订单退订 -->
+	<select id="selectbygm" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
+		select * from site s 
+		left join sitetype st on st.stid = s.stid
+		left join gymnasiummessage g on st.gid = g.gid
+		where g.gid = #{gid}
+	</select>
+	<!-- 删除场地对应的订单退订 -->
+	<select id="selectbys" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where sid = #{sid}
+	</select>
+	<!-- 按场地查询订单 -->
+	<select id="selectodersbysite" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * 
+		from orders o 
+		left join site s on s.sid = o.sid 
+		where o.ostarttime = #{ostarttime} and snumber like #{snumber}
+		order by snumber
+	</select>
+</mapper>

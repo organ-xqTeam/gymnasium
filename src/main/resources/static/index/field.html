@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>场次选择</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/field.css">
+</head>
+<body>
+	<div class="field_top">
+		<div class="field_title">
+			<select class="add_input my-select" id="gid" name="gid">
+			</select>
+			 <a class="field_fr"
+				href="record.html">我的预定记录</a>
+		</div>
+		<div class="field_content">
+			<div class="field_content_title">场馆信息</div>
+			<div class="field_content_style">
+				<!-- <div>
+					营业时间：<span class="font_b" id="gstarttime"></span>
+				</div> -->
+				<div>
+					最小预定：<span class="font_b">1小时</span>
+				</div>
+				<div>
+					场馆设施：<span class="font_b" id="facilities"></span>
+				</div>
+				<div id="addas">地址：<span id="glocation"></span></div>
+				<div>联系电话：<span id="gphonenum"></span></div>
+			</div>
+			<div class="field_content_title">温馨提示</div>
+			<ol class="field_content_style" id="ol1">
+				<!-- <li>1. 篮球馆每块号地为半场，如需全场需预订两块号地；</li>
+				<li>2. 预订成功后，可以退改；</li>
+				<li>3. 场馆要求深色鞋底禁止入场，如有疑问请提前致电咨询。</li> -->
+			</ol>
+		</div>
+	</div>
+	<ul class="field_tab" id="select">
+		<!-- 	<li class="field_tab_act">篮球</li>
+		<li>羽毛球</li> -->
+	</ul>
+	<!-- 场馆预定时间日历 -->
+	<div class="field_top field_date">
+		<ul class="field_date_ul"  id="getdate">
+			
+		</ul>
+		<script type="text/javascript">
+		// $(".field_date_ul").delegate("li","click",function(){
+		// 	$(this).addClass("field_date_act");
+		// 	$(this).siblings().removeClass('field_date_act')
+		// })
+			
+		</script>
+
+		<!-- 场馆预定表单 -->
+		<div class="dd" style="position: relative;">
+			<div class="field_scroll">
+				<table class="date_content" id="date_content">
+					<thead>
+						<tr></tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<ul class="field_th" id="field_th">
+				
+			</ul>
+		</div>
+		<ul class="table_bottom dd">
+			<li><div class="select"></div> <br> <span>已选择</span></li>
+			<li><div class="selected"></div> <br> <span>已预定</span></li>
+			<li><div class="selecting"></div> <br> <span>可预订</span></li>
+		</ul>
+
+	</div>
+	<!-- 下方确认按钮 -->
+	<div class="field_btn">
+		<button id="Affirmatory" class="dd">确认</button>
+	</div>
+	<!-- 弹窗 -->
+	<!-- <div class="field_confirm ac">
+		<div class="field_box">
+			<div class="field_box_word field_box_btns">预定两场共计费用400元预定两场共计费用400元</div>
+			<div class="field_box_btns">
+				<button class="btn_l">取消</button>
+				<button>确认</button>
+			</div>
+			<div class="field_box_btns">
+				<button>确认</button>
+			</div>
+		</div>
+	</div> -->
+
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="../js/dropout.js"></script>
+	<script src="../js/index-field.js"></script>
+	<script src="../js/Global.js"></script>
+</body>
+</html>

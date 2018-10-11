@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 体育馆场地 -->
+<mapper namespace="com.xq.gymnasium.dao.SiteMapper">
+	<!-- 新增体育馆场地 -->
+	<insert id="insertsite" useGeneratedKeys="true" parameterType="java.util.List">
+		insert into site(stid,srsnumber,sname,snumber,sprice,pstatus,sremark,time) values
+		<foreach collection="list" item="item" index="index" separator="," >  
+			(#{item.stid},#{item.srsnumber},#{item.sname},#{item.snumber},#{item.sprice},#{item.pstatus},#{item.sremark},#{item.time})
+		</foreach>
+	</insert>
+	<!-- 查询体育馆的篮球场地编号 -->
+	<select id="selectsnumber" parameterType="java.util.HashMap" resultType="java.lang.String">
+		select snumber from site as s left join sitetype as st on s.stid = st.stid where stname = #{stname} and gid = #{gid}
+	</select>
+	<!-- 查询体育馆的篮球场地编号 -->
+	<select id="selectsname" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		select snumber,sname from site as s left join sitetype as st on s.stid = st.stid where stname = #{stname} and gid = #{gid} group by sname
+	</select>
+	<!-- 查询体育馆场地 -->
+	<select id="selectsite" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select s.sid,g.gid,s.sname,s.snumber,st.stname,g.gname,g.gnumber,g.gstarttime,g.gendtime,g.gclosedtime,s.pstatus as state
+		from site as s 
+		left join sitetype as st on s.stid = st.stid 
+		left join gymnasiummessage as g on g.gid = st.gid 
+		left join orders  as o on o.sid = s.sid
+		<where>
+			<if test="gid != null and gid != ''">
+				and g.gid = #{gid}
+			</if>
+			<if test="sname != null and sname != ''">
+				and s.sname = #{sname}
+			</if>
+			<if test="stname != null and stname != ''">
+				and st.stname = #{stname}
+			</if>
+			<if test="pstatus != null and pstatus != ''">
+				and s.pstatus = #{pstatus}
+			</if>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					and o.otime between #{starttime} and #{endtime}
+				</if>
+			</if>
+		</where>
+		GROUP BY s.sname,s.snumber
+		order by s.time desc
+		limit #{pageNum},#{pageSize}
+	</select>
+	<!-- 查询全部体育馆场地总数 -->
+	<select id="selectbycounts" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM site AS s 
+		LEFT JOIN sitetype AS st ON s.stid = st.stid 
+		LEFT JOIN gymnasiummessage AS g ON g.gid = st.gid 
+		LEFT JOIN orders  AS o ON o.sid = s.sid
+		<where>
+			<if test="gid != null and gid != ''">
+				and g.gid = #{gid}
+			</if>
+			<if test="sname != null and sname != ''">
+				and s.sname = #{sname}
+			</if>
+			<if test="stname != null and stname != ''">
+				and st.stname = #{stname}
+			</if>
+			<if test="pstatus != null and pstatus != ''">
+				and s.pstatus = #{pstatus}
+			</if>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					and o.otime between #{starttime} and #{endtime}
+				</if>
+			</if>
+		</where>
+		GROUP BY sname,s.snumber
+	</select>
+	<!-- 变更预定状态 -->
+	<update id="updatepstatus" parameterType="com.xq.gymnasium.model.Site">
+		update site set pstatus = #{pstatus} where sid = #{sid}
+	</update>
+	<!-- 按sid查询 -->
+	<select id="selectBySid" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Site">
+		select * from site where sid = #{sid}
+	</select>
+	<!-- 编辑场地 -->
+	<update id="updatesite" parameterType="com.xq.gymnasium.model.Site">
+		update site set sname = #{sname},sprice = #{sprice},sremark = #{sremark} where sid = #{sid}
+	</update>
+	<!-- 删除场地 -->
+	<delete id="deletesite" parameterType="java.lang.Integer">
+		delete from site where sid = #{sid}
+	</delete>
+	<!-- 按体育场类别显示预定 -->
+	<select id="selectsitepstate" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * 
+		from site as s 
+		left join sitetype as st on s.stid = st.stid
+		left join orders as o on s.sid = o.sid
+		<where>
+			<if test="year != null and year != ''">
+				<if test="month != null and month != ''">
+					<if test="day != null and day != ''">
+						 and year(o.ostarttime) = #{year} and month(o.ostarttime) = #{month} and day(o.ostarttime) = #{day}
+					</if>
+				</if>
+			</if>
+		</where>
+		order by s.snumber
+	</select>
+	<!-- 按体育馆编号查询 -->
+	<select id="selectBySnumber" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		SELECT * FROM site s
+		LEFT JOIN sitetype st ON s.stid = st.stid
+		LEFT JOIN gymnasiummessage g ON g.gid = st.gid
+		<where>
+			<if test="snumber != null and snumber != ''">
+				and snumber = #{snumber}
+			</if>
+			<if test="gid != null and gid != ''">
+				and g.gid = #{gid}
+			</if>
+			<if test="sid != null and sid != ''">
+				and s.sid = #{sid}
+			</if>
+			<if test="stname != null and stname != ''">
+				 and st.stname = #{stname}
+			</if>
+		</where>
+	</select>
+	<!-- 按体育馆编号查询 -->
+	<select id="selectBylqSnumber" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		SELECT * FROM site s
+		LEFT JOIN sitetype st ON s.stid = st.stid
+		LEFT JOIN gymnasiummessage g ON g.gid = st.gid
+		<where>
+			<if test="snumber != null and snumber != ''">
+				and snumber = #{snumber}
+			</if>
+			<if test="gid != null and gid != ''">
+				and g.gid = #{gid}
+			</if>
+			<if test="sid != null and sid != ''">
+				and s.sid = #{sid}
+			</if>
+			<if test="stname != null and stname != ''">
+				 and st.stname = #{stname}
+			</if>
+		</where>
+		group by s.sname
+	</select>
+	<!-- 查询指定的时间该场地是否预定了 -->
+	<select id="selectnotororder" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		select s.* 
+		from orders as o
+		left join site as s on o.sid = s.sid 
+		where (o.sid = #{sid} and o.ostarttime = #{ostarttime} and o.oendtime = #{oendtime}) 
+		and (s.pstate = 2 or s.pstatus = 2) and s.snumber = #{snumber} and o.state = 1
+	</select>
+	<!-- 按羽毛球关联篮球场地查询 -->
+	<select id="selectBySrsnumber" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Site">
+		select * from site where srsnumber = #{srsnumber}
+	</select>
+	<!-- 查询场地编号 -->
+	<select id="selectBysnumbers" parameterType="java.lang.String" resultType="com.xq.gymnasium.model.Site">
+		select * from site where snumber = #{snumber}
+	</select>
+	<!-- 查询场地预定情况 -->
+	<select id="selectbygymaiumorder" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select g.gid,s.sname,s.snumber,g.gname,st.stname,count(o.sid) as count,s.pstatus,g.gstarttime,g.gendtime,g.gclosedtime
+		from site s 
+		left join orders o on s.sid = o.sid 
+		left join sitetype st on st.stid = s.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		<where>
+			<if test="stname != null and stname != ''">
+				and st.stname = #{stname}
+			</if>
+			<if test="starttime != null and starttime != ''">
+				<if test="endtime != null and endtime != ''">
+					and o.ostarttime between #{starttime} and #{endtime}
+				</if>
+			</if>
+		</where>
+		group by s.sid
+	</select>
+	<!-- 按体育场类别id查询场地 -->
+	<select id="selectbystid" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		select * from site s
+		left join sitetype st on s.stid = st.stid
+		left join gymnasiummessage g on g.gid = st.gid
+		where s.stid = #{stid} and hcode = #{hcode}
+	</select>
+	<!-- 按体育场类别id查询场地 -->
+	<select id="selectbystids" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		select * from site where stid = #{stid}
+		<if test="state != null and state != ''">
+			 and pstate = 1 and pstatus = 1
+		</if>
+		group by sname
+	</select>
+	<!-- 查询最受欢迎的场地 -->
+	<select id="selectbycount" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT sname FROM orders o LEFT JOIN site s ON s.sid = o.sid
+		<where>
+			<if test="today != null and today != ''">
+				and YEAR(otime)=YEAR(NOW()) AND MONTH(otime)=MONTH(NOW()) AND DAY(otime)=DAY(NOW())
+			</if>
+			<if test="month != null and month != ''">
+				and date(otime) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+			</if>
+		</where>
+		GROUP BY sname DESC LIMIT 3
+	</select>
+	<!-- 查询没有的体育场场地 -->
+	<select id="selectbynotsite" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT * FROM site s
+		LEFT JOIN sitetype st ON s.stid = st.stid
+		<where>
+			<if test="sname != null and sname != ''">
+				and sname not in 
+				<foreach collection="sname" index="index" item="item" open="(" close=")" separator=",">
+					#{item.sname}
+				</foreach>
+			</if>
+			<if test="stname != null and stname != ''">
+				stname = #{stname}
+			</if>
+		</where>
+	</select>
+	<!-- 根据体育馆id查询体育馆场地 -->
+	<select id="selectbygid" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Site">
+		SELECT s.* FROM site s LEFT JOIN sitetype st ON s.stid = st.stid WHERE st.gid = #{gid}
+	</select>
+	<!-- 查询场地最大的id -->
+	<select id="selectbymaxsid" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		SELECT * FROM site s
+		LEFT JOIN sitetype st ON s.stid = st.stid 		
+		WHERE st.stid = #{stid} AND stname = #{stname} ORDER BY sid DESC LIMIT 1
+	</select>
+	<!-- 根据体育馆状态修改场地状态 -->
+	<update id="updatebygmstate" parameterType="java.util.HashMap">
+		update site set pstatus=#{pstatus} where sid in ( 
+		select u.sid from(select sid from site s 
+		left join sitetype st on s.stid = st.stid
+		left join gymnasiummessage g on st.gid = g.gid
+		where g.gid = #{gid}) as u
+		)
+	</update>
+</mapper>

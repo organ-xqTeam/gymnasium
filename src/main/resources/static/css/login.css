@@ -1,0 +1,81 @@
+.main{
+	margin: 50px 20%;
+	padding: 80px 10% 60px 10%;
+	background-color: #fff;
+}
+
+.login_line{
+	border-bottom: 1px solid #ccc;
+}
+
+.login_title{
+	display: inline-block;
+	background-color: #fff;
+	padding: 0 40px;
+	font-size: 32px;
+	font-weight: bold;
+	position: relative;
+	top: -20px;
+}
+
+.login_item{
+	margin-top: 40px;
+	font-size: 20px;
+	display: inline-block;
+	position: relative;
+}
+
+.login_item input{
+	width: 380px;
+	height: 40px;
+	padding: 0 20px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	font-size: 20px;
+}
+
+.login_btn{
+	margin: 30px 20px;
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #38acff;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+	font-size: 18px;
+}
+
+.login_forget{
+	margin-left: 70px;
+	font-size: 16px;
+	color: #bbb;
+}
+
+.login_code{
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	background-color: #fff;
+    border: none;
+    outline: none;
+    color: #999;
+}
+
+.login_ident{
+	display: inline-block;
+	position: absolute;
+	top: 5px;
+	right: 20px;
+	background-color: #fff;
+	border:1px solid #ddd;
+	padding: 0 10px;
+}
+
+.cancel_btn{
+	background-color: #fff;
+	color: #333;
+	border: 1px solid #C9C9C9;
+}
