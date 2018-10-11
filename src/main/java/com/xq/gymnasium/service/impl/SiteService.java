@@ -407,8 +407,7 @@ public class SiteService implements ISiteService {
 		map.put("stid", stid);
 		map.put("state", 1);
 		List<Site> list = ism.selectbystids(map);
-		System.out.println("list----"+list);
-		/*int i = 0;
+		int i = 0;
 		for (Site s : list) {
 			String[] ss = list.get(i).getSnumber().split("-");
 			if (ss.length == 2) {
@@ -417,7 +416,7 @@ public class SiteService implements ISiteService {
 				s.setSnumber(list.get(i).getSnumber());
 			}
 			i++;
-		}*/
+		}
 		return list;
 	}
 	
