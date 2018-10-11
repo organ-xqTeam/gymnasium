@@ -218,7 +218,7 @@
 		from orders o 
 		left join site s on s.sid = o.sid 
 		left join sitetype st on s.stid = st.stid
-		where o.ostarttime = #{ostarttime} and snumber like #{snumber} and st.stname = #{stname}
+		where o.ostarttime = #{ostarttime} and snumber like #{snumber} and st.stname = #{stname} and o.state != 2
 		order by snumber
 	</select>
 </mapper>

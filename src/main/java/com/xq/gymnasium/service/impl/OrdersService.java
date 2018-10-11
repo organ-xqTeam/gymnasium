@@ -766,6 +766,7 @@ public class OrdersService implements IOrdersService {
 							Map<String,Object> m1 = new HashMap<String,Object>();
 							m1.put("snumber", m.get("snumber"));
 							m1.put("sname", m.get("sname"));
+							m1.put("sid", m.get("sid"));
 							ss.add(m1);
 						}
 						//System.out.println("ss"+ss);

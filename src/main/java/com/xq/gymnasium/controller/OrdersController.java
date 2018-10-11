@@ -340,7 +340,6 @@ public class OrdersController {
 	 */
 	@RequestMapping("/selectbyordersydhou")
 	public List<Map<String,Object>> selectbyordersydhou(Selectbyordersyd sb){
-		System.out.println("asdsadsd"+ios.selectbyordersydhou(sb));
 		return ios.selectbyordersydhou(sb);
 	}
 	
