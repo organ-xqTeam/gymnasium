@@ -744,6 +744,7 @@ public class OrdersService implements IOrdersService {
 						String two = strl.get(i).split("=")[1];
 						map.put("snumber", one+"%");
 						map.put("ostarttime", two);
+						map.put("stname", sb.getStname());
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
 						List<Map<String,Object>> ss = new ArrayList<Map<String,Object>>();
 						for (Map<String, Object> m : sell) {
