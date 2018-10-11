@@ -225,7 +225,7 @@ $(function () {
         		$("#one").append("<li>暂无</li>");
         	}else if(data.length == 2){
         		$("#one").append("<li>暂无</li>");
-        	}else{
+        	}else if(data.length != 3){
         		$("#one").append("<li>暂无</li>");
         	}
         }
@@ -251,7 +251,7 @@ $(function () {
             		$("#one").append("<li>暂无</li>");
             	}else if(data.length == 2){
             		$("#one").append("<li>暂无</li>");
-            	}else{
+            	}else if(data.length != 3){
             		$("#one").append("<li>暂无</li>");
             	}
             }
@@ -275,7 +275,7 @@ $(function () {
             		$("#two").append("<li>暂无</li>");
             	}else if(data.length == 2){
             		$("#two").append("<li>暂无</li>");
-            	}else if(data.length < 1){
+            	}else if(data.length != 3){
             		$("#two").append("<li>暂无</li>");
             	}
             }
