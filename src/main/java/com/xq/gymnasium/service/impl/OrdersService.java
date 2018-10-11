@@ -564,7 +564,7 @@ public class OrdersService implements IOrdersService {
 				}
 			}
 		}
-		System.out.println("array"+array);
+		//System.out.println("array"+array);
 		return array;
 	}
 	
@@ -613,7 +613,7 @@ public class OrdersService implements IOrdersService {
 				}
 			}
 		}
-		System.out.println("st"+st);
+		//System.out.println("st"+st);
 		return st;
 	}
 	
@@ -777,9 +777,9 @@ public class OrdersService implements IOrdersService {
 				lis.add(m);
 			}
 		}
-		for (int i = 0; i < lis.size(); i++) {
+		/*for (int i = 0; i < lis.size(); i++) {
 			System.out.println("--"+lis.get(i));
-		}
+		}*/
 		return lis;
 	}
 }
