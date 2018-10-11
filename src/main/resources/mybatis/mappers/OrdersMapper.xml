@@ -217,7 +217,8 @@
 		select * 
 		from orders o 
 		left join site s on s.sid = o.sid 
-		where o.ostarttime = #{ostarttime} and snumber like #{snumber}
+		left join sitetype st on s.stid = st.stid
+		where o.ostarttime = #{ostarttime} and snumber like #{snumber} and st.stname = #{stname}
 		order by snumber
 	</select>
 </mapper>
