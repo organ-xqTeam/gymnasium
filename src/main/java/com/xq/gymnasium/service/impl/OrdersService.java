@@ -180,6 +180,48 @@ public class OrdersService implements IOrdersService {
 	}
 	
 	/**
+	 * 批量录入订单
+	 * yangweihang
+	 * @Date 2018年10月12日 下午1:37:46
+	 * @param map
+	 * @param oname
+	 * @return
+	 */
+	public String insertorderss(JSONObject map,String oname) {
+		StringBuffer sids = new StringBuffer();
+		StringBuffer starttimes = new StringBuffer();
+		StringBuffer endtimes = new StringBuffer();
+		Integer gid = (Integer)map.get("gid");
+		List<Map<String,Object>> list = (List<Map<String,Object>>)map.get("count");
+		for (Map<String,Object> m : list) {
+			Integer sid = (Integer)m.get("sid");
+			List<List<String>> sl = (List<List<String>>)m.get("value");
+			for (List<String> s : sl) {
+				String starttime = s.get(0);
+				String endtime = s.get(1);
+				sids.append(sid);
+				starttimes.append(starttime);
+				endtimes.append(endtime);
+			}
+			sids.append(",");
+			starttimes.append(",");
+			endtimes.append(",");
+		}
+		sids.delete(sids.length()-1, sids.length());
+		starttimes.delete(starttimes.length()-1, starttimes.length());
+		endtimes.delete(endtimes.length()-1, endtimes.length());
+		String[] strsid = sids.toString().split(",");
+		Integer[] sid = new Integer[strsid.length];
+		for (int i = 0; i < strsid.length; i++) {
+			sid[i] = new Integer(strsid[i]);
+		}
+		String[] ostarttime = starttimes.toString().split(",");
+		String[] oendtime = endtimes.toString().split(",");
+		//获得操作人
+		return insertorders(sid, oname, ostarttime, oendtime,gid);
+	}
+	
+	/**
 	 * 获得场地编码
 	 * yangweihang
 	 * @Date 2018年9月25日 上午11:01:17

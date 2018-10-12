@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.xq.gymnasium.model.Selectbyordersyd;
 import com.xq.gymnasium.model.Sitetime;
 
@@ -28,6 +29,16 @@ public interface IOrdersService {
 	 * @return
 	 */
 	String insertorders(Integer[] sid,String oname,String[] ostarttime,String[] oendtime,Integer gid);
+	
+	/**
+	 * 批量录入订单
+	 * yangweihang
+	 * @Date 2018年10月12日 下午1:37:46
+	 * @param map
+	 * @param oname
+	 * @return
+	 */
+	String insertorderss(JSONObject map,String oname);
 	
 	/**
 	 * 查询该场地的指定时间是否已经预定了
