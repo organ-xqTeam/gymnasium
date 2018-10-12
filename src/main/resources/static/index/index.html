@@ -46,6 +46,7 @@
 			<li><a href="manage_venue.html">场馆管理</a></li>
 			<li><a href="index_list.html">查看预定</a></li>
 		</ul>
+		
 		<div class="header_icon fr">
 			<span class="iconfont icon-tuichu" id="dropout"></span>
 		</div>
@@ -106,8 +107,18 @@
 		<div class="content">
 			
 			<div class="content_table">
+				<div class="table_top clearfix">
+					<div class="table_caption fl" id="table_title">场地预订情况</div>
+					<!-- <div class="field_btn"> -->
+						<button id="Affirmatory" class="content_date_btn ac dd">确认</button>
+					<!-- </div> -->
+					<ul class="table_bottom fr">
+						<li><i class="select_box"></i><span>已预定</span></li>
+						<li><i></i><span>可预订</span></li>
+					</ul>
+				</div>
 				<table class="date_content">
-					<caption class="table_caption" id="table_title">场地预订情况</caption>
+					<!-- <caption class="table_caption" id="table_title">场地预订情况</caption> -->
 					<thead>
 						<tr id="time">
 							<th>时间</th>
@@ -363,14 +374,9 @@
 						</tr>
 					</tbody>
 				</table>
-				<ul class="table_bottom">
-					<li><i class="select_box"></i><span>已预定</span></li>
-					<li><i></i><span>可预订</span></li>
-				</ul>
+				
 				<!-- 下方确认按钮 -->
-	<div class="field_btn">
-		<button id="Affirmatory" class="dd">确认</button>
-	</div>
+	
 			</div>
 		</div>
 	</div>

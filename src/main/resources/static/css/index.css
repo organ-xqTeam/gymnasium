@@ -7,7 +7,7 @@ textarea{
 	resize: none;
 }
 
-/*椤堕儴鑿滃崟鏍�*/
+/*妞ゅ爼鍎撮懣婊冨礋閺嶏拷*/
 header{
 	width: 100%;
 	height: 85px;
@@ -52,7 +52,7 @@ header{
 	line-height: 85px;
 }
 
-/*宸︿晶鑿滃崟鏍�*/
+/*瀹革缚鏅堕懣婊冨礋閺嶏拷*/
 .myLeft{
 	width: 15%;
 	min-width: 200px;
@@ -145,7 +145,7 @@ header{
 	box-shadow: 0 4px 4px #D6D6D6;
 }
 
-/*涓棿涓昏鍐呭*/
+/*娑擃參妫挎稉鏄忣洣閸愬懎顔�*/
 .content{
 	width: 83%;
 	padding: 30px 1.6% 30px 0;
@@ -184,7 +184,7 @@ header{
 
 .content_date_btn:hover{color: #fff}
 
-/*鏃ュ巻*/
+/*閺冦儱宸�*/
 .content_date{
 	position: relative;
 }
@@ -245,7 +245,7 @@ header{
 	background-color: #4A90E2;
 	border-color: #4A90E2;
 }
-/*琛ㄦ牸*/
+/*鐞涖劍鐗�*/
 .content_table{
 	background-color: #fff;
 	margin-top: 30px;
@@ -253,7 +253,7 @@ header{
 }
 
 .table_caption{
-	padding: 15px 0;
+	/* padding: 15px 0; */
 	font-size: 26px;
 	text-align: center;
 	border-bottom: none;
@@ -286,7 +286,7 @@ table tr td,tr,th,caption{
 	box-sizing: border-box;
 }
 
-/*琛ㄦ牸涓嬫柟*/
+/*鐞涖劍鐗告稉瀣煙*/
 .table_bottom{
 	background-color: #fff;
 	padding: 20px 0 40px 0;
