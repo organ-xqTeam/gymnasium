@@ -145,6 +145,26 @@
 		</where>
 	</select>
 	<!-- 按体育馆编号查询 -->
+	<select id="selectBySnumbers" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
+		SELECT * FROM site s
+		LEFT JOIN sitetype st ON s.stid = st.stid
+		LEFT JOIN gymnasiummessage g ON g.gid = st.gid
+		<where>
+			<if test="snumber != null and snumber != ''">
+				and snumber = #{snumber}
+			</if>
+			<if test="gid != null and gid != ''">
+				and g.gid = #{gid}
+			</if>
+			<if test="sid != null and sid != ''">
+				and s.sid = #{sid}
+			</if>
+			<if test="stname != null and stname != ''">
+				 and st.stname = #{stname}
+			</if>
+		</where>
+	</select>
+	<!-- 按体育馆编号查询 -->
 	<select id="selectBylqSnumber" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Site">
 		SELECT * FROM site s
 		LEFT JOIN sitetype st ON s.stid = st.stid

@@ -735,6 +735,7 @@ public class OrdersService implements IOrdersService {
 					String date = dt.formatDate((Date)list.get(0).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
 					strl.add((String)list.get(0).get("snumber")+"="+date);
 				}
+				System.out.println("list---"+list);
 				for (int i = 1; i < list.size(); i++) {
 					String snum1 = (String)list.get(i).get("snumber");
 					String[] sp1 = snum.split("-");
@@ -749,6 +750,8 @@ public class OrdersService implements IOrdersService {
 					}
 					if(!strl.contains(str) && !snumbers.equals("by001")) {
 						strl.add(snumbers+"="+date1);
+					}else {
+						strl.add(snumbers+"="+date1);
 					}
 				}
 				//System.out.println("strl"+strl);
@@ -760,6 +763,10 @@ public class OrdersService implements IOrdersService {
 						map.put("snumber", one+"%");
 						map.put("ostarttime", two);
 						map.put("stname", sb.getStname());
+						map.put("gid", sb.getGid());
+						if(one.equals("by001")) {
+							map.put("sid", sb.getSid());
+						}
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
 						List<Map<String,Object>> ss = new ArrayList<Map<String,Object>>();
 						for (Map<String, Object> m : sell) {
@@ -793,9 +800,9 @@ public class OrdersService implements IOrdersService {
 				lis.add(m);
 			}
 		}
-		/*for (int i = 0; i < lis.size(); i++) {
-			System.out.println("--"+lis.get(i));
-		}*/
+//		for (int i = 0; i < lis.size(); i++) {
+//			System.out.println("--"+lis.get(i));
+//		}
 		return lis;
 	}
 }

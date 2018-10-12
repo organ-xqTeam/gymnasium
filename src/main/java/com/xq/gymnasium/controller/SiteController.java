@@ -317,4 +317,19 @@ public class SiteController {
 		List<Site> list = its.selectsname(gid);
 		return list;
 	}
+	
+	/**
+	 * 按条件查询
+	 * yangweihang
+	 * @Date 2018年9月25日 下午1:37:21
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/selectBySnumbers")
+	public List<Site> selectBySnumbers(String stname,Integer gid){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("stname", stname);
+		map.put("gid", gid);
+		return its.selectBySnumbers(map);
+	}
 }

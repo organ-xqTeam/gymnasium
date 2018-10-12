@@ -181,4 +181,13 @@ public interface ISiteService {
 	 * @return
 	 */
 	List<Site> selectsname(Integer gid);
+	
+	/**
+	 * 按条件查询
+	 * yangweihang
+	 * @Date 2018年10月12日 上午9:05:40
+	 * @param map
+	 * @return
+	 */
+	List<Site> selectBySnumbers(Map<String,Object> map);
 }
