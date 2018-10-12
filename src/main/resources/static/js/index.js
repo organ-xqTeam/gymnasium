@@ -200,7 +200,6 @@ var Index = {
                         	let btime=timeKey.split("=")[1].substr(11,5)
                         	var rowindex=bt.indexOf(btime)
                         	console.log(rowindex,colindex)
-                        	
                         	//找到这个td
                         	var $td=$("#main tr").eq(rowindex).find("td").eq(colindex+1)
                         	console.log($td)
@@ -210,11 +209,14 @@ var Index = {
                         	console.log(selectedAreaArr)
                         	selectedAreaArr.forEach(function(areaObj){
                         		let site=areaObj.snumber.substr(areaObj.snumber.length-1,1)
-                        		console.log(site)
-                        		console.log($td[0])
-                        		console.log($td[0].getElementsByClassName("l")[0])
+                        		console.log(site)//C
+                        		console.log("1=",$td[0])
+                        		console.log($td[0].getElementsByClassName("l")[0])//.prop("data-site",site)
+                        		//console.log("2=",$td[0].$("div[data-site='"+site+"']"))
 //                        		debugger
-                        		$td.find("div.l").addClass("select")
+                        		
+                        		
+                        		$td.find("div[data-site='"+site+"']").addClass("select")
                         	})
                         })
 //                    },5000)

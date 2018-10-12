@@ -47,9 +47,6 @@ var st1 = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11
 var Field = {
     gid: 1, // 场馆id
     typeArr: [], // 本场馆的 球类 类型 [{stid: 5, gid: 1, stname: "篮球"}]
-
-  
-
     // 查询场馆信息
     getGuanInfo() {
     	// alert("gid"+g);
@@ -294,7 +291,6 @@ var Field = {
 				        					})
 				        					
 				        					if ("篮球" === stname) {
-				        						
 				        						a1 += "<td><div class=\"add_input court_img court_position \">"
 				        					}else if("羽毛球" === stname){
 				        						a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
@@ -302,8 +298,6 @@ var Field = {
 				        						a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
 				        						
 				        					}
-				        						
-				        						
 				        					let m1 = false;	
         									let m2 = false;	
         									let m3 = false;	
@@ -374,8 +368,6 @@ var Field = {
 					        						a1+="<div class='l' data-site='by'></div>"
 					        					}
 											}
-        									
-        									
                 								a1+="</div></td>";
         								} else {
         									if ("篮球" === stname) {
@@ -408,9 +400,7 @@ var Field = {
         					var hh = field.length + 1;
         					var aa = hh * 128;
         					$('.date_content').css('width', aa + 'px')
-        					
         				}
-        				
         			});
         		}else{
         			$(".dd").hide();
