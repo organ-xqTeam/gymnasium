@@ -382,7 +382,7 @@ var Index = {
       	  		console.log(count)
       	  		
       	  			let datecontent = {
-            		  gid :gid,
+            		  gid :Number(gid),
             		  count:count
             		  }
                    console.log(datecontent)

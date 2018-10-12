@@ -28,12 +28,12 @@ function timestampToTime(timestamp) {
 
 
 var st = [
-	"00:00<p> - </p>01:00","01:00<p> - </p>02:00","02:00<p> - </p>03:00","03:00<p> - </p>04:00","04:00<p> - </p>05:00",
-    "05:00<p> - </p>06:00","06:00<p> - </p>07:00", "07:00<p> - </p>08:00", "08:00<p> - </p>09:00", "09:00<p> - </p>10:00",
-    "10:00<p> - </p>11:00", "11:00<p> - </p>12:00", "12:00<p> - </p>13:00", "13:00<p> - </p>14:00",
-    "14:00<p> - </p>15:00", "15:00<p> - </p>16:00", "16:00<p> - </p>17:00", "17:00<p> - </p>18:00",
-    "18:00<p> - </p>19:00", "19:00<p> - </p>20:00", "20:00<p> - </p>21:00", "21:00<p> - </p>22:00",
-    "22:00<p> - </p>23:00", "23:00<p> - </p>00:00"
+	"00:00 ~ 01:00","01:00 ~ 02:00","02:00 ~ 03:00","03:00 ~ 04:00","04:00 ~ 05:00",
+    "05:00 ~ 06:00","06:00 ~ 07:00", "07:00 ~ 08:00", "08:00 ~ 09:00", "09:00 ~ 10:00",
+    "10:00 ~ 11:00", "11:00 ~ 12:00", "12:00 ~ 13:00", "13:00 ~ 14:00",
+    "14:00 ~ 15:00", "15:00 ~ 16:00", "16:00 ~ 17:00", "17:00 ~ 18:00",
+    "18:00 ~ 19:00", "19:00 ~ 20:00", "20:00 ~ 21:00", "21:00 ~ 22:00",
+    "22:00 ~ 23:00", "23:00 ~ 00:00"
 ];
 var sts = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
 	"10:00", "11:00", "12:00", "13:00",
@@ -183,6 +183,14 @@ var Field = {
         					// servenday: "2018-09-09 00:00:00", //测试用
         				},
         				success: function (data) {
+        					if(stname === "篮球"){
+        						$("#mynote").html('<li><div class="select"></div> <br> <span>已选择</span></li><li><div class="selectno"><div class="selectno_cover"></div></div> <br> <span>可预订</span></li><li><div class="selected"></div> <br> <span>不可预定</span></li>')
+        					}else if(stname === "羽毛球"){
+        						$("#mynote").html('<li><div class="select" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"></div> <br> <span>已选择</span></li><li><div class="selectno" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"><div class="selectno_cover"></div></div> <br> <span>可预订</span></li><li><div class="selected"></div> <br> <span>不可预定</span></li>')
+        					}
+        					
+        					
+        					
         					//获取时间10-12
         					let mouth = servenday.substring(5,10)
         					console.log(mouth)
@@ -398,7 +406,7 @@ var Field = {
         					
         					// 更改样式
         					var hh = field.length + 1;
-        					var aa = hh * 80;
+        					var aa = hh * 120;
         					$('.date_content').css('width', aa + 'px')
         					
         				}
