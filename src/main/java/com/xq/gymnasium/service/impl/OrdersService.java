@@ -190,7 +190,7 @@ public class OrdersService implements IOrdersService {
 	 * @return
 	 */
 	public String insertorderss(JSONObject map,String oname) {
-		System.out.println("map"+map);
+		//System.out.println("map"+map);
 		StringBuffer sids = new StringBuffer();
 		StringBuffer starttimes = new StringBuffer();
 		StringBuffer endtimes = new StringBuffer();
@@ -849,7 +849,7 @@ public class OrdersService implements IOrdersService {
 //		for (int i = 0; i < lis.size(); i++) {
 //			System.out.println("--"+lis.get(i));
 //		}
-		System.out.println("lis"+lis);
+		//System.out.println("lis"+lis);
 		return lis;
 	}
 }

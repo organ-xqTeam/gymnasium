@@ -72,6 +72,7 @@ public class OrdersController {
 		//获得操作人
 		String oname = (String)request.getSession().getAttribute("username");
 		String str = ios.insertorders(sid, oname, ostarttime, oendtime,gid);
+		System.out.println("str"+str);
 		return str;
 	}
 	
@@ -94,6 +95,7 @@ public class OrdersController {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status", "success");
 		jsonObject.put("count", str);
+		System.out.println("str"+str);
 		return jsonObject.toString();
 	}
 	
