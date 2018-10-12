@@ -263,8 +263,6 @@ public class OrdersService implements IOrdersService {
 		map.put("ostarttime", ostarttime);
 		map.put("oendtime", oendtime);
 		map.put("snumber", sitenumber);
-		System.out.println("sitenumber"+sitenumber);
-		System.out.println("map"+map);
 		List<Site> s = ism.selectnotororder(map);
 		if(s.size() >= 1) {
 			pstate = 1;//已经预定了
@@ -777,7 +775,6 @@ public class OrdersService implements IOrdersService {
 					String date = dt.formatDate((Date)list.get(0).get("ostarttime"), "yyyy-MM-dd HH:ss:mm");
 					strl.add((String)list.get(0).get("snumber")+"="+date);
 				}
-				System.out.println("list---"+list);
 				for (int i = 1; i < list.size(); i++) {
 					String snum1 = (String)list.get(i).get("snumber");
 					String[] sp1 = snum.split("-");
