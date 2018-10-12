@@ -91,7 +91,10 @@ public class OrdersController {
 		//获得操作人
 		String oname = (String)request.getSession().getAttribute("username");
 		String str = ios.insertorderss(map,oname);
-		return str;
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("status", "success");
+		jsonObject.put("count", str);
+		return jsonObject.toString();
 	}
 	
 	/**

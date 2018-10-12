@@ -38,7 +38,7 @@
 				g.hcode = #{hcode}
 			</if>
 		</where>
-		GROUP BY g.gname
+		group by g.gname
 		order by g.time desc
 	</select>
 	<!-- 按gid查询 -->

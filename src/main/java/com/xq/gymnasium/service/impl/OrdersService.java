@@ -85,6 +85,8 @@ public class OrdersService implements IOrdersService {
 			}
 			//按场地id查询场地
 			Site s = ism.selectBySid(sid[i]);
+			System.out.println("ss"+s);
+			System.out.println("sid[i]"+sid[i]);
 			//按体育馆场地编号查询场地类别名称
 			Sitetype st = sm.selectStnameBySnumber(s.getSnumber());
 			Orders o = null;
@@ -188,6 +190,7 @@ public class OrdersService implements IOrdersService {
 	 * @return
 	 */
 	public String insertorderss(JSONObject map,String oname) {
+		System.out.println("map"+map);
 		StringBuffer sids = new StringBuffer();
 		StringBuffer starttimes = new StringBuffer();
 		StringBuffer endtimes = new StringBuffer();
@@ -195,17 +198,20 @@ public class OrdersService implements IOrdersService {
 		List<Map<String,Object>> list = (List<Map<String,Object>>)map.get("count");
 		for (Map<String,Object> m : list) {
 			Integer sid = (Integer)m.get("sid");
-			List<List<String>> sl = (List<List<String>>)m.get("value");
-			for (List<String> s : sl) {
-				String starttime = s.get(0);
-				String endtime = s.get(1);
+			if(sid == null) {
+				return "not.site";
+			}
+			List<List<Object>> sl = (List<List<Object>>)m.get("value");
+			for (List<Object> s : sl) {
+				String starttime = s.get(0).toString();
+				String endtime = s.get(1).toString();
 				sids.append(sid);
 				starttimes.append(starttime);
 				endtimes.append(endtime);
+				sids.append(",");
+				starttimes.append(",");
+				endtimes.append(",");
 			}
-			sids.append(",");
-			starttimes.append(",");
-			endtimes.append(",");
 		}
 		sids.delete(sids.length()-1, sids.length());
 		starttimes.delete(starttimes.length()-1, starttimes.length());
@@ -843,6 +849,7 @@ public class OrdersService implements IOrdersService {
 //		for (int i = 0; i < lis.size(); i++) {
 //			System.out.println("--"+lis.get(i));
 //		}
+		System.out.println("lis"+lis);
 		return lis;
 	}
 }
