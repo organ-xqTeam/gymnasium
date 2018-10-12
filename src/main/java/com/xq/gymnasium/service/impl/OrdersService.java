@@ -838,7 +838,7 @@ public class OrdersService implements IOrdersService {
 				String one1 = f.split(" ")[0];
 				String two1 = one1.split("-")[1];
 				String three = one1.split("-")[2];
-				String time = two1 + "." + three;
+				String time = two1 + "-" + three;
 				m.put(time, new ArrayList());
 				lis.add(m);
 			}
