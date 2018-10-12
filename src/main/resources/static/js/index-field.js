@@ -184,9 +184,9 @@ var Field = {
         				},
         				success: function (data) {
         					if(stname === "篮球"){
-        						$("#mynote").html('<li><div class="select"></div> <br> <span>已选择</span></li><li><div class="selectno"><div class="selectno_cover"></div></div> <br> <span>可预订</span></li><li><div class="selected"></div> <br> <span>不可预定</span></li>')
+        						$("#mynote").html('<li><div class="select"></div> <span>已选择</span></li><li><div class="selectno"><div class="selectno_cover"></div></div> <span>可预订</span></li>')
         					}else if(stname === "羽毛球"){
-        						$("#mynote").html('<li><div class="select" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"></div> <br> <span>已选择</span></li><li><div class="selectno" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"><div class="selectno_cover"></div></div> <br> <span>可预订</span></li><li><div class="selected"></div> <br> <span>不可预定</span></li>')
+        						$("#mynote").html('<li><div class="select" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"></div> <span>已选择</span></li><li><div class="selectno" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"><div class="selectno_cover"></div></div> <span>可预订</span></li>')
         					}
         					
         					
@@ -257,19 +257,19 @@ var Field = {
         							}
         							if (fl1 == -1) {
         								if ("篮球" === stname) {
-        									a1 += "<td><div class=\"add_input court_img court_position\">"
+        									a1 += "<td><div class=\"court_img court_position\">"
         										+"<div class='l' data-site='A'></div>"
         										+"<div class='l' data-site='B'></div>"
                 								+"</div></td>";
 			        					}else if("羽毛球" === stname){
-			        						a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
+			        						a1 += "<td><div class=\"court_img court_position court_positionBadminton\">"
 												+"<div class='l' data-site='C'></div>"
 												+"<div class='l' data-site='D'></div>"
 												+"<div class='l' data-site='E'></div>"
 												+"<div class='l' data-site='F'></div>"
 		        								+"</div></td>";
 			        					}else{
-			        						a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
+			        						a1 += "<td><div class=\"court_img court_positionBadminton1\">"
 												+"<div class='l' data-site='by'></div>"
 		        								+"</div></td>";
 			        					}
@@ -406,7 +406,7 @@ var Field = {
         					
         					// 更改样式
         					var hh = field.length + 1;
-        					var aa = hh * 120;
+        					var aa = hh * 128;
         					$('.date_content').css('width', aa + 'px')
         					
         				}
