@@ -73,6 +73,56 @@ public class OrdersController {
 	}
 	
 	/**
+	 * 预定场地
+	 * yangweihang
+	 * @Date 2018年9月14日 下午2:42:25
+	 * @param sid 场地id
+	 * @param ostarttime 预定开始时间
+	 * @param oendtime	预定结束时间
+	 * @return
+	 * http://localhost:8089/orders/insertorders?sid=1&sid=2&ostarttime=2018-09-09%2012:00:00&ostarttime=2018-09-09%2013:00:00&oendtime=2018-09-09%2013:00:00&oendtime=2018-09-09%2014:00:00
+	 */
+	@RequestMapping("/insertorderss")
+	public String insertorderss(Map<String,Object> map) {
+		StringBuffer sids = new StringBuffer();
+		StringBuffer starttimes = new StringBuffer();
+		StringBuffer endtimes = new StringBuffer();
+		Integer gid = (Integer)map.get("gid");
+		List<Map<String,Object>> list = (List<Map<String,Object>>)map.get("count");
+		for (Map<String,Object> m : list) {
+			Integer sid = (Integer)m.get("sid");
+			List<String[]> sl = (List<String[]>)m.get("value");
+			for (String[] s : sl) {
+				String starttime = s[0];
+				String endtime = s[1];
+				sids.append(sid);
+				starttimes.append(starttime);
+				endtimes.append(endtime);
+			}
+			sids.append(",");
+			starttimes.append(",");
+			endtimes.append(",");
+		}
+		sids.delete(sids.length()-1, sids.length());
+		starttimes.delete(starttimes.length()-1, starttimes.length());
+		endtimes.delete(endtimes.length()-1, endtimes.length());
+		String[] strsid = sids.toString().split(",");
+		Integer[] sid = new Integer[strsid.length];
+		for (int i = 0; i < strsid.length; i++) {
+			sid[i] = new Integer(strsid[i]);
+		}
+		String[] ostarttime = starttimes.toString().split(",");
+		String[] oendtime = endtimes.toString().split(",");
+		System.out.println("sid"+sid);
+		System.out.println("ostarttime"+ostarttime);
+		System.out.println("oendtime"+oendtime);
+		//获得操作人
+		String oname = (String)request.getSession().getAttribute("username");
+		String str = ios.insertorders(sid, oname, ostarttime, oendtime,gid);
+		return str;
+	}
+	
+	/**
 	 * 查询该人的订单
 	 * yangweihang
 	 * @Date 2018年9月14日 下午7:04:41

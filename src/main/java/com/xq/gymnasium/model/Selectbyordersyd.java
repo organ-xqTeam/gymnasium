@@ -20,10 +20,9 @@ public class Selectbyordersyd {
 	private Integer state;
 	private Integer gid;
 	private Integer num;
-	private Integer type;//1.前端 2.后台
 	public Selectbyordersyd() {
 	}
-	public Selectbyordersyd(String year, String month, String oneday, String twoday, String stname, String snumber, String sname, String date, String servenday, Integer sid, Integer state, Integer gid, Integer num, Integer type) {
+	public Selectbyordersyd(String year, String month, String oneday, String twoday, String stname, String snumber, String sname, String date, String servenday, Integer sid, Integer state, Integer gid, Integer num) {
 		this.year = year;
 		this.month = month;
 		this.oneday = oneday;
@@ -37,7 +36,6 @@ public class Selectbyordersyd {
 		this.state = state;
 		this.gid = gid;
 		this.num = num;
-		this.type = type;
 	}
 	public String getYear() {
 		return year;
@@ -117,17 +115,10 @@ public class Selectbyordersyd {
 	public void setNum(Integer num) {
 		this.num = num;
 	}
-	public Integer getType() {
-		return type;
-	}
-	public void setType(Integer type) {
-		this.type = type;
-	}
 	@Override
 	public String toString() {
 		return "Selectbyordersyd [year=" + year + ", month=" + month + ", oneday=" + oneday + ", twoday=" + twoday
 				+ ", stname=" + stname + ", snumber=" + snumber + ", sname=" + sname + ", date=" + date + ", servenday="
-				+ servenday + ", sid=" + sid + ", state=" + state + ", gid=" + gid + ", num=" + num + ", type=" + type
-				+ "]";
+				+ servenday + ", sid=" + sid + ", state=" + state + ", gid=" + gid + ", num=" + num + "]";
 	}
 }	

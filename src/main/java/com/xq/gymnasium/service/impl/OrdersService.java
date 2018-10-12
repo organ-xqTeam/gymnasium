@@ -765,6 +765,7 @@ public class OrdersService implements IOrdersService {
 						map.put("stname", sb.getStname());
 						map.put("gid", sb.getGid());
 						if(one.equals("by001")) {
+							map.put("str", "1");
 							map.put("sid", sb.getSid());
 						}
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
