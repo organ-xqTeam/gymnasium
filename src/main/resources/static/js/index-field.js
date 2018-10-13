@@ -191,245 +191,264 @@ var Field = {
         					}else if(stname === "羽毛球"){
         						$("#mynote").html('<li><div class="select" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"></div> <span>已选择</span></li><li><div class="selectno" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"><div class="selectno_cover"></div></div> <span>可预订</span></li>')
         					}
-        					//获取时间10-12
-        					let mouth = servenday.substring(5,10)
-        					console.log(mouth)
-        					// alert("data"+data);
-        					let field = areasArr
-        					console.log(data)
-        					console.log(field)
         					
-        					// [{"sname":"篮球1号场地","time":["12:00:00","14:46:22"]},{"sname":"篮球2号场地","time":["13:00:00"]}]
-        					var a1 = "<thead><tr><th></th>";
-        					for (var i = 0; i < field.length; i++) {
-        						// a1 += "<th>" + field[i].sname + "</th>";
-        						a1 += `<th data-sid=${field[i].snumber}>${field[i].sname}</th>`;
-        					}
-        					a1 += "</tr></thead>";
-        					a1 += "<tbody>";
-        					var body = "";
-        					/*
-							 * 
-							 * <div class="add_input court_img court_position">
-							 * <div class=""></div> <div
-							 * class="court_position_bg"></div> </div>
-							 * 
-							 * 
-							 */
-        					// 获取所有 key(时间和体育场id)
-        					let obj1=data[0]
-							let arr1=obj1[mouth]
-							let arr2=arr1.map(function(obj){
-								let skey=Object.keys(obj)[0]
-								return skey
-							})
-							let arr3=arr2.map(function(str){
-								return str.split("=")[0]
-							})
-							let keyArr=Array.from(new Set(arr3))
-        					let obj={}
-        					keyArr.forEach(function(key){
-        						obj[key]=[]
-        					})
-        					arr2.forEach(function(str){
-        						let key=str.split("=")[0]
-								let value=str.split("=")[1]
-								obj[key].push(value)
-        					})
-        					// 循环 时间
-        					for (var j = 0; j < st.length; j++) {
-        						if (j == 0) {
-        							body += "<li></li>";
-        						}
-        						body += "<li>" + st[j] + "</li>";
-        						a1 += "<tr><th></th>";
-        						// 循环所有体育场
-        						for (var i1 = 0; i1 < field.length; i1++) {
-        							var flag = false;
-        							var fl = false;
-        							var fl1 = -1;
-        							
-        							// 循环所有预定记录中的 体育场id
-        							for (var i = 0; i < keyArr.length; i++) {
-        								if (keyArr[i] == field[i1].snumber) {
-        									fl1 = i;
-        									break;
+        					//获取场地是否可预定
+        				
+        				            	//console.log(fieldDate)
+        	        					//获取时间10-12
+        	        					let mouth = servenday.substring(5,10)
+        	        					console.log(mouth)
+        	        					// alert("data"+data);
+        	        					let field = areasArr
+        	        					console.log(data)
+        	        					console.log(field)
+        	        					
+        	        					// [{"sname":"篮球1号场地","time":["12:00:00","14:46:22"]},{"sname":"篮球2号场地","time":["13:00:00"]}]
+        	        					var a1 = "<thead><tr><th></th>";
+        	        					for (var i = 0; i < field.length; i++) {
+        	        						// a1 += "<th>" + field[i].sname + "</th>";
+        	        						a1 += `<th data-sid=${field[i].snumber}>${field[i].sname}</th>`;
+        	        					}
+        	        					a1 += "</tr></thead>";
+        	        					a1 += "<tbody>";
+        	        					var body = "";
+        	        					/*
+        								 * 
+        								 * <div class="add_input court_img court_position">
+        								 * <div class=""></div> <div
+        								 * class="court_position_bg"></div> </div>
+        								 * 
+        								 * 
+        								 */
+        	        					// 获取所有 key(时间和体育场id)
+        	        					let obj1=data[0]
+        								let arr1=obj1[mouth]
+        								let arr2=arr1.map(function(obj){
+        									let skey=Object.keys(obj)[0]
+        									return skey
+        								})
+        								let arr3=arr2.map(function(str){
+        									return str.split("=")[0]
+        								})
+        								let keyArr=Array.from(new Set(arr3))
+        	        					let obj={}
+        	        					keyArr.forEach(function(key){
+        	        						obj[key]=[]
+        	        					})
+        	        					arr2.forEach(function(str){
+        	        						let key=str.split("=")[0]
+        									let value=str.split("=")[1]
+        									obj[key].push(value)
+        	        					})
+        	        					
+        	        					//显示当前时间后的可预定实现.
+        	        					var nowDate = dateToFormat(new Date());
+        	        					console.log(nowDate)
+        	        					let indexTime = 0;
+        	        					if (nowDate.indexOf(mouth) != -1) {
+        	        						console.log(nowDate.substr(11, 2))
+        	        						console.log(st1.indexOf(nowDate.substr(11, 2)))
+        	        						indexTime = Number(st1.indexOf(nowDate.substr(11, 2)))
         								}
-        							}
-        							if (fl1 == -1) {
-        								if ("篮球" === stname) {
-        									a1 += "<td><div class=\"court_img court_position\">"
-        										+"<div class='l' data-site='A'></div>"
-        										+"<div class='l' data-site='B'></div>"
-                								+"</div></td>";
-			        					}else if("羽毛球" === stname){
-			        						if (field[i1].snumber.indexOf("by") != -1) {
-			        							a1 += "<td><div class=\"court_img court_positionBadminton1\">"
-													+"<div class='l' data-site='by'></div>"
-			        								+"</div></td>";
-											}else{
-												a1 += "<td><div class=\"court_img court_position court_positionBadminton\">"
-													+"<div class='l' data-site='C'></div>"
-													+"<div class='l' data-site='D'></div>"
-													+"<div class='l' data-site='E'></div>"
-													+"<div class='l' data-site='F'></div>"
-													+"</div></td>";
-											}
-			        					}else{
-			        						
-			        					}
-        							} else {
-        								let sst = "";
-        								for (var k = 0; k < obj[keyArr[i]].length; k++) {
-        									var str =obj[keyArr[i]][k].split(" ")[1].substring(0, 2);
-        									if (str == st1[j]) {
-        										sst = obj[keyArr[i]][k];
-        										flag = true;
-        										break;
-        									}
-        								}
-        								if (flag) {// court_position_bg
-        									let indeed1 = field[i1].snumber+"="+sst;
-        									let ssr
-        									data[0][mouth].forEach(function(obj){
-        										let skey=Object.keys(obj)[0]
-        										if (skey == indeed1) {
-        											ssr = obj[skey]
-												}
-				        					})
-				        					
-				        					if ("篮球" === stname) {
-				        						a1 += "<td><div class=\"add_input court_img court_position \">"
-				        					}else if("羽毛球" === stname){
-				        						if (field[i1].snumber.indexOf("by") != -1) {
-				        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
-				        						}else{
-				        							
-				        							a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
-				        						}
-				        					}else{
-				        						
-				        						
-				        					}
-				        					let m1 = false;	
-        									let m2 = false;	
-        									let m3 = false;	
-        									let m4 = false;	
-        									let m5 = false;	
-        									let m6 = false;	
-        									let by = false;	
-				        					ssr.forEach(function(obj){
-				        						if(obj.snumber.indexOf("A") != -1){
-				        							m1 = true;
-				        						}
-				        						if(obj.snumber.indexOf("B") != -1){
-				        							m2 = true;
-				        						}
-				        						if(obj.snumber.indexOf("C") != -1){
-				        							m3 = true;
-				        						}
-				        						if(obj.snumber.indexOf("D") != -1){
-				        							m4 = true;
-				        						}
-				        						if(obj.snumber.indexOf("E") != -1){
-				        							m5 = true;
-				        						}
-				        						if(obj.snumber.indexOf("F") != -1){
-				        							m6 = true;
-				        						}
-				        						if(obj.snumber.indexOf("by") != -1){
-				        							by = true;
-				        						}
-				        					})
-				        					if ("篮球" === stname) {
-				        						if (m1) {
-				        							a1+="<div class='l court_position_bg' data-site='A'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='A'></div>"
-				        						}
-				        						if (m2) {
-				        							a1+="<div class='l court_position_bg' data-site='B'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='B'></div>"
-				        						}
-											}else if ("羽毛球" === stname) {
-												
-												if (field[i1].snumber.indexOf("by")  != -1) {
-													
-													if (by) {
-														a1+="<div class='l court_position_bg' data-site='by'></div>"
-													}else{
-														a1+="<div class='l' data-site='by'></div>"
-													}
-												}else{
-													
-													if (m3) {
-														a1+="<div class='l court_position_bg' data-site='C'></div>"
-													}else{
-														a1+="<div class='l' data-site='C'></div>"
-													}
-													if (m4) {
-														a1+="<div class='l court_position_bg' data-site='D'></div>"
-													}else{
-														a1+="<div class='l' data-site='D'></div>"
-													}
-													if (m5) {
-														a1+="<div class='l court_position_bg' data-site='E'></div>"
-													}else{
-														a1+="<div class='l' data-site='E'></div>"
-													}
-													if (m6) {
-														a1+="<div class='l court_position_bg' data-site='F'></div>"
-													}else{
-														a1+="<div class='l' data-site='F'></div>"
-													}
-												}
-												
-											}else{
-											}
-                								a1+="</div></td>";
-        								} else {
-        									if ("篮球" === stname) {
-            									a1 += "<td><div class=\"add_input court_img court_position\">"
-            										+"<div class='l' data-site='A'></div>"
-            										+"<div class='l' data-site='B'></div>"
-                    								+"</div></td>";
-    			        					}else if("羽毛球" === stname){
-    			        						
-    			        						if (field[i1].snumber.indexOf("by") != -1) {
-    			        							
-    			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
-    			        								+"<div class='l' data-site='by'></div>"
-    			        								+"</div></td>";
-    			        						}else{
-    			        							a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
-    			        								+"<div class='l' data-site='C'></div>"
-    			        								+"<div class='l' data-site='D'></div>"
-    			        								+"<div class='l' data-site='E'></div>"
-    			        								+"<div class='l' data-site='F'></div>"
-    			        								+"</div></td>";
-    			        						}
-    			        					}else{
-    			        					}
-        								}
-        							}
-        						}
-        						a1 += "</tr>";
-        					}
-        					a1 += "</tr></tbody>";
-        					
-        					if(field.length == 0){
-        						var a1 = "<div class='nobook_word ac'>无可预定场地<div>";
-        						$("#noInfo").html(a1);
-        						$("#field_th").html("");
-        					}else{
-        						$("#date_content").html(a1);
-            					$("#field_th").html(body);
-        					}
-        					// 更改样式
-        					var hh = field.length + 1;
-        					var aa = hh * 128;
-        					$('.date_content').css('width', aa + 'px')
+        	        					//var rowindex=bt.indexOf(btime)
+        	        					
+        	        					// 循环 时间
+        	        					for (var j = indexTime; j < st.length; j++) {
+        	        						if (j == indexTime) {
+        	        							body += "<li></li>";
+        	        						}
+        	        						body += "<li>" + st[j] + "</li>";
+        	        						a1 += "<tr><th></th>";
+        	        						// 循环所有体育场
+        	        						for (var i1 = 0; i1 < field.length; i1++) {
+        	        							var flag = false;
+        	        							var fl = false;
+        	        							var fl1 = -1;
+        	        							
+        	        							// 循环所有预定记录中的 体育场id
+        	        							for (var i = 0; i < keyArr.length; i++) {
+        	        								if (keyArr[i] == field[i1].snumber) {
+        	        									fl1 = i;
+        	        									break;
+        	        								}
+        	        							}
+        	        							if (fl1 == -1) {
+        	        								if ("篮球" === stname) {
+        	        									a1 += "<td><div class=\"court_img court_position\">"
+        	        										+"<div class='l' data-site='A'></div>"
+        	        										+"<div class='l' data-site='B'></div>"
+        	                								+"</div></td>";
+        				        					}else if("羽毛球" === stname){
+        				        						if (field[i1].snumber.indexOf("by") != -1) {
+        				        							a1 += "<td><div class=\"court_img court_positionBadminton1\">"
+        														+"<div class='l' data-site='by'></div>"
+        				        								+"</div></td>";
+        												}else{
+        													a1 += "<td><div class=\"court_img court_position court_positionBadminton\">"
+        														+"<div class='l' data-site='C'></div>"
+        														+"<div class='l' data-site='D'></div>"
+        														+"<div class='l' data-site='E'></div>"
+        														+"<div class='l' data-site='F'></div>"
+        														+"</div></td>";
+        												}
+        				        					}else{
+        				        						
+        				        					}
+        	        							} else {
+        	        								let sst = "";
+        	        								for (var k = 0; k < obj[keyArr[i]].length; k++) {
+        	        									var str =obj[keyArr[i]][k].split(" ")[1].substring(0, 2);
+        	        									if (str == st1[j]) {
+        	        										sst = obj[keyArr[i]][k];
+        	        										flag = true;
+        	        										break;
+        	        									}
+        	        								}
+        	        								if (flag) {// court_position_bg
+        	        									let indeed1 = field[i1].snumber+"="+sst;
+        	        									let ssr
+        	        									data[0][mouth].forEach(function(obj){
+        	        										let skey=Object.keys(obj)[0]
+        	        										if (skey == indeed1) {
+        	        											ssr = obj[skey]
+        													}
+        					        					})
+        					        					
+        					        					if ("篮球" === stname) {
+        					        						a1 += "<td><div class=\"add_input court_img court_position \">"
+        					        					}else if("羽毛球" === stname){
+        					        						if (field[i1].snumber.indexOf("by") != -1) {
+        					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
+        					        						}else{
+        					        							
+        					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
+        					        						}
+        					        					}else{
+        					        						
+        					        						
+        					        					}
+        					        					let m1 = false;	
+        	        									let m2 = false;	
+        	        									let m3 = false;	
+        	        									let m4 = false;	
+        	        									let m5 = false;	
+        	        									let m6 = false;	
+        	        									let by = false;	
+        					        					ssr.forEach(function(obj){
+        					        						if(obj.snumber.indexOf("A") != -1){
+        					        							m1 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("B") != -1){
+        					        							m2 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("C") != -1){
+        					        							m3 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("D") != -1){
+        					        							m4 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("E") != -1){
+        					        							m5 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("F") != -1){
+        					        							m6 = true;
+        					        						}
+        					        						if(obj.snumber.indexOf("by") != -1){
+        					        							by = true;
+        					        						}
+        					        					})
+        					        					if ("篮球" === stname) {
+        					        						if (m1) {
+        					        							a1+="<div class='l court_position_bg' data-site='A'></div>"
+        					        						}else{
+        					        							a1+="<div class='l' data-site='A'></div>"
+        					        						}
+        					        						if (m2) {
+        					        							a1+="<div class='l court_position_bg' data-site='B'></div>"
+        					        						}else{
+        					        							a1+="<div class='l' data-site='B'></div>"
+        					        						}
+        												}else if ("羽毛球" === stname) {
+        													
+        													if (field[i1].snumber.indexOf("by")  != -1) {
+        														
+        														if (by) {
+        															a1+="<div class='l court_position_bg' data-site='by'></div>"
+        														}else{
+        															a1+="<div class='l' data-site='by'></div>"
+        														}
+        													}else{
+        														
+        														if (m3) {
+        															a1+="<div class='l court_position_bg' data-site='C'></div>"
+        														}else{
+        															a1+="<div class='l' data-site='C'></div>"
+        														}
+        														if (m4) {
+        															a1+="<div class='l court_position_bg' data-site='D'></div>"
+        														}else{
+        															a1+="<div class='l' data-site='D'></div>"
+        														}
+        														if (m5) {
+        															a1+="<div class='l court_position_bg' data-site='E'></div>"
+        														}else{
+        															a1+="<div class='l' data-site='E'></div>"
+        														}
+        														if (m6) {
+        															a1+="<div class='l court_position_bg' data-site='F'></div>"
+        														}else{
+        															a1+="<div class='l' data-site='F'></div>"
+        														}
+        													}
+        													
+        												}else{
+        												}
+        	                								a1+="</div></td>";
+        	        								} else {
+        	        									if ("篮球" === stname) {
+        	            									a1 += "<td><div class=\"add_input court_img court_position\">"
+        	            										+"<div class='l' data-site='A'></div>"
+        	            										+"<div class='l' data-site='B'></div>"
+        	                    								+"</div></td>";
+        	    			        					}else if("羽毛球" === stname){
+        	    			        						
+        	    			        						if (field[i1].snumber.indexOf("by") != -1) {
+        	    			        							
+        	    			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
+        	    			        								+"<div class='l' data-site='by'></div>"
+        	    			        								+"</div></td>";
+        	    			        						}else{
+        	    			        							a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
+        	    			        								+"<div class='l' data-site='C'></div>"
+        	    			        								+"<div class='l' data-site='D'></div>"
+        	    			        								+"<div class='l' data-site='E'></div>"
+        	    			        								+"<div class='l' data-site='F'></div>"
+        	    			        								+"</div></td>";
+        	    			        						}
+        	    			        					}else{
+        	    			        					}
+        	        								}
+        	        							}
+        	        						}
+        	        						a1 += "</tr>";
+        	        					}
+        	        					a1 += "</tr></tbody>";
+        	        					
+        	        					if(field.length == 0){
+        	        						var a1 = "<div class='nobook_word ac'>无可预定场地<div>";
+        	        						$("#noInfo").html(a1);
+        	        						$("#field_th").html("");
+        	        						$("#date_content").html("");
+        	        					}else{
+        	        						$("#date_content").html(a1);
+        	            					$("#field_th").html(body);
+        	        					}
+        	        					// 更改样式
+        	        					var hh = field.length + 1;
+        	        					var aa = hh * 128;
+        	        					$('.date_content').css('width', aa + 'px')
+        				            	
+        				         
         				}
         			});
         		}else{
