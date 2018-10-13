@@ -343,6 +343,7 @@ public class SiteController {
 	 */
 	@RequestMapping("/selectBycloce")
 	public Map<String,Object> selectBycloce(String stname,Integer gid){
+		//
 		return its.selectBycloce(stname, gid);
 	}
 }
