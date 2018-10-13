@@ -117,31 +117,45 @@
 	</script>
 </head>
 <body>
-	<div class="record">
-		<div class="record_name">选择日期：</div> <button class="record_fr_btn fr" id="td">退 订</button><button class="record_fr_btn fr" id="cx">查询</button></div> 
-		<div class="record_date">
-			<div class="record_input input-group date"> 
-				<input type="text" class="input-group-addon form-control" id='date1'/>  
-			</div>
-			<span class="record_name">至</span>
-			<div class="record_input input-group date"> 
-				<input type="text" class="input-group-addon form-control" id='date2' />  
+	<div class="record_top">
+		<div class="record">
+			<div class="record_name">选择日期：</div> 
+			<button class="record_fr_btn fr" id="td">退 订</button>
+			<button class="record_fr_btn fr" id="cx">查询</button>
+			<div class="record_date">
+				<div class="record_input input-group date"> 
+					<input type="text" class="input-group-addon form-control" id='date1'/>  
+				</div>
+				<span class="record_name">至</span>
+				<div class="record_input input-group date"> 
+					<input type="text" class="input-group-addon form-control" id='date2' />  
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="field_top">
-		<!-- 场馆预定表单 -->
-		<table class="date_content">
+		<table class="date_content top0">
 			<thead>
 				<tr>
-					<th></th>
+					<!-- <td></td> -->
 					<th>预定场所</th>
 					<th>预定时间</th>
-					<th>状态</th>
+					<th>状态 &nbsp;&nbsp;&nbsp;</th>
 				</tr>
 			</thead>
+		</table>
+	</div>
+	<div style="height:150px;"></div>
+	<div class="field_top top0">
+		<!-- 场馆预定表单 -->
+
+		<table class="date_content top0">
+
 			<tbody id="tb">
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">没有更多数据</td>
+			    </tr>
+			</tfoot>
 		</table>
 	</div>
 	<div class="field_tc ac">

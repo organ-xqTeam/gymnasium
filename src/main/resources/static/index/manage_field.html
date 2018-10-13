@@ -159,7 +159,7 @@
 				}
 			});
 		}); */
-		//新增
+		//添加
 		$("[id^=insert_]").click(function(){
 			var name = [];
 			$("input[name='sname']").each(function(){
@@ -237,9 +237,9 @@
 				traditional:true,
 				success:function(data){
 					if(data == 'insert.bk.success' || data == 'insert.bm.success'){
-		                alert("新增成功！");
+		                alert("添加成功！");
 	                }else{
-	                	alert("新增失败！");
+	                	alert("添加失败！");
 	                }
 					location.reload();
 				}
@@ -634,7 +634,7 @@
 				<button class="add_btn content_date_btn fr" id="add" data-toggle="modal" data-target="#myAdd">新 增</button>
 			</div>
 			<div style="clear: both;"></div>
-			<!-- 新增弹窗 -->
+			<!-- 添加弹窗 -->
 			<div class="modal fade" id="myAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-right: 0!important;min-width: 1280px;">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -642,7 +642,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 								&times;
 							</button>
-							<h4 class="add_title modal-title" id="myModalLabel">新增场馆场地</h4>
+							<h4 class="add_title modal-title" id="myModalLabel">添加场地</h4>
 						</div>
 						<div class="modal-body">
 							<div class="add_body">
@@ -753,7 +753,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 								&times;
 							</button>
-							<h4 class="add_title modal-title" id="myModalLabel">修改场馆场地</h4>
+							<h4 class="add_title modal-title" id="myModalLabel">修改场地</h4>
 						</div>
 						<div class="modal-body">
 							<div class="add_body basketball">
@@ -785,7 +785,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 								&times;
 							</button>
-							<h4 class="add_title modal-title" id="myModalLabel">查看场馆场地</h4>
+							<h4 class="add_title modal-title" id="myModalLabel">查看场地</h4>
 						</div>
 						<div class="modal-body">
 							<div class="add_body">

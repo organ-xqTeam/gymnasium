@@ -352,7 +352,10 @@ table tbody tr td{
 }
 
 .nobook_word{
-	padding: 4px 6px 12px 6px;
-    /* border: 1px solid #ddd; */
+	padding: 4px 6px;
     width: 100%;
+	background-color: #f1f5f6;
+    height: 60px;
+    line-height: 60px;
+    color: #999;
 }
