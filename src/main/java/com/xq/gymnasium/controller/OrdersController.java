@@ -1,13 +1,10 @@
 package com.xq.gymnasium.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,9 +28,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.xq.gymnasium.model.Selectbyordersyd;
 import com.xq.gymnasium.model.Sitetime;
 import com.xq.gymnasium.service.IOrdersService;
-import com.xq.gymnasium.util.DateTools;
-
-//import net.sf.json.JSONArray;
 
 /**
  * 体育馆场地
@@ -72,7 +66,7 @@ public class OrdersController {
 		//获得操作人
 		String oname = (String)request.getSession().getAttribute("username");
 		String str = ios.insertorders(sid, oname, ostarttime, oendtime,gid);
-		System.out.println("str"+str);
+		//System.out.println("str"+str);
 		return str;
 	}
 	
@@ -116,7 +110,6 @@ public class OrdersController {
 			oname = (String)request.getSession().getAttribute("username");
 		}
 		List<Map<String, Object>> list = ios.selectByOname(hcode, oname, starttime, endtime, pageNum, pageSize);
-		//System.out.println("list"+list);
 		return list;
 	}
 	
