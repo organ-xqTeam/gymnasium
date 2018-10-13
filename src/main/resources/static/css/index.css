@@ -7,7 +7,7 @@ textarea{
 	resize: none;
 }
 
-/*妞ゅ爼鍎撮懣婊冨礋閺嶏拷*/
+/*濡炪倕鐖奸崕鎾嚕濠婂啫绀嬮柡宥忔嫹*/
 header{
 	width: 100%;
 	height: 85px;
@@ -23,24 +23,6 @@ header{
 	color: #fff;
 }
 
-.header_menu li{
-	float: left;
-	margin-left: 3%;
-}
-
-.header_menu li a{
-	padding: 26px 10px;
-	line-height: 85px;
-	color: #fff;
-	font-size: 22px;
-	text-decoration: none;
-}
-
-.header_menu li a:hover,.header_menu_act{
-	border-bottom: 4px solid #fff;
-	text-decoration: none;
-}
-
 .header_icon{
 	display: inline-block;
 	color: #fff;
@@ -52,106 +34,63 @@ header{
 	line-height: 85px;
 }
 
-/*瀹革缚鏅堕懣婊冨礋閺嶏拷*/
+/*鐎归潻缂氶弲鍫曟嚕濠婂啫绀嬮柡宥忔嫹*/
 .myLeft{
 	width: 15%;
 	min-width: 200px;
 	height: calc(100% - 85px);
-	background-color: #fff;
-	padding: 40px 30px 0 30px;
+	background-color: #1D2B36;
+	padding-top: 70px;
 	box-sizing: border-box;
 	position: absolute;
 }
-
-.myLeft_tab_title{
-	height: 42px;
-	text-align: center;
-	line-height: 42px;
-	font-size: 18px;
-	font-weight: bold;
-	border-bottom: 1px solid #ECECEC;
+.myLeft_menu li{
+	display: flex;
+    align-items: end;
+    padding: 15px 20px;
+}
+.myLeft_menu li:hover{
+	background-color: rgba(0,0,0,.4)
 }
 
-.myLeft_tab li a{
-	display: inline-block;
-	float: left;
-	width: 50%;
-	height: 32px;
-	text-align: center;
-	line-height: 32px;
-	font-size: 16px;
-	background-color: #999;
+.myLeft_menu li img{
+	width:22px;
+	margin-right: 15px;
+}
+.myLeft_menu li a{
 	color: #fff;
-	text-decoration: none;
+    font-size: 18px;
+}
+.myLeft_menu_act{
+	background-color: rgba(0,0,0,.4)
+}
+.myLeft_menu_act a{
+	color:#4A90E2 !important;
 }
 
-.myLeft_tab li.active a{
-	background-color: #4A90E2 !important;
+/*濞戞搩鍙冨Λ鎸庣▔閺勫浚娲ｉ柛鎰噹椤旓拷*/
+.content_top{
+	height: 50px;
+    background-color: #fff;
+	padding-left: 16.6%;
 }
-
-.myLeft_tabCon_list li{
-	height: 40px;
-	line-height: 40px;
-	padding: 0 10px;
-	text-align: center;
-	font-size: 16px;
-	border-bottom: 1px solid #ECECEC;
-	border-left: 4px solid transparent;
+.content_title{
+	background-color: #B5C2CA;
+    display: inline-block;
+    padding: 8px 10px;
+    margin-top: 14px;
+    border-radius: 5px 5px 0 0;
+    color:#fff;
 }
-
-.myLeft_info{
-	padding:10px;
-	font-size:16px;
-	line-height:26px;
-}
-
-.myLeft_tabCon_hover li:hover{
-	background-color: rgba(74,144,226,.2);
-	color: #4A90E2;
-	border-left-color: #4a90e2;
-	box-sizing: border-box;
-}
-
-.myLeft_tabCon_act{
-	background-color: rgba(74,144,226,.2);
-	color: #4A90E2;
-	border-left-color: #4a90e2 !important;
-	box-sizing: border-box;
-}
-
-.myLeft_tabCon_list input,.myLeft_tabCon_list select{
-	width: 100%;
-	list-style: none;
-	outline: none;
-	border: none;
-	box-shadow: none;
-	height: 30px;
-	font-size: 16px;
-	box-sizing: border-box;
-}
-
-.tabCon_btn{
-	width: 100%;
-	background-color: #38acff;
-	height: 40px !important;
-	color: #fff;
-	font-size: 18px !important;
-}
-
-.myLeft_room{
-	margin-bottom: 20px;
-	border-radius: 4px;
-	border: 1px solid #ECECEC;
-	box-shadow: 0 4px 4px #D6D6D6;
-}
-
-/*娑擃參妫挎稉鏄忣洣閸愬懎顔�*/
 .content{
 	width: 83%;
 	padding: 30px 1.6% 30px 0;
 	margin-left:17%;
 }
-
+.table_sel{
+	width: 150px;
+    height: 40px;
+}
 .list_content{
 	background-color: #fff;
 	padding: 20px 3%;
@@ -184,7 +123,7 @@ header{
 
 .content_date_btn:hover{color: #fff}
 
-/*閺冦儱宸�*/
+/*闁哄啨鍎卞锟�*/
 .content_date{
 	position: relative;
 }
@@ -245,7 +184,7 @@ header{
 	background-color: #4A90E2;
 	border-color: #4A90E2;
 }
-/*鐞涖劍鐗�*/
+/*閻炴稏鍔嶉悧锟�*/
 .content_table{
 	background-color: #fff;
 	margin-top: 30px;
@@ -286,7 +225,7 @@ table tr td,tr,th,caption{
 	box-sizing: border-box;
 }
 
-/*鐞涖劍鐗告稉瀣煙*/
+/*閻炴稏鍔嶉悧鍛婄▔鐎ｎ偅鐓�*/
 .table_bottom{
 	background-color: #fff;
 	padding: 20px 0 40px 0;
