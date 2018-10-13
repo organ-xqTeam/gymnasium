@@ -28,20 +28,26 @@ function timestampToTime(timestamp) {
 
 
 var st = [
-	"00:00 ~ 01:00","01:00 ~ 02:00","02:00 ~ 03:00","03:00 ~ 04:00","04:00 ~ 05:00",
+	//"00:00 ~ 01:00","01:00 ~ 02:00","02:00 ~ 03:00","03:00 ~ 04:00","04:00 ~ 05:00",
     "05:00 ~ 06:00","06:00 ~ 07:00", "07:00 ~ 08:00", "08:00 ~ 09:00", "09:00 ~ 10:00",
     "10:00 ~ 11:00", "11:00 ~ 12:00", "12:00 ~ 13:00", "13:00 ~ 14:00",
     "14:00 ~ 15:00", "15:00 ~ 16:00", "16:00 ~ 17:00", "17:00 ~ 18:00",
     "18:00 ~ 19:00", "19:00 ~ 20:00", "20:00 ~ 21:00", "21:00 ~ 22:00",
-    "22:00 ~ 23:00", "23:00 ~ 00:00"
+    "22:00 ~ 23:00",
+    //"23:00 ~ 00:00"
 ];
-var sts = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
+var sts = [
+	//"00:00", "01:00", "02:00", "03:00", "04:00", 
+	"05:00",
+	"06:00", "07:00", "08:00", "09:00",
 	"10:00", "11:00", "12:00", "13:00",
 	"14:00", "15:00", "16:00", "17:00",
-	"18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
+	"18:00", "19:00", "20:00", "21:00", "22:00",// "23:00"
 	];
-var st1 = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
-    "17", "18", "19", "20", "21", "22", "23"
+var st1 = [//"00", "01", "02", "03", "04",
+	"05",
+	"06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
+    "17", "18", "19", "20", "21", "22", //"23"
 ];
 
 var Field = {
@@ -185,9 +191,6 @@ var Field = {
         					}else if(stname === "羽毛球"){
         						$("#mynote").html('<li><div class="select" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"></div> <span>已选择</span></li><li><div class="selectno" style="background:url(../images/badminton.jpg) no-repeat;background-size: 100% 100%;"><div class="selectno_cover"></div></div> <span>可预订</span></li>')
         					}
-        					
-        					
-        					
         					//获取时间10-12
         					let mouth = servenday.substring(5,10)
         					console.log(mouth)
@@ -195,6 +198,7 @@ var Field = {
         					let field = areasArr
         					console.log(data)
         					console.log(field)
+        					
         					// [{"sname":"篮球1号场地","time":["12:00:00","14:46:22"]},{"sname":"篮球2号场地","time":["13:00:00"]}]
         					var a1 = "<thead><tr><th></th>";
         					for (var i = 0; i < field.length; i++) {
@@ -259,7 +263,7 @@ var Field = {
         										+"<div class='l' data-site='B'></div>"
                 								+"</div></td>";
 			        					}else if("羽毛球" === stname){
-			        						if (field[i1].snumber.indexOf("by") > 0) {
+			        						if (field[i1].snumber.indexOf("by") != -1) {
 			        							a1 += "<td><div class=\"court_img court_positionBadminton1\">"
 													+"<div class='l' data-site='by'></div>"
 			        								+"</div></td>";
@@ -297,7 +301,7 @@ var Field = {
 				        					if ("篮球" === stname) {
 				        						a1 += "<td><div class=\"add_input court_img court_position \">"
 				        					}else if("羽毛球" === stname){
-				        						if (field[i1].snumber.indexOf("by")  > 0) {
+				        						if (field[i1].snumber.indexOf("by") != -1) {
 				        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
 				        						}else{
 				        							
@@ -350,7 +354,7 @@ var Field = {
 				        						}
 											}else if ("羽毛球" === stname) {
 												
-												if (field[i1].snumber.indexOf("by")  > 0) {
+												if (field[i1].snumber.indexOf("by")  != -1) {
 													
 													if (by) {
 														a1+="<div class='l court_position_bg' data-site='by'></div>"
@@ -392,13 +396,12 @@ var Field = {
                     								+"</div></td>";
     			        					}else if("羽毛球" === stname){
     			        						
-    			        						if (field[i1].snumber.indexOf("by") > 0) {
+    			        						if (field[i1].snumber.indexOf("by") != -1) {
     			        							
     			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
     			        								+"<div class='l' data-site='by'></div>"
     			        								+"</div></td>";
     			        						}else{
-    			        							
     			        							a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
     			        								+"<div class='l' data-site='C'></div>"
     			        								+"<div class='l' data-site='D'></div>"
@@ -414,9 +417,15 @@ var Field = {
         						a1 += "</tr>";
         					}
         					a1 += "</tr></tbody>";
-        					$("#date_content").html(a1);
-        					$("#field_th").html(body);
         					
+        					if(field.length == 0){
+        						var a1 = "<div>无可预定场地<div>";
+        						$("#date_content").html(a1);
+        						$("#field_th").html("");
+        					}else{
+        						$("#date_content").html(a1);
+            					$("#field_th").html(body);
+        					}
         					// 更改样式
         					var hh = field.length + 1;
         					var aa = hh * 128;
