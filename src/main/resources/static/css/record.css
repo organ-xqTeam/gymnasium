@@ -1,5 +1,18 @@
+.record_top{
+	position: fixed;
+    width: 100% !important;
+    background: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.top0{
+	margin-top: 0;
+}
 .record{
 	padding: 10px;
+    width: 100%;
 }
 .record_date{
 	width: 100%;
@@ -24,6 +37,7 @@
 	font-size: 1.3em;
 	color: #848484;
 	line-height: 30px;
+	display: inline-block;
 }
 
 .record_fr_btn{
@@ -33,6 +47,7 @@
 	border: none;
 	outline: none;
 	color: #fff;
+	margin-left: 10px;
 }
 
 .date_content thead{
@@ -46,4 +61,10 @@
 
 .date_content tr td:first-child{
 	width: 36px;
+}
+
+tfoot tr td{
+	padding: 4px 6px;
+    text-align: center;
+    color: #aaa;
 }
