@@ -69,10 +69,41 @@ var Index = {
             // $("#stid").append($('<option value="0">请选择场地类型</option>'))
         } else {
             arr.forEach(function (obj) {
-                var $option = $('<option value="' + obj.stid + '" data-rvalue="'+obj.stname+'">' + obj.stname + '</option>')
-                $("#stid").append($option)
+            	console.log(obj)
+//                var $option = $('<option value="' + obj.stid + '" data-rvalue="'+obj.stname+'">' + obj.stname + '</option>')
+//                $("#stid").append($option)
+                let sidobj = obj
+                $.ajax({
+                    type: "post",
+                    url: Global.host + "site/selectbystids",
+                    data: {
+                        stid: Number(sidobj.stid)
+                    },
+                    success: function (data) {
+                        console.log(data)
+//                        $("#sid").html("")
+                        if (data.length == 0) {
+                           // alert("当前条件无场地")
+                            $("#stid").append($('<option value="0">无'+sidobj.stname+'场地</option>'))
+                        } else {
+                            var arr = data
+                            //var $option1 = $('<option value="0">请选择场地</option>')
+                        	//$("#stid").append($option1)
+                            arr.forEach(function (obj) {
+                                var $option = $(
+                            		'<option value="' + obj.sid + '" data-rvalue="' + obj.sname + '" data-snumber="'+obj.snumber+'" data-stid="' + sidobj.stid + '" data-stname="'+sidobj.stname+'">' + 
+                            		obj.sname +"-"+  sidobj.stname+ 
+                            		'</option>'
+                        		)
+                                $("#stid").append($option)
+                            })
+                        }
+                        
+                        Index.getSevenDayData()
+                    }
+                });
             })
-            Index.getArea(arr[0].stid)
+//            Index.getArea(arr[0].stid)
         }
     },
     //根据stid获取场地
@@ -112,11 +143,12 @@ var Index = {
         if($("#sid").val()=="0"){
             alert("请选择场地")
         }
-        var stname =$("#stid option:selected").attr("data-rvalue") //"篮球"
-        var sid =$("#sid option:selected").attr("value") //"篮球"
-        var sname=$("#sid option:selected").attr("data-rvalue") //"篮球一号场地"
+        var stname =$("#stid option:selected").attr("data-stname") //"篮球"
+        var sid =$("#stid option:selected").attr("value") //"篮球"
+        var sname=$("#stid option:selected").attr("data-rvalue") //"篮球一号场地"
         var gid=$("#gid option:selected").attr("value");
-        var date=$("#datetime").val()+" 00:00:00"
+//        var date=$("#datetime").val()+" 00:00:00"
+        var date=dateToFormat(new Date()).substr(0, 10)+" 00:00:00"
         
         
     	let a1 = "";
@@ -210,7 +242,7 @@ var Index = {
                         	selectedAreaArr.forEach(function(areaObj){
                         		let site=areaObj.snumber.substr(areaObj.snumber.length-1,1)
                         		console.log(site)//C
-                        		console.log("1=",$td[0])
+                        		//console.log("1=",$td[0])
                         		console.log($td[0].getElementsByClassName("l")[0])//.prop("data-site",site)
                         		//console.log("2=",$td[0].$("div[data-site='"+site+"']"))
 //                        		debugger
@@ -261,12 +293,16 @@ var Index = {
             Index.getAreaType(gid)
         })
         //更改场地类型select
-        $("#stid").change(function () {
-            console.log(this.value)
-            var stid = this.value
-            Index.getArea(stid)
-        })
+//        $("#stid").change(function () {
+//            console.log(this.value)
+//            var stid = this.value
+//            Index.getArea(stid)
+//        })
         //select change事件 end
+        $("#stid").change(function () {
+        	Index.getSevenDayData()
+        })
+        
         //点击确定
         $("#button").click(function(){
             Index.getSevenDayData()
@@ -307,7 +343,7 @@ var Index = {
         
     },
     submit() {
-    	let  stname =$("#stid option:selected").attr("data-rvalue") //"篮球"
+    	let  stname =$("#stid option:selected").attr("data-stname") //"篮球"
     	let  gid=$("#gid option:selected").attr("value");
 			//获取 snumber 对应 sid
     	  $.ajax({
@@ -329,7 +365,7 @@ var Index = {
             	  let $ths=$("th[data-sid]") //表头数组
       	  		console.log($("div.book_act[data-site]"))
       	  		let $selectedDivs=$("div.book_act[data-site]") //所有被选中的div
-      	  		var sidStr=$("#sid option:selected").attr("data-snumber") //b002 
+      	  		var sidStr=$("#stid option:selected").attr("data-snumber") //b002 
       	  		$selectedDivs.each(function(index,el){ 
       	  			let col=$(this).attr("data-col")
       	  			console.log(col)
@@ -526,7 +562,7 @@ $(function () {
     });
 
     var nowDate = dateToFormat(new Date()).substr(0, 10)
-    document.getElementById("datetime").value = nowDate
+   // document.getElementById("datetime").value = nowDate
     //时间改变列表日期改变
     $("#datetime").datetimepicker({
         format: 'yyyy-mm-dd',
