@@ -280,7 +280,7 @@ var Field = {
         	                								+"</div></td>";
         				        					}else if("羽毛球" === stname){
         				        						if (field[i1].snumber.indexOf("by") != -1) {
-        				        							a1 += "<td><div class=\"court_img court_positionBadminton1\">"
+        				        							a1 += "<td><div class=\"court_img court_positionBadminton court_positionBadminton1\">"
         														+"<div class='l' data-site='by'></div>"
         				        								+"</div></td>";
         												}else{
@@ -318,7 +318,7 @@ var Field = {
         					        						a1 += "<td><div class=\"add_input court_img court_position \">"
         					        					}else if("羽毛球" === stname){
         					        						if (field[i1].snumber.indexOf("by") != -1) {
-        					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
+        					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton court_positionBadminton1 \">"
         					        						}else{
         					        							
         					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
@@ -414,7 +414,7 @@ var Field = {
         	    			        						
         	    			        						if (field[i1].snumber.indexOf("by") != -1) {
         	    			        							
-        	    			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
+        	    			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton court_positionBadminton1\">"
         	    			        								+"<div class='l' data-site='by'></div>"
         	    			        								+"</div></td>";
         	    			        						}else{
