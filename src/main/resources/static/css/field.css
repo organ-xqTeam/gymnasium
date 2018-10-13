@@ -11,6 +11,7 @@ body{
 	outline:none;
 	font-size:1.2em;
 	font-weight:bold;
+	background: #fff;
 }
 
 /*缁楊兛绔撮崸锟�*/
@@ -176,7 +177,7 @@ table tbody tr td{
 }
 .field_th{
 	position: absolute;
-	top: 10px;
+	top: 0;
 }
 .field_th li{
 	width: 100px;
@@ -336,4 +337,25 @@ table tbody tr td{
 	border-radius: 0 0 0 10px !important;
 	border-right: 1px solid #BEC2CE !important;
 	color: #848484 !important;
+}
+
+.fixedTop{
+	position: fixed;
+    top: 0;
+    left: 0;
+    background: #f1f5f6;
+    z-index: 9;
+    width: 100%;
+}
+.kong{
+	height:108px
+}
+
+.nobook_word{
+	padding: 4px 6px;
+    width: 100%;
+	background-color: #f1f5f6;
+    height: 60px;
+    line-height: 60px;
+    color: #999;
 }
