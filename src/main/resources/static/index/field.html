@@ -40,21 +40,28 @@
 			</ol>
 		</div>
 	</div>
-	<div class="field_tab">
-		<ul class="field_tab_ul" id="select">
-			<!-- 	<li class="field_tab_act">篮球</li>
-			<li>羽毛球</li> -->
-		</ul>
+	<div id="fixedTop">
+		<div class="field_tab">
+			<ul class="field_tab_ul" id="select">
+				<!-- 	<li class="field_tab_act">篮球</li>
+				<li>羽毛球</li> -->
+			</ul>
+		</div>
+		<div class="field_top">
+			<ul class="field_date_ul "  id="getdate">
+				
+			</ul>
+		</div>
 	</div>
+
 	<!-- 场馆预定时间日历 -->
-	<div class="field_top">
-		<ul class="field_date_ul"  id="getdate">
-			
-		</ul>
+	<div id="kong"></div>
+	<div class="field_top" id="mytop" style="margin-top: 0;">
+		
 		<!-- 场馆预定表单 -->
-		<div class="dd" style="position: relative;">
+		<div class="dd" style="position: relative;" id="noInfo">
 			<div class="field_scroll">
-				<table class="date_content" id="date_content">
+				<table class="date_content" id="date_content" style="margin-top: 0;">
 					<thead>
 						<tr></tr>
 					</thead>
@@ -67,11 +74,10 @@
 		</div>
 
 	</div>
+	<div style="height:50px;"></div>
 	<!-- 下方确认按钮 -->
 	<div class="field_btn">
 		<ul class="table_bottom dd" id="mynote">
-			<!-- <li><div class="select"></div> <span>已选择</span></li>
-			<li><div class="selectno"><div class="selectno_cover"></div></div> <span>可预订</span></li> -->
 		</ul>
 		<button id="Affirmatory" class="dd">确认</button>
 	</div>
@@ -93,5 +99,8 @@
 	<script src="../js/dropout.js"></script>
 	<script src="../js/index-field.js"></script>
 	<script src="../js/Global.js"></script>
+	<script type="text/javascript"> 
+		
+	</script>
 </body>
 </html>
