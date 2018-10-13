@@ -56,8 +56,10 @@
 			    		flag2 = false;
 			    	}
 			    	/* oid.push(o); */
-				    otime = this.id.split("_")[2];
+				    otime += this.id.split("_")[2];
+			    	otime += ",";
 			    });
+			    otime = otime.substring(0,otime.length-1);
 			    if(!flag1){
 			    	alert("已经退订不可退订！");
 			    	return false;

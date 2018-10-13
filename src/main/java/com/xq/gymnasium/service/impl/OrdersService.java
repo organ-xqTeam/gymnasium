@@ -478,9 +478,19 @@ public class OrdersService implements IOrdersService {
 			os.setOid(oid[i]);
 			list.add(os);
 		}*/
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("otime", otime);
-		int result = om.updatestate(map);
+		int result = 0;
+		String[] otimes = otime.split(",");
+		if(otimes.length > 1) {
+			for (int i = 0; i < otimes.length; i++) {
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("otime", otimes[i]);
+				result = om.updatestate(map);
+			}
+		}else {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("otime", otime);
+			result = om.updatestate(map);
+		}
 		if(result > 0) {
 			return "order.unsubscribe.success";
 		}
