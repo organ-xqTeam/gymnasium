@@ -95,7 +95,6 @@ public class OrdersController {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status", "success");
 		jsonObject.put("count", str);
-		System.out.println("str"+str);
 		return jsonObject.toString();
 	}
 	

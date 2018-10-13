@@ -216,8 +216,8 @@
 		</if>
 	</select>
 	<!-- 查询订单 -->
-	<select id="selectbyss" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
-		select * from orders where sid = #{sid} and ostarttime = #{starttime}
+	<select id="selectbyss" parameterType="java.util.HashMap" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where sid = #{sid} and ostarttime = #{starttime} and state != 2
 	</select>
 	<!-- 按场地查询订单 -->
 	<select id="selectodersbysite" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -225,11 +225,14 @@
 		from orders o 
 		left join site s on s.sid = o.sid 
 		left join sitetype st on s.stid = st.stid
-		where o.ostarttime = #{ostarttime} and snumber like #{snumber} and st.stname = #{stname} and o.state != 2  and gid = #{gid}
+		where o.ostarttime = #{ostarttime} and snumber like #{snumber} and o.state != 2  and gid = #{gid}
 		<if test="sid != 0">
 			<if test="str != null and str != ''">
 				and s.sid = #{sid}
 			</if>
+		</if>
+		<if test="stname != null and stname != ''">
+			and st.stname = #{stname}
 		</if>
 		order by snumber
 	</select>

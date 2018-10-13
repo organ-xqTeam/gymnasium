@@ -39,6 +39,8 @@ import com.xq.gymnasium.util.StringTools;
 @Service("ios")
 public class OrdersService implements IOrdersService {
 
+	private static final String String = null;
+
 	@Autowired
 	private OrdersMapper om;
 	
@@ -223,6 +225,11 @@ public class OrdersService implements IOrdersService {
 		}
 		String[] ostarttime = starttimes.toString().split(",");
 		String[] oendtime = endtimes.toString().split(",");
+		//获得操作人
+		return inserto(sid, oname, ostarttime, oendtime,gid);
+	}
+	
+	public synchronized String inserto(Integer[] sid,String oname,String[] ostarttime,String[] oendtime,Integer gid) {
 		for (int i = 0; i < sid.length; i++) {
 			Map<String,Object> map1 = new HashMap<String,Object>();
 			map1.put("sid", sid[i]);
@@ -232,7 +239,6 @@ public class OrdersService implements IOrdersService {
 				return "orders.not.null";
 			}
 		}
-		//获得操作人
 		return insertorders(sid, oname, ostarttime, oendtime,gid);
 	}
 	
@@ -757,6 +763,7 @@ public class OrdersService implements IOrdersService {
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<Map<String,Object>> selectbyordersydhou(Selectbyordersyd sb) {
+		sb.setStname(null);
 		Map<String,Object> map = null;
 		List<Map<String,Object>> ls = new ArrayList<Map<String,Object>>();
 		String f = "";
@@ -816,20 +823,58 @@ public class OrdersService implements IOrdersService {
 						String two = strl.get(i).split("=")[1];
 						map.put("snumber", one+"%");
 						map.put("ostarttime", two);
-						map.put("stname", sb.getStname());
+						//map.put("stname", sb.getStname());
 						map.put("gid", sb.getGid());
 						if(one.equals("by001")) {
 							map.put("str", "1");
 							map.put("sid", sb.getSid());
 						}
+						//System.out.println("map"+map);
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
 						List<Map<String,Object>> ss = new ArrayList<Map<String,Object>>();
 						for (Map<String, Object> m : sell) {
 							Map<String,Object> m1 = new HashMap<String,Object>();
-							m1.put("snumber", m.get("snumber"));
+							String str1 = (String)m.get("snumber");
+							m1.put("snumber", str1);
 							m1.put("sname", m.get("sname"));
 							m1.put("sid", m.get("sid"));
 							ss.add(m1);
+							String[] split = str1.split("-");
+							if(split.length == 2 && split[1].equals("A") || split[1].equals("B")) {
+								String[] s1 = new String[]{"C","D","E","F"};
+								for (int j = 0; j < 2; j++) {
+									Map<String,Object> mm = new HashMap<String,Object>();
+									if(split[1].equals("A")) {
+										if(j == 0) {
+											mm.put("snumber", split[0]+"-"+s1[0]);
+										}else {
+											mm.put("snumber", split[0]+"-"+s1[2]);
+										}
+									}else if(split[1].equals("B")){
+										if(j == 0) {
+											mm.put("snumber", split[0]+"-"+s1[1]);
+										}else {
+											mm.put("snumber", split[0]+"-"+s1[3]);
+										}
+									}
+									mm.put("sname", "名");
+									mm.put("sid", 0);
+									//System.out.println("mm1--"+mm);
+									ss.add(mm);
+								}
+							}else if(split.length == 2 && split[1].equals("C") || split[1].equals("E") || split[1].equals("D") || split[1].equals("F")) {
+								String[] s1 = new String[]{"A","B"};
+								Map<String,Object> mm = new HashMap<String,Object>();
+								if(split[1].equals("C") || split[1].equals("E")) {
+									mm.put("snumber", split[0]+"-"+s1[0]);
+								}else if(split[1].equals("D") || split[1].equals("F")) {
+									mm.put("snumber", split[0]+"-"+s1[1]);
+								}
+								mm.put("sname", "名");
+								mm.put("sid", 0);
+								//System.out.println("mm2--"+mm);
+								ss.add(mm);
+							}
 						}
 						//System.out.println("ss"+ss);
 						Map<String,Object> map1 = new HashMap<String,Object>();
@@ -861,4 +906,5 @@ public class OrdersService implements IOrdersService {
 		//System.out.println("lis"+lis);
 		return lis;
 	}
+	
 }
