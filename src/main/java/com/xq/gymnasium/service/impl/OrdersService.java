@@ -223,6 +223,15 @@ public class OrdersService implements IOrdersService {
 		}
 		String[] ostarttime = starttimes.toString().split(",");
 		String[] oendtime = endtimes.toString().split(",");
+		for (int i = 0; i < sid.length; i++) {
+			Map<String,Object> map1 = new HashMap<String,Object>();
+			map1.put("sid", sid[i]);
+			map1.put("starttime", ostarttime[i]);
+			Orders o = om.selectbyss(map1);
+			if(o != null) {
+				return "orders.not.null";
+			}
+		}
 		//获得操作人
 		return insertorders(sid, oname, ostarttime, oendtime,gid);
 	}

@@ -655,8 +655,10 @@ var Field = {
                           	alert("请选择大于当前时间的场地！");
                           }else if(res.count == 'not.site'){
                         	  alert("该场地没有添加场地！");
+                          }else if(res.count == "orders.not.null"){
+                        	  alert("已经预定不能预定！");
                           }else{
-                          	alert("恭喜您，预定成功！");
+                        	  alert("恭喜您，预定成功！");
                           }
                           window.location.reload();
                       }

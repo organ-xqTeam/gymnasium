@@ -211,6 +211,13 @@
 	<!-- 删除场地对应的订单退订 -->
 	<select id="selectbys" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
 		select * from orders where sid = #{sid}
+		<if test="starttime != null and starttime != ''">
+			and ostarttime = #{starttime}
+		</if>
+	</select>
+	<!-- 查询订单 -->
+	<select id="selectbyss" parameterType="java.lang.Integer" resultType="com.xq.gymnasium.model.Orders">
+		select * from orders where sid = #{sid} and ostarttime = #{starttime}
 	</select>
 	<!-- 按场地查询订单 -->
 	<select id="selectodersbysite" parameterType="java.util.HashMap" resultType="java.util.HashMap">

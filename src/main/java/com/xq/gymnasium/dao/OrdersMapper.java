@@ -158,4 +158,13 @@ public interface OrdersMapper {
 	 * @return
 	 */
 	List<Map<String,Object>> selectodersbysite(Map<String,Object> map);
+	
+	/**
+	 * 查询订单
+	 * yangweihang
+	 * @Date 2018年10月13日 上午9:13:52
+	 * @param map
+	 * @return
+	 */
+	Orders selectbyss(Map<String,Object> map);
 }

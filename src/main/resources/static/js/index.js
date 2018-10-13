@@ -414,8 +414,10 @@ var Index = {
                             	alert("篮球场地已经预定不可预定！");
                             }else if(res.count == '99'){
                             	alert("请选择大于当前时间的场地！");
+                            }else if(res.count == "orders.not.null"){
+                          	  	alert("已经预定不能预定！");
                             }else{
-                            	alert("恭喜您，预定成功！");
+                          	  	alert("恭喜您，预定成功！");
                             }
                           window.location.reload();
                       }
