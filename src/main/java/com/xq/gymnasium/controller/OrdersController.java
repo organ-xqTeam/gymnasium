@@ -116,6 +116,7 @@ public class OrdersController {
 			oname = (String)request.getSession().getAttribute("username");
 		}
 		List<Map<String, Object>> list = ios.selectByOname(hcode, oname, starttime, endtime, pageNum, pageSize);
+		//System.out.println("list"+list);
 		return list;
 	}
 	

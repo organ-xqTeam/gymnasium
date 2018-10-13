@@ -570,7 +570,7 @@ public class SiteService implements ISiteService {
 	}
 	
 	/**
-	 * 获得场地下是否是开馆或闭关
+	 * 获得场地下是否可预定
 	 * yangweihang
 	 * @Date 2018年10月13日 下午2:07:17
 	 * @param stname
