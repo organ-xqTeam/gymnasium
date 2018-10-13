@@ -190,4 +190,14 @@ public interface ISiteService {
 	 * @return
 	 */
 	List<Site> selectBySnumbers(Map<String,Object> map);
+	
+	/**
+	 * 获得场地下是否是开馆或闭关
+	 * yangweihang
+	 * @Date 2018年10月13日 下午2:07:17
+	 * @param stname
+	 * @param gid
+	 * @return
+	 */
+	Map<String,Object> selectBycloce(String stname,Integer gid);
 }

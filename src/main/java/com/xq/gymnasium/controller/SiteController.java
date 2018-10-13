@@ -332,4 +332,17 @@ public class SiteController {
 		map.put("gid", gid);
 		return its.selectBySnumbers(map);
 	}
+	
+	/**
+	 * 获得场地下是否是开馆或闭关
+	 * yangweihang
+	 * @Date 2018年10月13日 下午2:18:27
+	 * @param stname
+	 * @param gid
+	 * @return
+	 */
+	@RequestMapping("/selectBycloce")
+	public Map<String,Object> selectBycloce(String stname,Integer gid){
+		return its.selectBycloce(stname, gid);
+	}
 }

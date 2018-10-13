@@ -568,4 +568,31 @@ public class SiteService implements ISiteService {
 	public List<Site> selectBySnumbers(Map<String,Object> map){
 		return ism.selectBySnumbers(map);
 	}
+	
+	/**
+	 * 获得场地下是否是开馆或闭关
+	 * yangweihang
+	 * @Date 2018年10月13日 下午2:07:17
+	 * @param stname
+	 * @param gid
+	 * @return
+	 */
+	public Map<String,Object> selectBycloce(String stname,Integer gid){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("stname", stname);
+		map.put("gid", gid);
+		List<Site> sl = ism.selectBySnumbers(map);
+		Map<String,Object> m = new HashMap<String,Object>();
+		List<Map<String,Object>> ml = new ArrayList<Map<String,Object>>();
+		for(Site s : sl) {
+			Site ss = ism.selectbysid(s.getSid());
+			Map<String,Object> m1 = new HashMap<String,Object>();
+			m1.put("snumber", s.getSnumber());
+			m1.put("state", s.getPstatus());
+			ml.add(m1);
+		}
+		m.put("result", ml);
+		System.out.println("m"+m);
+		return m;
+	}
 }

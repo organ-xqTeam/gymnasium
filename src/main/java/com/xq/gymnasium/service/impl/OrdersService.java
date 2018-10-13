@@ -87,8 +87,6 @@ public class OrdersService implements IOrdersService {
 			}
 			//按场地id查询场地
 			Site s = ism.selectBySid(sid[i]);
-			System.out.println("ss"+s);
-			System.out.println("sid[i]"+sid[i]);
 			//按体育馆场地编号查询场地类别名称
 			Sitetype st = sm.selectStnameBySnumber(s.getSnumber());
 			Orders o = null;
@@ -222,6 +220,11 @@ public class OrdersService implements IOrdersService {
 		Integer[] sid = new Integer[strsid.length];
 		for (int i = 0; i < strsid.length; i++) {
 			sid[i] = new Integer(strsid[i]);
+			//判断当前是否是闭馆的场地
+			Site s = ism.selectBySid(sid[i]);
+			if(s.getPstate() == 2) {
+				return "pstate";
+			}
 		}
 		String[] ostarttime = starttimes.toString().split(",");
 		String[] oendtime = endtimes.toString().split(",");
@@ -831,15 +834,25 @@ public class OrdersService implements IOrdersService {
 						}
 						//System.out.println("map"+map);
 						List<Map<String, Object>> sell = om.selectodersbysite(map);
+						System.out.println("sell"+sell);
 						List<Map<String,Object>> ss = new ArrayList<Map<String,Object>>();
+						List<String> ll = new ArrayList<String>();
 						for (Map<String, Object> m : sell) {
 							Map<String,Object> m1 = new HashMap<String,Object>();
-							String str1 = (String)m.get("snumber");
-							m1.put("snumber", str1);
+							String snumber = (String)m.get("snumber");
+							Integer sid = (Integer)m.get("sid");
+							m1.put("snumber", snumber);
 							m1.put("sname", m.get("sname"));
-							m1.put("sid", m.get("sid"));
+							m1.put("sid", sid);
 							ss.add(m1);
-							String[] split = str1.split("-");
+							String[] split = snumber.split("-");
+//							String snums = null;
+//							if(split.length == 2) {
+//								snums = sb.getGid()+"-"+split[0];
+//							}else {
+//								snums = sb.getGid()+"-"+snumber;
+//							}
+//							ll.add(snums);
 							if(split.length == 2 && split[1].equals("A") || split[1].equals("B")) {
 								String[] s1 = new String[]{"C","D","E","F"};
 								for (int j = 0; j < 2; j++) {
@@ -876,12 +889,34 @@ public class OrdersService implements IOrdersService {
 								ss.add(mm);
 							}
 						}
-						//System.out.println("ss"+ss);
+						System.out.println("ss"+ss);
+						System.out.println("ll"+ll);
 						Map<String,Object> map1 = new HashMap<String,Object>();
+						System.out.println("ssssss"+strl.get(i));
+						/*String time = strl.get(i).split(" ")[0];
+						String[] ds = new String[] {"00:00:00","01:00:00","02:00:00","03:00:00","04:00:00","05:00:00","06:00:00","07:00:00","08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00","21:00:00","22:00:00","23:00:00"};
+						for (int j = 0; j < ll.size(); j++) {
+							int gid = new Integer(ll.get(j).split("-")[0]);
+							String snum1 = ll.get(j).split("-")[1];
+							Map<String,Object> mss = new HashMap<String,Object>();
+							mss.put("gid", gid);
+							mss.put("snumber", snum1+"%");
+							//判断当前是否是闭馆的场地
+							List<Site> sl = ism.selectbysname(mss);
+							for (int k = 0; k < sl.size(); k++) {
+								if(sl.get(l).getPstatus() == 2) {
+									for (int k2 = 0; k2 < ds.length; k2++) {
+										Map<String,Object> m = new HashMap<String,Object>();
+										m.put(time+" "+ds[k2], ss);
+										ls.add(m);
+									}
+								}
+							}
+						}*/
 						map1.put(strl.get(i), ss);
 						ls.add(map1);
 					}
-					//System.out.println("ls"+ls);
+					System.out.println("ls"+ls);
 					Map<String,Object> m = new HashMap<String,Object>();
 					String one1 = f.split(" ")[0];
 					String two1 = one1.split("-")[1];
@@ -903,7 +938,7 @@ public class OrdersService implements IOrdersService {
 //		for (int i = 0; i < lis.size(); i++) {
 //			System.out.println("--"+lis.get(i));
 //		}
-		//System.out.println("lis"+lis);
+		System.out.println("lis"+lis);
 		return lis;
 	}
 	
