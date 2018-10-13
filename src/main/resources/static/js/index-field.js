@@ -419,8 +419,8 @@ var Field = {
         					a1 += "</tr></tbody>";
         					
         					if(field.length == 0){
-        						var a1 = "<div>无可预定场地<div>";
-        						$("#date_content").html(a1);
+        						var a1 = "<div class='nobook_word ac'>无可预定场地<div>";
+        						$("#noInfo").html(a1);
         						$("#field_th").html("");
         					}else{
         						$("#date_content").html(a1);
@@ -813,3 +813,19 @@ function getSidBySnumber(snumber,arr){ //str
 	})
 	return mysid
 }
+
+$(document).ready(function(){
+    $(document).scroll(function(){
+        var top = $("#mytop").offset().top;
+        var fixedTop = top - $(document).scrollTop()
+        /*console.log("距离顶部",fixedTop)*/
+        if(fixedTop <= 108 ){
+        	$("#fixedTop").addClass("fixedTop")
+        	$("#kong").addClass("kong")
+        }else if(fixedTop > 108){
+        	$("#fixedTop").removeClass("fixedTop")
+        	$("#kong").removeClass("kong")
+        }
+        
+    });
+});
