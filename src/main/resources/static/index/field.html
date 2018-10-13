@@ -83,15 +83,15 @@
 		<button id="Affirmatory" class="dd">确认</button>
 	</div>
 	<!-- 弹窗 -->
-	<div class="field_confirm ac">
+	<div class="field_confirm ac" id="field_confirm">
 		<div class="field_box">
-			<div class="field_box_word field_box_btns">恭喜您,预定成功</div>
+			<div class="field_box_word field_box_btns" id="field_word"></div>
 			<!-- <div class="field_box_btns">
 				<button class="btn_l">取消</button>
 				<button>确认</button>
 			</div> -->
 			<div class="field_box_btns">
-				<button>确认</button>
+				<button id="btn_ok">确认</button>
 			</div>
 		</div>
 	</div>
@@ -101,7 +101,10 @@
 	<script src="../js/index-field.js"></script>
 	<script src="../js/Global.js"></script>
 	<script type="text/javascript"> 
-		
+		$("#btn_ok").click(function(){
+			$("#field_confirm").css("display","none")
+			 window.location.reload();
+		})
 	</script>
 </body>
 </html>

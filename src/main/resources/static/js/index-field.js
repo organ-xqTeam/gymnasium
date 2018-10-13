@@ -321,7 +321,7 @@ var Field = {
         					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton court_positionBadminton1 \">"
         					        						}else{
         					        							
-        					        							a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
+        					        							a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton \">"
         					        						}
         					        					}else{
         					        						
@@ -453,7 +453,9 @@ var Field = {
         			});
         		}else{
         			$(".dd").hide();
-        			alert("当前是闭馆时间！");
+        			//alert("当前是闭馆时间！");
+   					$("#field_confirm").css("display","block");
+   					$("#field_word").text("当前是闭馆时间！")
         		}
         	}
         });
@@ -577,7 +579,10 @@ var Field = {
                  		 indexCol =$(dataclass[i]).attr('data-col')
                  	 }
                  	 if ($(dataclass[i]).attr('data-col') != indexCol) {
-         				alert("不能跨场地预定")
+         				//alert("不能跨场地预定")
+	   					$("#field_confirm").css("display","block");
+	   					$("#field_word").text("不能跨场地预定！")
+         				
          			}
          	         //获取所有选中 的预定
          	         //console.log($(dataclass[i]).attr('data-col') ,$(dataclass[i]).attr('data-row'))
@@ -694,45 +699,71 @@ var Field = {
                    console.log(datecontent)
                    let map = datecontent
                    if (count.length == 0) {
-   					alert("请选择预定的场地")
+   					//alert("请选择预定的场地")
+   					$("#field_confirm").css("display","block");
+   					$("#field_word").text("请选择预定的场地")
                     }else{
-//	                  $.ajax({
-//	                      type: "post",
-//	                      url: Global.host + "orders/insertorderss",
-//	                      //dataType : 'jsonp',\
-//	                      //traditional:true,
-//	                      data:JSON.stringify(map),
-//	                      contentType:"application/json; charset=utf-8",
-//	                      success: function (res) {
-//	                          console.log(res.count)
-//	                         if(res.count == 'login'){
-//	                          	alert("请先登录！");
-//	                          }else if(res.count == 'There are orders pending'){
-//	                          	alert("请先完成没完成的预定单再来完成！");
-//	                          }else if(res.count == '1'){
-//	                          	alert("羽毛球场地对应的篮球场地已经预定了！");
-//	                          }else if(res.count == 's'){
-//	                          	alert("抱歉，暂不可选，请选择其他场地！");
-//	                          }else if(res.count == '2'){
-//	                          	alert("羽毛球场地已经预定了!");
-//	                          }else if(res.count == '3'){
-//	                          	alert("篮球场地对应的羽毛球场地已经预定了！");
-//	                          }else if(res.count == '4'){
-//	                          	alert("篮球场地已经预定不可预定！");
-//	                          }else if(res.count == '99'){
-//	                          	alert("请选择大于当前时间的场地！");
-//	                          }else if(res.count == 'not.site'){
-//	                        	  alert("该场地没有添加场地！");
-//	                          }else if(res.count == "orders.not.null"){
-//	                        	  alert("已经预定不能预定！");
-//	                          }else if(res.count == "pstate"){
-//	                        	  alert("当前场地不可预定！");
-//	                          }else{
-//	                        	  alert("恭喜您，预定成功！");
-//	                          }
+	                  $.ajax({
+	                      type: "post",
+	                      url: Global.host + "orders/insertorderss",
+	                      //dataType : 'jsonp',\
+	                      //traditional:true,
+	                      data:JSON.stringify(map),
+	                      contentType:"application/json; charset=utf-8",
+	                      success: function (res) {
+	                          console.log(res.count)
+	                         if(res.count == 'login'){
+	                          	//alert("请先登录！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("请先登录！")
+	                          }else if(res.count == 'There are orders pending'){
+	                          	//alert("请先完成没完成的预定单再来完成！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("请先完成没完成的预定单再来完成！")
+	                          }else if(res.count == '1'){
+	                          	//alert("羽毛球场地对应的篮球场地已经预定了！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("羽毛球场地对应的篮球场地已经预定了！")
+	                          }else if(res.count == 's'){
+	                          	//alert("抱歉，暂不可选，请选择其他场地！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("抱歉，暂不可选，请选择其他场地！")
+	                          }else if(res.count == '2'){
+	                          	//alert("羽毛球场地已经预定了!");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("羽毛球场地已经预定了！")
+	                          }else if(res.count == '3'){
+	                          	//alert("篮球场地对应的羽毛球场地已经预定了！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("篮球场地对应的羽毛球场地已经预定了！")
+	                          }else if(res.count == '4'){
+	                          	//alert("篮球场地已经预定不可预定！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("篮球场地已经预定不可预定！")
+	                          }else if(res.count == '99'){
+	                          	//alert("请选择大于当前时间的场地！");
+	    	   					$("#field_confirm").css("display","block");
+	    	   					$("#field_word").text("请选择大于当前时间的场地！")
+	                          }else if(res.count == 'not.site'){
+	                        	  //alert("该场地没有添加场地！");
+		    	   					$("#field_confirm").css("display","block");
+		    	   					$("#field_word").text("该场地没有添加场地！")
+	                          }else if(res.count == "orders.not.null"){
+	                        	  //alert("已经预定不能预定！");
+		    	   					$("#field_confirm").css("display","block");
+		    	   					$("#field_word").text("已经预定不能预定！")
+	                          }else if(res.count == "pstate"){
+	                        	  //alert("当前场地不可预定！");
+		    	   					$("#field_confirm").css("display","block");
+		    	   					$("#field_word").text("当前场地不可预定！")
+	                          }else{
+	                        	  //alert("恭喜您，预定成功！");
+		    	   					$("#field_confirm").css("display","block");
+		    	   					$("#field_word").text("恭喜您，预定成功！")
+	                          }
 //	                          window.location.reload();
-//	                      }
-//	                  });
+	                      }
+	                  });
                     }
             	  
               }
