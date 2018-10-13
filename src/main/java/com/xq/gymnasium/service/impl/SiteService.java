@@ -592,7 +592,6 @@ public class SiteService implements ISiteService {
 			ml.add(m1);
 		}
 		m.put("result", ml);
-		//
 		return m;
 	}
 }

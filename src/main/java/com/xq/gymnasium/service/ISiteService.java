@@ -198,7 +198,6 @@ public interface ISiteService {
 	 * @param stname
 	 * @param gid
 	 * @return
-	 * 
 	 */
 	Map<String,Object> selectBycloce(String stname,Integer gid);
 }
