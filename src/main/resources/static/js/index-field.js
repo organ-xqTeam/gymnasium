@@ -259,16 +259,20 @@ var Field = {
         										+"<div class='l' data-site='B'></div>"
                 								+"</div></td>";
 			        					}else if("羽毛球" === stname){
-			        						a1 += "<td><div class=\"court_img court_position court_positionBadminton\">"
-												+"<div class='l' data-site='C'></div>"
-												+"<div class='l' data-site='D'></div>"
-												+"<div class='l' data-site='E'></div>"
-												+"<div class='l' data-site='F'></div>"
-		        								+"</div></td>";
+			        						if (field[i1].snumber.indexOf("by") > 0) {
+			        							a1 += "<td><div class=\"court_img court_positionBadminton1\">"
+													+"<div class='l' data-site='by'></div>"
+			        								+"</div></td>";
+											}else{
+												a1 += "<td><div class=\"court_img court_position court_positionBadminton\">"
+													+"<div class='l' data-site='C'></div>"
+													+"<div class='l' data-site='D'></div>"
+													+"<div class='l' data-site='E'></div>"
+													+"<div class='l' data-site='F'></div>"
+													+"</div></td>";
+											}
 			        					}else{
-			        						a1 += "<td><div class=\"court_img court_positionBadminton1\">"
-												+"<div class='l' data-site='by'></div>"
-		        								+"</div></td>";
+			        						
 			        					}
         							} else {
         								let sst = "";
@@ -293,9 +297,14 @@ var Field = {
 				        					if ("篮球" === stname) {
 				        						a1 += "<td><div class=\"add_input court_img court_position \">"
 				        					}else if("羽毛球" === stname){
-				        						a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
+				        						if (field[i1].snumber.indexOf("by")  > 0) {
+				        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
+				        						}else{
+				        							
+				        							a1 += "<td><div class=\"add_input court_img court_positionBadminton \">"
+				        						}
 				        					}else{
-				        						a1 += "<td><div class=\"add_input court_img court_positionBadminton1 \">"
+				        						
 				        						
 				        					}
 				        					let m1 = false;	
@@ -341,32 +350,38 @@ var Field = {
 				        						}
 											}else if ("羽毛球" === stname) {
 												
-				        						if (m3) {
-				        							a1+="<div class='l court_position_bg' data-site='C'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='C'></div>"
-				        						}
-				        						if (m4) {
-				        							a1+="<div class='l court_position_bg' data-site='D'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='D'></div>"
-				        						}
-				        						if (m5) {
-				        							a1+="<div class='l court_position_bg' data-site='E'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='E'></div>"
-				        						}
-				        						if (m6) {
-				        							a1+="<div class='l court_position_bg' data-site='F'></div>"
-				        						}else{
-				        							a1+="<div class='l' data-site='F'></div>"
-				        						}
+												if (field[i1].snumber.indexOf("by")  > 0) {
+													
+													if (by) {
+														a1+="<div class='l court_position_bg' data-site='by'></div>"
+													}else{
+														a1+="<div class='l' data-site='by'></div>"
+													}
+												}else{
+													
+													if (m3) {
+														a1+="<div class='l court_position_bg' data-site='C'></div>"
+													}else{
+														a1+="<div class='l' data-site='C'></div>"
+													}
+													if (m4) {
+														a1+="<div class='l court_position_bg' data-site='D'></div>"
+													}else{
+														a1+="<div class='l' data-site='D'></div>"
+													}
+													if (m5) {
+														a1+="<div class='l court_position_bg' data-site='E'></div>"
+													}else{
+														a1+="<div class='l' data-site='E'></div>"
+													}
+													if (m6) {
+														a1+="<div class='l court_position_bg' data-site='F'></div>"
+													}else{
+														a1+="<div class='l' data-site='F'></div>"
+													}
+												}
+												
 											}else{
-					        					if (by) {
-					        						a1+="<div class='l court_position_bg' data-site='by'></div>"
-					        					}else{
-					        						a1+="<div class='l' data-site='by'></div>"
-					        					}
 											}
                 								a1+="</div></td>";
         								} else {
@@ -376,16 +391,22 @@ var Field = {
             										+"<div class='l' data-site='B'></div>"
                     								+"</div></td>";
     			        					}else if("羽毛球" === stname){
-    			        						a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
-    												+"<div class='l' data-site='C'></div>"
-    												+"<div class='l' data-site='D'></div>"
-    												+"<div class='l' data-site='E'></div>"
-    												+"<div class='l' data-site='F'></div>"
-    		        								+"</div></td>";
+    			        						
+    			        						if (field[i1].snumber.indexOf("by") > 0) {
+    			        							
+    			        							a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
+    			        								+"<div class='l' data-site='by'></div>"
+    			        								+"</div></td>";
+    			        						}else{
+    			        							
+    			        							a1 += "<td><div class=\"add_input court_img court_position court_positionBadminton\">"
+    			        								+"<div class='l' data-site='C'></div>"
+    			        								+"<div class='l' data-site='D'></div>"
+    			        								+"<div class='l' data-site='E'></div>"
+    			        								+"<div class='l' data-site='F'></div>"
+    			        								+"</div></td>";
+    			        						}
     			        					}else{
-    			        						a1 += "<td><div class=\"add_input court_img court_positionBadminton1\">"
-    												+"<div class='l' data-site='by'></div>"
-    		        								+"</div></td>";
     			        					}
         								}
         							}
@@ -657,6 +678,8 @@ var Field = {
                         	  alert("该场地没有添加场地！");
                           }else if(res.count == "orders.not.null"){
                         	  alert("已经预定不能预定！");
+                          }else if(res.count == "pstate"){
+                        	  alert("当前场地不可预定！");
                           }else{
                         	  alert("恭喜您，预定成功！");
                           }

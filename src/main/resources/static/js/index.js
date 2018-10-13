@@ -403,27 +403,31 @@ var Index = {
                 		   success: function (res) {
                 			   console.log(res)
                 			   if(res.count == 'login'){
-                				   alert("请先登录！");
-                			   }else if(res.count == 'There are orders pending'){
-                				   alert("请先完成没完成的预定单再来完成！");
-                			   }else if(res.count == '1'){
-                				   alert("羽毛球场地对应的篮球场地已经预定了!");
-                			   }else if(res.count == 's'){
-                				   alert("抱歉，暂不可选，请选择其他场地!");
-                			   }else if(res.count == '2'){
-                				   alert("羽毛球场地已经预定了!");
-                			   }else if(res.count == '3'){
-                				   alert("篮球场地对应的羽毛球场地已经预定了!");
-                			   }else if(res.count == '4'){
-                				   alert("篮球场地已经预定不可预定！");
-                			   }else if(res.count == '99'){
-                				   alert("请选择大于当前时间的场地！");
-                			   }else if(res.count == "orders.not.null"){
-                				   alert("已经预定不能预定！");
-                			   }else{
-                				   alert("恭喜您，预定成功！");
-                			   }
-                			   window.location.reload();
+                                 	alert("请先登录！");
+                                 }else if(res.count == 'There are orders pending'){
+                                 	alert("请先完成没完成的预定单再来完成！");
+                                 }else if(res.count == '1'){
+                                 	alert("羽毛球场地对应的篮球场地已经预定了！");
+                                 }else if(res.count == 's'){
+                                 	alert("抱歉，暂不可选，请选择其他场地！");
+                                 }else if(res.count == '2'){
+                                 	alert("羽毛球场地已经预定了!");
+                                 }else if(res.count == '3'){
+                                 	alert("篮球场地对应的羽毛球场地已经预定了！");
+                                 }else if(res.count == '4'){
+                                 	alert("篮球场地已经预定不可预定！");
+                                 }else if(res.count == '99'){
+                                 	alert("请选择大于当前时间的场地！");
+                                 }else if(res.count == 'not.site'){
+                               	  alert("该场地没有添加场地！");
+                                 }else if(res.count == "orders.not.null"){
+                               	  alert("已经预定不能预定！");
+                                 }else if(res.count == "pstate"){
+                               	  alert("当前场地不可预定！");
+                                 }else{
+                               	  alert("恭喜您，预定成功！");
+                                 }
+                                 window.location.reload();
                 		   }
                 	   });
                    }
